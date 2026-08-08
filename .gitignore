@@ -1,0 +1,14 @@
+# WorkBuddy 项目记忆与配置（不对外共享）
+.workbuddy/
+
+# 本地令牌等敏感临时文件
+*.tmp
+
+# 验证/调试用的截图与产物（开发期生成，非源码）
+shots/
+verify_*.png
+
+# 系统/编辑器
+.DS_Store
+Thumbs.db
+*.log

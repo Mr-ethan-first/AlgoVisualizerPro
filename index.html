@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d1117" />
+    <meta name="description" content="AlgoLens - 纯前端、完全离线的数据结构与算法动画可视化平台" />
+    <title>AlgoLens · 算法动画库</title>
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Nunito+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./styles/components.css" />
+    <link rel="stylesheet" href="./styles/algorithms.css" />
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header class="app-header">
+        <div class="header-left">
+            <div class="logo">
+                <svg viewBox="0 0 32 32" class="logo-icon" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#58a6ff" />
+                            <stop offset="100%" stop-color="#bc8cff" />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="16" cy="16" r="14" fill="none" stroke="url(#lg)" stroke-width="2"/>
+                    <circle cx="16" cy="16" r="4" fill="url(#lg)"/>
+                    <circle cx="6" cy="16" r="3" fill="#3fb950"/>
+                    <circle cx="26" cy="16" r="3" fill="#f78166"/>
+                    <circle cx="16" cy="6" r="3" fill="#d29922"/>
+                    <circle cx="16" cy="26" r="3" fill="#bc8cff"/>
+                </svg>
+                <span class="logo-text">Algo<span class="logo-accent">Lens</span></span>
+            </div>
+            <span class="logo-tag">离线算法动画库</span>
+        </div>
+
+        <div class="header-center">
+            <div class="search-box">
+                <svg viewBox="0 0 1024 1024" class="search-icon" aria-hidden="true">
+                    <path fill="currentColor" d="M524.019992 874.815105l18.549987-3.864997 17.778987-4.636997 23.189984-7.729995h10.820992a443.689688 443.689688 0 0 0 119.811916-66.475953L946.064695 1024l77.297945-77.297946L791.468803 714.810217a443.689688 443.689688 0 0 0 66.475954-119.811915 60.291958 60.291958 0 0 0 0-10.820993c0-7.729995 5.410996-15.459989 7.729994-23.189983l6.183996-19.323987c0-6.183996 0-13.139991 3.864997-20.097986s0-16.231989 0-23.961983v-57.19996A432.094696 432.094696 0 0 0 775.236815 159.810608a439.050691 439.050691 0 0 0-59.519958-60.291958l-26.279982-21.643985a463.786674 463.786674 0 0 0-77.297945-40.194971 367.936741 367.936741 0 0 0-38.649973-17.004989A402.720717 402.720717 0 0 0 487.690017 0.57772a435.185694 435.185694 0 0 0-44.832968 0 450.645683 450.645683 0 0 0-45.604968 0 412.76971 412.76971 0 0 0-86.573939 20.097985 355.56975 355.56975 0 0 0-40.194972 14.68599 435.959693 435.959693 0 0 0-77.296946 40.194972l-34.010976 25.508982A442.142689 442.142689 0 0 0 98.88029 719.447214a439.050691 439.050691 0 0 0 60.292958 59.518958 386.488728 386.488728 0 0 0 34.009976 25.507982 435.959693 435.959693 0 0 0 77.297946 40.194972 359.434747 359.434747 0 0 0 40.194972 15.459989 468.424671 468.424671 0 0 0 85.799939 17.004988 450.645683 450.645683 0 0 0 45.605968 0h57.19996zM446.720046 101.838648a337.790762 337.790762 0 1 1-341.65576 340.109761 338.563762 338.563762 0 0 1 337.790763-337.791762z"/>
+                </svg>
+                <input type="text" id="searchInput" placeholder="搜索算法（例如：快排、KMP、Dijkstra）..." autocomplete="off" />
+            </div>
+        </div>
+
+        <div class="header-right">
+            <span class="header-stat" id="algoCountStat" title="已实现算法数">0 算法</span>
+            <button class="icon-btn" id="themeToggle" title="切换主题" aria-label="切换主题">
+                <svg class="icon-sun" viewBox="0 0 1024 1024" aria-hidden="true">
+                    <path fill="#EFAC25" d="M512 512m-256 0a256 256 0 1 0 512 0 256 256 0 1 0-512 0Z"/>
+                    <path fill="#EFAC25" d="M524.8 166.4m-12.8 0l0 0q-12.8 0-12.8-12.8l0-128q0-12.8 12.8-12.8l0 0q12.8 0 12.8 12.8l0 128q0 12.8-12.8 12.8Z"/>
+                    <path fill="#EFAC25" d="M524.8 1011.2m-12.8 0l0 0q-12.8 0-12.8-12.8l0-128q0-12.8 12.8-12.8l0 0q12.8 0 12.8 12.8l0 128q0 12.8-12.8 12.8Z"/>
+                    <path fill="#EFAC25" d="M856.956768 877.254834m-9.050967 9.050967l0 0q-9.050967 9.050967-18.101934 0l-90.509668-90.509668q-9.050967-9.050967 0-18.101934l0 0q9.050967-9.050967 18.101934 0l90.509668 90.509668q9.050967 9.050967 0 18.101934Z"/>
+                    <path fill="#EFAC25" d="M1011.2 499.2m0 12.8l0 0q0 12.8-12.8 12.8l-128 0q-12.8 0-12.8-12.8l0 0q0-12.8 12.8-12.8l128 0q12.8 0 12.8 12.8Z"/>
+                    <path fill="#EFAC25" d="M851.585532 141.456942m9.050967 9.050967l0 0q9.050967 9.050967 0 18.101933l-90.509668 90.509668q-9.050967 9.050967-18.101934 0l0 0q-9.050967-9.050967 0-18.101933l90.509668-90.509668q9.050967-9.050967 18.101934 0Z"/>
+                    <path fill="#EFAC25" d="M166.4 499.2m0 12.8l0 0q0 12.8-12.8 12.8l-128 0q-12.8 0-12.8-12.8l0 0q0-12.8 12.8-12.8l128 0q12.8 0 12.8 12.8Z"/>
+                    <path fill="#EFAC25" d="M268.22607 262.774928m-9.050967 9.050967l0 0q-9.050967 9.050967-18.101934 0l-90.509668-90.509668q-9.050967-9.050967 0-18.101934l0 0q9.050967-9.050967 18.101934 0l90.509668 90.509668q9.050967 9.050967 0 18.101934Z"/>
+                    <path fill="#EFAC25" d="M262.939132 755.793319m9.050967 9.050967l0 0q9.050967 9.050967 0 18.101933l-90.509668 90.509668q-9.050967 9.050967-18.101934 0l0 0q-9.050967-9.050967 0-18.101933l90.509668-90.509668q9.050967-9.050967 18.101934 0Z"/>
+                </svg>
+                <svg class="icon-moon" viewBox="0 0 1024 1024" aria-hidden="true">
+                    <path fill="currentColor" d="M915.692308 145.723077h-73.255385L815.182769 72.152615l-27.569231 73.570462H714.436923l59.470769 45.922461-27.490461 82.707693 68.686769-50.569846 68.529231 50.569846-27.332923-82.707693 59.392-45.922461zM734.286769 385.181538h-52.460307l-19.692308-52.775384-19.692308 52.775384h-52.539077l42.692923 32.925539-19.771077 59.392 49.23077-36.233846 49.230769 36.233846-19.692308-59.392 42.692923-33.004308z m179.278769 263.798154h-39.85723l-14.966154-39.936-14.966154 39.936h-39.778462l32.295385 24.969846-14.887385 44.977231 37.336616-27.490461 37.257846 27.56923-14.887385-45.056 32.452923-24.969846zM505.619692 40.802462C266.24 63.015385 78.769231 265.609846 78.769231 512.472615c0 261.750154 210.865231 473.875692 470.803692 473.875693 147.140923 0 298.850462-68.056615 385.181539-174.552616-14.493538 1.417846-49.467077 2.284308-64.275693 2.284308-259.938462 0-470.724923-212.204308-470.724923-473.954462 0-113.585231 39.778462-217.718154 105.944616-299.323076"/>
+                </svg>
+            </button>
+            <button class="icon-btn" id="fullscreenBtn" title="全屏" aria-label="全屏">
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                    <path fill="currentColor" d="M2 2.75A.75.75 0 0 1 2.75 2H6a.75.75 0 0 1 0 1.5H3.5V6a.75.75 0 0 1-1.5 0V2.75ZM10 2h3.25a.75.75 0 0 1 .75.75V6a.75.75 0 0 1-1.5 0V3.5H10a.75.75 0 0 1 0-1.5ZM2.75 10a.75.75 0 0 1 .75.75v2.75H6a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1-.75-.75v-3.5a.75.75 0 0 1 .75-.75ZM13.25 10a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-.75.75H10a.75.75 0 0 1 0-1.5h2.5v-2.75a.75.75 0 0 1 .75-.75Z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- 主体布局 -->
+    <div class="app-body">
+        <!-- 侧边栏 -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-title">算法分类</span>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-level="all">全部</button>
+                    <button class="filter-tab" data-level="P0">P0</button>
+                    <button class="filter-tab" data-level="P1">P1</button>
+                    <button class="filter-tab" data-level="P2">P2</button>
+                    <button class="filter-tab" data-level="P3">P3</button>
+                </div>
+            </div>
+            <nav class="sidebar-nav" id="sidebarNav" aria-label="算法导航"></nav>
+            <div class="sidebar-footer">
+                <div class="progress-mini">
+                    <span>已实现</span>
+                    <strong id="implProgress">0 / 0</strong>
+                </div>
+            </div>
+        </aside>
+        <div class="sidebar-resizer" id="sidebarResizer"></div>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 算法标题栏（含控制栏，吸顶显示） -->
+            <div class="algo-header">
+                <div class="algo-title-block">
+                    <h1 class="algo-title" id="algoTitle">请选择算法</h1>
+                    <p class="algo-subtitle" id="algoSubtitle">从左侧导航选择一个算法开始可视化</p>
+                    <p class="algo-mnemonic" id="algoMnemonic" style="display:none"></p>
+                </div>
+                <!-- 控制栏：移到大标题右侧，始终可见 -->
+                <section class="controls">
+                    <div class="controls-group">
+                        <button class="ctrl-btn" id="firstBtn" title="跳到开头 (Home)" aria-label="跳到开头">
+                            <svg viewBox="0 0 16 16"><path fill="currentColor" d="M3 2.75A.75.75 0 0 1 3.75 2h.5a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-.5a.75.75 0 0 1-.75-.75V2.75Zm3.06 5.31 7.72-5.18a.5.5 0 0 1 .78.41v10.42a.5.5 0 0 1-.78.42L6.06 8.5a.5.5 0 0 1 0-.83Z"/></svg>
+                        </button>
+                        <button class="ctrl-btn" id="prevBtn" title="后退一步 (←)" aria-label="后退一步">
+                            <svg viewBox="0 0 16 16"><path fill="currentColor" d="M9.78 4.22a.75.75 0 0 1 0 1.06L7.06 8l2.72 2.72a.75.75 0 1 1-1.06 1.06L5.47 8.53a.75.75 0 0 1 0-1.06l3.25-3.25a.75.75 0 0 1 1.06 0Z"/></svg>
+                        </button>
+                        <button class="ctrl-btn ctrl-play" id="playBtn" title="播放/暂停 (Space)" aria-label="播放或暂停">
+                            <svg class="play-icon" viewBox="0 0 16 16"><path fill="currentColor" d="M3.5 2.5a.5.5 0 0 1 .76-.43l8.5 5.5a.5.5 0 0 1 0 .86l-8.5 5.5a.5.5 0 0 1-.76-.43v-11Z"/></svg>
+                            <svg class="pause-icon" style="display:none" viewBox="0 0 16 16"><path fill="currentColor" d="M3.5 2h3v12h-3V2Zm6 0h3v12h-3V2Z"/></svg>
+                        </button>
+                        <button class="ctrl-btn" id="nextBtn" title="前进一步 (→)" aria-label="前进一步">
+                            <svg viewBox="0 0 16 16"><path fill="currentColor" d="M6.22 4.22a.75.75 0 0 0 0 1.06L8.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06l3.25-3.25a.75.75 0 0 0 0-1.06L7.28 4.22a.75.75 0 0 0-1.06 0Z"/></svg>
+                        </button>
+                        <button class="ctrl-btn" id="lastBtn" title="跳到结尾 (End)" aria-label="跳到结尾">
+                            <svg viewBox="0 0 16 16"><path fill="currentColor" d="M12 2.75a.75.75 0 0 1 .75-.75h.5a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-.5a.75.75 0 0 1-.75-.75V2.75ZM3.44 2.88l7.72 5.18a.5.5 0 0 1 0 .83L3.44 14.07a.5.5 0 0 1-.78-.42V3.3a.5.5 0 0 1 .78-.42Z"/></svg>
+                        </button>
+                    </div>
+                    <div class="controls-group controls-speed">
+                        <span class="speed-label">速度</span>
+                        <button class="speed-step" id="speedMinus" title="减速 -0.25x" aria-label="减速">−</button>
+                        <span class="speed-min">0.25x</span>
+                        <div class="speed-slider-wrap">
+                            <input type="range" id="speedSlider" min="0" max="100" value="50" step="1" />
+                            <div class="speed-track">
+                                <div class="speed-fill" id="speedFill"></div>
+                            </div>
+                        </div>
+                        <span class="speed-max">4x</span>
+                        <button class="speed-step" id="speedPlus" title="加速 +0.25x" aria-label="加速">+</button>
+                        <span class="speed-value" id="speedValue">1.0x</span>
+                    </div>
+                    <div class="controls-group">
+                        <button class="btn btn-sm btn-ghost" id="resetBtn" title="重置">
+                            <svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M502.714987 58.258904l-126.531056-54.617723a52.797131 52.797131 0 0 0-41.873587 96.855428A447.865322 447.865322 0 0 0 392.02307 946.707184a61.535967 61.535967 0 0 0 13.83649 1.820591 52.797131 52.797131 0 0 0 13.65443-103.773672 342.453118 342.453118 0 0 1-31.678278-651.771485l-8.374718 19.480321a52.615072 52.615072 0 0 0 27.855039 69.182448 51.522718 51.522718 0 0 0 20.572675 4.369418A52.797131 52.797131 0 0 0 476.498481 254.882703L530.205907 127.441352a52.979191 52.979191 0 0 0-27.49092-69.182448zM962.960326 509.765407A448.775617 448.775617 0 0 0 643.992829 68.090094a52.797131 52.797131 0 1 0-30.403866 101.042786A342.635177 342.635177 0 0 1 674.578753 801.059925a52.615072 52.615072 0 0 0-92.30395-50.612422l-71.913335 117.246043a52.433013 52.433013 0 0 0 17.295612 72.82363l117.063985 72.823629a52.797131 52.797131 0 1 0 54.617722-89.755123l-16.021198-10.013249A448.593558 448.593558 0 0 0 962.960326 509.765407z"/></svg>
+                            重置
+                        </button>
+                    </div>
+                </section>
+                <div class="algo-meta" id="algoMeta">
+                    <span class="badge" data-type="category">分类</span>
+                    <span class="badge" data-type="complexity">时间复杂度</span>
+                    <span class="badge" data-type="level">P0</span>
+                </div>
+            </div>
+
+            <!-- 画布区域 -->
+            <section class="canvas-section">
+                <div class="canvas-toolbar">
+                    <div class="canvas-label" id="canvasLabel">可视化区域</div>
+                    <div class="canvas-tools">
+                        <label class="data-input-group" id="dataInputGroup" style="display:none">
+                            <span class="data-label">数据</span>
+                            <input type="text" id="dataInput" placeholder="例：5,3,8,1,2,7,4,6" />
+                            <button class="btn btn-sm btn-primary" id="applyDataBtn">应用</button>
+                        </label>
+                        <button class="btn btn-sm btn-ghost" id="randomDataBtn" style="display:none" title="随机数据">
+                            <svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M511.52 89.528c-12.352 0-24.706 2.768-34.274 8.304L171.74 274.552c-19.14 11.072-19.14 28.58 0 39.652l305.506 176.72c19.14 11.072 49.406 11.072 68.544 0l305.506-176.72c19.14-11.07 19.14-28.58 0-39.65l-305.506-176.72c-9.57-5.54-21.92-8.306-34.27-8.306m-1.648 106.22q27.04 0.292 48.62 12.384 14.76 8.272 19.332 18.876 4.42 10.522 0.52 27.73l-3.2 11.412q-3.18 12.25-1.32 17.62 1.708 5.29 8.484 9.088l6.78 3.796-66.47 37.24-7.386-4.134q-12.352-6.918-15.766-15.64-3.564-8.804 1.188-28.01l3.048-11.496q2.66-10.27 0.52-16.836-1.96-6.672-8.888-10.554-10.546-5.908-25.26-4.246-14.866 1.58-30.7 10.45-14.914 8.356-27.1 20.92-12.334 12.486-21.174 28.576L343.8 276.42q15.954-16.02 31.352-28.026 15.4-12 32.524-21.6 44.928-25.172 83.56-29.934a138 138 0 0 1 18.64-1.114z m101.514 113.4l53.63 30.048-66.47 37.24-53.632-30.046 66.472-37.24zM151.34 347.68c-11.506-0.31-19.328 8.672-19.328 24.56v315.392c0 22.104 15.14 48.326 34.28 59.38l293.86 169.696c19.14 11.052 34.28 2.312 34.28-19.79V581.52c0-22.104-15.14-48.32-34.28-59.376l-293.86-169.694c-5.38-3.11-10.45-4.654-14.952-4.774z m721.546 0.004c-4.5 0.12-9.566 1.66-14.948 4.77l-293.87 169.694c-19.14 11.054-34.28 37.276-34.28 59.38v315.4c0 22.1 15.14 30.836 34.28 19.78L857.94 747.02c19.14-11.054 34.274-37.272 34.274-59.376v-315.4c0-15.884-7.82-24.864-19.328-24.556z m-643.09 127.504q19.66 4.1 35.908 10.026a199.2 199.2 0 0 1 31.36 14.65q39.64 22.89 60.436 52.164 20.796 29.1 20.796 62.08 0 16.92-6.336 26.728-6.338 9.636-21.608 16.188l-10.4 3.84q-11.048 4.326-14.46 8.92-3.41 4.414-3.41 12.184v7.77l-58.65-33.866v-8.46q-0.002-14.16 5.36-21.94 5.362-7.954 22.584-14.934l10.4-4.012q9.26-3.63 13.484-9.134 4.382-5.408 4.384-13.352 0-12.082-7.8-23.32-7.798-11.41-21.77-19.48-13.16-7.596-28.434-10.544-15.272-3.12-31.844-1.29v-54.22z m539.08 17.214q4.564 0 8.464 0.986 20.796 5.086 20.796 38.068 0 16.92-6.336 34.046-6.336 16.952-21.608 41.136l-10.4 15.848q-11.048 17.084-14.46 25.614-3.41 8.356-3.41 16.126v7.77l-58.65 33.864v-8.46q0-14.16 5.36-28.134 5.366-14.146 22.584-41.008l10.4-16.02q9.26-14.328 13.484-24.708 4.382-10.476 4.384-18.42 0-12.084-7.796-14.316-7.8-2.402-21.774 5.66-13.16 7.602-28.43 22.29-15.27 14.518-31.844 35.48v-54.22q19.66-18.6 35.9-31.436 16.252-12.834 31.36-21.554 32.212-18.6 51.98-18.614z m-505.446 189.03l58.652 33.86v61.472l-58.65-33.86v-61.47z m478.492 16.12v61.47l-58.65 33.86v-61.466l58.652-33.864z"/></svg>
+                            随机
+                        </button>
+                    </div>
+                </div>
+                <div class="canvas-wrap" id="canvasWrap">
+                    <canvas id="mainCanvas" aria-label="算法可视化画布"></canvas>
+                    <div class="canvas-empty" id="canvasEmpty">
+                        <div class="empty-illustration">
+                            <svg viewBox="0 0 240 160" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="eg" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.6"/>
+                                        <stop offset="100%" stop-color="#bc8cff" stop-opacity="0.6"/>
+                                    </linearGradient>
+                                </defs>
+                                <rect x="40" y="100" width="28" height="40" rx="4" fill="url(#eg)"/>
+                                <rect x="76" y="70" width="28" height="70" rx="4" fill="url(#eg)" opacity="0.7"/>
+                                <rect x="112" y="50" width="28" height="90" rx="4" fill="url(#eg)" opacity="0.5"/>
+                                <rect x="148" y="80" width="28" height="60" rx="4" fill="url(#eg)" opacity="0.7"/>
+                                <rect x="184" y="35" width="28" height="105" rx="4" fill="url(#eg)" opacity="0.5"/>
+                            </svg>
+                        </div>
+                        <p class="empty-title">选择一个算法开启可视化之旅</p>
+                        <p class="empty-desc">支持单步执行 / 变速播放 / 代码高亮联动</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 代码区 + 日志区 -->
+            <section class="bottom-section">
+                <div class="code-section">
+                    <div class="section-header">
+                        <div class="section-tabs">
+                            <button class="section-tab active" data-tab="code">代码</button>
+                            <button class="section-tab" data-tab="desc">说明</button>
+                        </div>
+                        <span class="section-lang" id="codeLang">JavaScript</span>
+                    </div>
+                    <div class="code-viewer" id="codeViewer">
+                        <pre class="code-block"><code id="codeContent"></code></pre>
+                    </div>
+                    <div class="desc-viewer" id="descViewer" style="display:none"></div>
+                </div>
+                <div class="log-section">
+                    <div class="section-header">
+                        <span class="section-title">执行日志</span>
+                        <button class="btn btn-sm btn-ghost" id="clearLogBtn" title="清空日志">
+                            <svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M343.074133 57.480533A34.133333 34.133333 0 0 1 375.466667 34.133333h273.066666a34.133333 34.133333 0 0 1 32.392534 23.3472L695.876267 102.4H887.466667a68.266667 68.266667 0 0 1 68.266666 68.266667v68.266666a68.266667 68.266667 0 0 1-68.266666 68.266667v512a170.666667 170.666667 0 0 1-170.666667 170.666667H307.2a170.666667 170.666667 0 0 1-170.666667-170.666667V307.2a68.266667 68.266667 0 0 1-68.266666-68.266667V170.666667a68.266667 68.266667 0 0 1 68.266666-68.266667h191.5904l14.9504-44.919467zM716.8 307.2H204.8v512a102.4 102.4 0 0 0 102.4 102.4h409.6a102.4 102.4 0 0 0 102.4-102.4V307.2h-102.4z m170.666667-68.266667V170.666667h-216.1664a34.133333 34.133333 0 0 1-32.392534-23.3472L623.9232 102.4h-223.8464l-14.984533 44.919467a34.133333 34.133333 0 0 1-32.392534 23.3472H136.533333v68.266666h750.933334z m-477.866667 204.8a34.133333 34.133333 0 1 0-68.266667 0v341.333334a34.133333 34.133333 0 1 0 68.266667 0V443.733333z m273.066667 0a34.133333 34.133333 0 1 0-68.266667 0v341.333334a34.133333 34.133333 0 1 0 68.266667 0V443.733333z"/></svg>
+                        </button>
+                    </div>
+                    <div class="log-viewer" id="logViewer"></div>
+                </div>
+            </section>
+
+            <!-- 信息面板 -->
+            <section class="info-panel">
+                <div class="step-info">
+                    <span class="step-label">步骤</span>
+                    <span class="step-current" id="stepCurrent">0</span>
+                    <span class="step-sep">/</span>
+                    <span class="step-total" id="stepTotal">0</span>
+                </div>
+                <div class="step-desc" id="stepDesc">点击算法开始</div>
+                <div class="step-progress">
+                    <div class="step-progress-bar" id="stepProgress"></div>
+                </div>
+            </section>
+
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast 提示 -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- 脚本（按依赖顺序加载） -->
+    <script src="./js/core/store.js"></script>
+    <script src="./js/core/renderer.js"></script>
+    <script src="./js/core/layoutEngine.js"></script>
+    <script src="./js/core/tracer.js"></script>
+    <script src="./js/core/animator.js"></script>
+    <script src="./js/core/codeRegistry.js"></script>
+    <script src="./js/core/algorithmLoader.js"></script>
+    <script src="./js/core/stateBuilders.js"></script>
+    <script src="./js/ui/codeViewer.js"></script>
+    <script src="./js/ui/sidebar.js"></script>
+    <script src="./js/ui/controls.js"></script>
+    <script src="./js/ui/themeSwitcher.js"></script>
+    <script src="./js/ui/toast.js"></script>
+    <script src="./js/ui/shortcut.js"></script>
+    <!-- 算法实现 -->
+    <script src="./js/algorithms/sorting.js"></script>
+    <script src="./js/algorithms/linear.js"></script>
+    <script src="./js/algorithms/tree.js"></script>
+    <script src="./js/algorithms/graph.js"></script>
+    <script src="./js/algorithms/string_classic.js"></script>
+    <script src="./js/algorithms/p1_algorithms.js"></script>
+    <script src="./js/algorithms/p2_algorithms.js"></script>
+    <script src="./js/algorithms/p3_algorithms.js"></script>
+    <script src="./js/algorithms/advanced_algorithms.js"></script>
+    <script src="./js/app.js"></script>
+</body>
+</html>

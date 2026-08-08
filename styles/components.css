@@ -1,0 +1,157 @@
+/* ===== 组件样式：代码高亮 / 算法元素渲染 ===== */
+
+/* ---------- 代码高亮（纯 CSS，无第三方库） ---------- */
+.code-block {
+    margin: 0;
+    padding: 12px 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-primary);
+    counter-reset: line;
+    display: block;
+    font-variant-ligatures: contextual;
+}
+.code-block code {
+    display: block;
+    white-space: pre;
+}
+.code-line {
+    display: block;
+    position: relative;
+    padding: 0 16px 0 52px;
+    counter-increment: line;
+    transition: background 180ms ease, border-color 180ms ease;
+    border-left: 3px solid transparent;
+    min-height: 1.7em;
+}
+.code-line::before {
+    content: counter(line);
+    position: absolute;
+    left: 0;
+    width: 40px;
+    padding-right: 12px;
+    text-align: right;
+    color: var(--text-tertiary);
+    user-select: none;
+    font-size: 12px;
+    opacity: 0.55;
+    font-variant-numeric: tabular-nums;
+    transition: color var(--transition), opacity var(--transition);
+}
+.code-line:hover::before { opacity: 0.85; }
+.code-line.highlight {
+    background: var(--bg-active);
+    border-left-color: var(--accent);
+    box-shadow: inset 0 0 0 1px var(--accent-light);
+}
+.code-line.highlight::before {
+    color: var(--accent);
+    opacity: 1;
+    font-weight: 700;
+}
+
+/* 语法着色（深色） - 使用 :root[data-theme="dark"] 提升特异性，确保覆盖浅色默认值 */
+:root[data-theme="dark"] .tok-kw { color: #ff7b72; }
+:root[data-theme="dark"] .tok-str { color: #a5d6ff; }
+:root[data-theme="dark"] .tok-num { color: #79c0ff; }
+:root[data-theme="dark"] .tok-com { color: #6e7681; font-style: italic; }
+:root[data-theme="dark"] .tok-fn { color: #d2a8ff; }
+:root[data-theme="dark"] .tok-var { color: #ffa657; }
+:root[data-theme="dark"] .tok-op { color: #ff7b72; }
+:root[data-theme="dark"] .tok-punc { color: #c9d1d9; }
+
+/* 浅色（默认） */
+:root .tok-kw { color: #cf222e; }
+:root .tok-str { color: #0a3069; }
+:root .tok-num { color: #0550ae; }
+:root .tok-com { color: #6e7781; font-style: italic; }
+:root .tok-fn { color: #8250df; }
+:root .tok-var { color: #953800; }
+:root .tok-op { color: #cf222e; }
+:root .tok-punc { color: #24292f; }
+
+/* ---------- 算法标签说明 ---------- */
+.legend {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 8px 12px;
+    box-shadow: var(--shadow-md);
+    font-size: 11px;
+    color: var(--text-secondary);
+    pointer-events: none;
+    max-width: calc(100% - 24px);
+    backdrop-filter: blur(8px);
+}
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+/* 队列/栈/数据结构浮窗 */
+.structure-overlay {
+    position: absolute;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    box-shadow: var(--shadow-md);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    pointer-events: none;
+    min-width: 120px;
+    backdrop-filter: blur(8px);
+}
+.structure-overlay-title {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-tertiary);
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+.structure-overlay-items {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+.structure-overlay-item {
+    padding: 2px 8px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-primary);
+}
+
+/* 加载动画 */
+.loader {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-primary);
+    color: var(--text-tertiary);
+    z-index: 5;
+}
+.spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 700ms linear infinite;
+    filter: drop-shadow(0 0 6px rgba(88, 166, 255, 0.35));
+}
+@keyframes spin { to { transform: rotate(360deg); } }
