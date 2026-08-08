@@ -5,6 +5,8 @@
 
 内部引擎代号为 **AlgoLens**（见 `manifest.json` / `index.html`）。本项目在 GitHub 上命名为 **AlgoVisualizerPro**，以避免与大量同名仓库混淆。
 
+> 🔗 **仓库地址**：https://github.com/Mr-ethan-first/AlgoVisualizerPro
+
 ---
 
 ## ✨ 功能特性
