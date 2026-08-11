@@ -214,21 +214,21 @@ function relax(e) {
             id: 'graph.bellmanFord', name: 'Bellman-Ford 单源最短路径', category: 'graph', level: 'P2',
             complexity: { time: 'O(V·E)', space: 'O(V)' }, keywords: ['bellman-ford', 'shortest path', 'negative weight'],
             mnemonic: 'V-1 轮全边松，再多一轮查负环',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>对图中所有边进行 V-1 轮松弛，可处理负权边；第 V 轮若仍能松弛，则存在负权环。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>Bellman-Ford 能处理负权边的单源最短路径，通过反复松弛所有边实现。</p></div><div class="desc-section"><h3>推导过程</h3><p>进行 n−1 轮松弛：对每条边 u→v，若 dist[u]+w < dist[v] 则更新。因为最短路径最多含 n−1 条边，n−1 轮足够。若第 n 轮还能更新，说明存在负环。SPFA 用队列只处理被更新的节点，常数更小。</p></div><div class="desc-section"><h3>适用场景</h3><p>含负权边的图、货币套利、差分约束。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 外汇套利检测。② 差分约束系统。③ 含负权边的网络路由。</p></div>`,
             code: bellmanCode, defaultData: [], dataParser: (s) => s, run: bellmanRun
         },
         {
             id: 'string.lzw', name: 'LZW 压缩', category: 'string', level: 'P2',
             complexity: { time: 'O(N)', space: 'O(N)' }, keywords: ['lzw', 'compression', 'dictionary'],
             mnemonic: '字符流建字典，未见过就输出并新增',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>维护一个从字符串到编码的字典；逐字符扩展当前串，遇到字典中没有的新串时输出旧串编码，并将新串加入字典。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>LZW 压缩在编码过程中动态构建字典，把重复子串用短编码替换。</p></div><div class="desc-section"><h3>推导过程</h3><p>初始字典包含所有单字符。扫描输入时，尽量匹配字典中最长的已有字符串，输出其编码，并把“当前串+下一个字符”加入字典。解压时同样重建字典。</p></div><div class="desc-section"><h3>适用场景</h3><p>文件压缩、图像格式（GIF/TIFF）、PDF 压缩。</p></div><div class="desc-section"><h3>典型案例</h3><p>① GIF 图像压缩。② Unix compress 工具。③ PDF 文本流压缩。</p></div>`,
             code: lzwCode, defaultData: 'TOBEORNOTTOBEORTOBEORNOT', dataParser: (s) => s, run: lzwRun
         },
         {
             id: 'sorting.topM', name: 'TopM（最小堆选最大 M 个）', category: 'sorting', level: 'P2',
             complexity: { time: 'O(N log M)', space: 'O(M)' }, keywords: ['top m', 'min heap', 'selection'],
             mnemonic: '小顶堆留大者，超容量踢最小',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>维护容量为 M 的最小堆；每来一个新元素，若堆未满则入堆，否则只保留比堆顶更大的元素，从而得到整个数据流中最大的 M 个。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>维护一个大小为 M 的最小堆，遍历数据时保留当前最大的 M 个元素。</p></div><div class="desc-section"><h3>推导过程</h3><p>堆顶是当前 Top-M 里最小的一个。来了新元素，如果它比堆顶大，就把堆顶替换为新元素并调整堆；否则忽略。遍历一遍即可得到最大的 M 个。</p></div><div class="desc-section"><h3>适用场景</h3><p>海量数据中取前 M 个、实时排行榜、热点统计。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 直播礼物榜 Top 100。② 日志中找出现次数最多的 10 个 IP。</p></div>`,
             code: topMCode, defaultData: [12, 5, 9, 22, 3, 17, 8, 31, 14, 6, 19, 2, 25, 11], dataParser: NUM_DATA, run: topMRun
         }
     ];

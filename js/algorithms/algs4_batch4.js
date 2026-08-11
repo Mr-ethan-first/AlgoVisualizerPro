@@ -896,63 +896,63 @@
             id: 'math.threeSum', name: '3-Sum 暴力解', category: 'classic', level: 'P1',
             complexity: { time: 'O(N³)', space: 'O(1)' }, keywords: ['3-sum', 'brute force', '复杂度分析'],
             mnemonic: '三重循环枚举，立方复杂度基准',
-            description: D('核心思想', '三重循环枚举所有 i &lt; j &lt; k 的三元组，判断三数之和是否为 0。它是《算法》第 1.4 节讲复杂度增长阶的标准范例：N 翻倍则运行时间约变为 8 倍。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>找出数组中三个数之和为 0 的所有组合。</p></div><div class="desc-section"><h3>推导过程</h3><p>暴力法是三重循环 O(n³)。先排序，固定一个数后，用双指针在剩余区间找两数之和为其相反数，可优化到 O(n²)。</p></div><div class="desc-section"><h3>适用场景</h3><p>组合搜索、面试经典题、数据分析。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 推荐系统中找互补三元组。② 财务对账找平衡组合。③ 算法面试题。</p></div>`,
             code: threeSumCode, defaultData: THREE_SUM_DATA, dataParser: NUM_DATA, run: threeSumRun
         },
         {
             id: 'math.threeSumFast', name: '3-Sum 排序+二分', category: 'classic', level: 'P2',
             complexity: { time: 'O(N² log N)', space: 'O(1)' }, keywords: ['3-sum', 'binary search', '算法改进'],
             mnemonic: '先排序再二分，立方降到平方对数',
-            description: D('核心思想', '先把数组排序，再枚举前两个数 a[i]、a[j]，用二分查找第三个数 −(a[i]+a[j])。只在查到的下标 k &gt; j 时计数，既保证 i &lt; j &lt; k 又避免重复。复杂度由 O(N³) 降为 O(N² log N)。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>找出数组中三个数之和为 0 的所有组合。</p></div><div class="desc-section"><h3>推导过程</h3><p>暴力法是三重循环 O(n³)。先排序，固定一个数后，用双指针在剩余区间找两数之和为其相反数，可优化到 O(n²)。</p></div><div class="desc-section"><h3>适用场景</h3><p>组合搜索、面试经典题、数据分析。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 推荐系统中找互补三元组。② 财务对账找平衡组合。③ 算法面试题。</p></div>`,
             code: threeSumFastCode, defaultData: THREE_SUM_DATA, dataParser: NUM_DATA, run: threeSumFastRun
         },
         {
             id: 'math.closestPair', name: '最近点对（分治）', category: 'classic', level: 'P3',
             complexity: { time: 'O(N log N)', space: 'O(N)' }, keywords: ['closest pair', 'divide and conquer', '计算几何'],
             mnemonic: '左右各求最近，中线带状再补刀',
-            description: D('核心思想', '按 x 排序后二分成左右两半，递归求各自最近距离 δ。跨越中线的点对只可能落在宽度 2δ 的带状区内；把带内点按 y 排序后，每个点最多只需与后面 7 个点比较，因此合并是线性的，总复杂度 O(N log N)。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>在平面上找距离最近的一对点。</p></div><div class="desc-section"><h3>推导过程</h3><p>分治法：按 x 坐标分成左右两半递归求最近距离 d，再检查中间宽度为 2d 的带状区域内按 y 排序的点，只需与接下来最多 6 个点比较。</p></div><div class="desc-section"><h3>适用场景</h3><p>计算几何、碰撞检测、聚类、GIS。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 地图上找最近的两个 POI。② 粒子碰撞检测。③ 机场最近航班对。</p></div>`,
             code: closestPairCode, ...G_, run: closestPairRun
         },
         {
             id: 'math.grahamScan', name: 'Graham 扫描凸包', category: 'classic', level: 'P2',
             complexity: { time: 'O(N log N)', space: 'O(N)' }, keywords: ['convex hull', 'graham scan', 'ccw'],
             mnemonic: '极角排一圈，右转就弹栈',
-            description: D('核心思想', '取最低点为基准，其余点按极角逆时针排序后依次入栈。每次入栈前检查栈顶两点与新点是否构成左转（叉积 &gt; 0），若非左转说明栈顶点在凸包内部，弹出即可。排序主导复杂度 O(N log N)。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>凸包是包含所有点的最小凸多边形。</p></div><div class="desc-section"><h3>推导过程</h3><p>Graham 扫描：先找最下最左点，其余点按极角排序，用栈维护凸包边界。对于新点，若导致“右转”则弹出栈顶，直到保持“左转”或共线。</p></div><div class="desc-section"><h3>适用场景</h3><p>计算几何、图像处理、碰撞盒、GIS。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 游戏碰撞包围盒。② 地图区域边界。③ 图像轮廓简化。</p></div>`,
             code: grahamCode, ...G_, run: grahamRun
         },
         {
             id: 'math.farthestPair', name: '最远点对（凸包直径）', category: 'classic', level: 'P3',
             complexity: { time: 'O(N log N)', space: 'O(N)' }, keywords: ['farthest pair', 'convex hull', 'rotating calipers'],
             mnemonic: '最远必在壳上，只扫凸包顶点',
-            description: D('核心思想', '关键性质：最远点对的两个端点一定都是凸包顶点（否则可沿某方向继续外移）。因此先求凸包把候选从 N 个点缩到 h 个顶点，再用旋转卡壳扫描，避免了 O(N²) 的全枚举。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>凸包是包含所有点的最小凸多边形。</p></div><div class="desc-section"><h3>推导过程</h3><p>Graham 扫描：先找最下最左点，其余点按极角排序，用栈维护凸包边界。对于新点，若导致“右转”则弹出栈顶，直到保持“左转”或共线。</p></div><div class="desc-section"><h3>适用场景</h3><p>计算几何、图像处理、碰撞盒、GIS。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 游戏碰撞包围盒。② 地图区域边界。③ 图像轮廓简化。</p></div>`,
             code: farthestCode, ...G_, run: farthestRun
         },
         {
             id: 'math.fft', name: '快速傅里叶变换 FFT', category: 'advanced', level: 'P3',
             complexity: { time: 'O(N log N)', space: 'O(N)' }, keywords: ['fft', 'butterfly', 'cooley-tukey', '分治'],
             mnemonic: '位反转开局，逐级蝶形合并',
-            description: D('核心思想', '把长度 N 的 DFT 按奇偶下标拆成两个 N/2 的 DFT，利用旋转因子的周期性合并。迭代实现先做位反转重排，再自底向上做 log N 级蝶形运算，每级 O(N)，总计 O(N log N)。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>该算法用于解决特定计算问题，通过合理的步骤把输入转化为输出。</p></div><div class="desc-section"><h3>推导过程</h3><p>从问题的约束和目标出发，设计状态/结构/策略，逐步缩小问题规模或消除不确定性，最终得到结果。</p></div><div class="desc-section"><h3>适用场景</h3><p>数据处理、算法教学、工程系统中的子模块。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 算法学习与实践。② 作为更大系统的一部分。③ 面试与竞赛训练。</p></div>`,
             code: fftCode, ...G_, run: fftRun
         },
         {
             id: 'math.gaussElim', name: '高斯消元', category: 'classic', level: 'P2',
             complexity: { time: 'O(N³)', space: 'O(N²)' }, keywords: ['gaussian elimination', 'pivot', '线性方程组'],
             mnemonic: '选主元换行，消成上三角回代',
-            description: D('核心思想', '对增广矩阵 [A | b] 逐列处理：先用部分主元（选该列绝对值最大的行）交换到对角位置以保证数值稳定，再把主元下方元素消为 0。矩阵化为上三角后自下而上回代即可求出全部未知量。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>高斯消元用行变换把线性方程组化成上三角矩阵，再回代求解。</p></div><div class="desc-section"><h3>推导过程</h3><p>通过交换行、倍乘行、行加减，把系数矩阵变成主对角线下方全为 0 的形式。然后从最后一行开始，依次求出每个未知数的值。</p></div><div class="desc-section"><h3>适用场景</h3><p>科学计算、工程仿真、计算机图形学、机器学习。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 电路网络分析。② 3D 变换矩阵求解。③ 线性回归解析解。</p></div>`,
             code: gaussCode, ...G_, run: gaussElimRun
         },
         {
             id: 'math.gaussJordan', name: '高斯-约当消元', category: 'classic', level: 'P2',
             complexity: { time: 'O(N³)', space: 'O(N²)' }, keywords: ['gauss-jordan', 'rref', '行最简形'],
             mnemonic: '主元归一，上下一起消',
-            description: D('核心思想', '在高斯消元基础上多做两件事：把主元归一化为 1，并同时消去主元上方与下方的元素。最终矩阵化为行最简形 [I | x]，最后一列直接就是解，无需回代；同样的过程还可用于求逆矩阵。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>高斯消元用行变换把线性方程组化成上三角矩阵，再回代求解。</p></div><div class="desc-section"><h3>推导过程</h3><p>通过交换行、倍乘行、行加减，把系数矩阵变成主对角线下方全为 0 的形式。然后从最后一行开始，依次求出每个未知数的值。</p></div><div class="desc-section"><h3>适用场景</h3><p>科学计算、工程仿真、计算机图形学、机器学习。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 电路网络分析。② 3D 变换矩阵求解。③ 线性回归解析解。</p></div>`,
             code: gaussJordanCode, ...G_, run: gaussJordanRun
         },
         {
             id: 'math.linProg', name: '单纯形法线性规划', category: 'advanced', level: 'P3',
             complexity: { time: '实践中近似 O(m·n)', space: 'O(m·n)' }, keywords: ['simplex', 'linear programming', '单纯形表'],
             mnemonic: '沿棱走顶点，比值定出基',
-            description: D('核心思想', '把不等式约束加松弛变量化为标准型，构造单纯形表。每轮从目标行挑一个系数为正的列入基（有改进方向），用最小比值法选出基行（保持可行性），做主元消元后移动到相邻的更优顶点。目标行系数全部 ≤ 0 时即为最优。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>该算法用于解决特定计算问题，通过合理的步骤把输入转化为输出。</p></div><div class="desc-section"><h3>推导过程</h3><p>从问题的约束和目标出发，设计状态/结构/策略，逐步缩小问题规模或消除不确定性，最终得到结果。</p></div><div class="desc-section"><h3>适用场景</h3><p>数据处理、算法教学、工程系统中的子模块。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 算法学习与实践。② 作为更大系统的一部分。③ 面试与竞赛训练。</p></div>`,
             code: simplexCode, ...G_, run: simplexRun
         },
         {

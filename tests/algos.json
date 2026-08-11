@@ -1,0 +1,1108 @@
+[
+  {
+    "id": "sorting.bubble",
+    "name": "冒泡排序",
+    "category": "sorting",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "sorting.selection",
+    "name": "选择排序",
+    "category": "sorting",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "sorting.insertion",
+    "name": "插入排序",
+    "category": "sorting",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "sorting.quick",
+    "name": "快速排序（递归）",
+    "category": "sorting",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "sorting.merge",
+    "name": "归并排序（自顶向下）",
+    "category": "sorting",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "sorting.heap",
+    "name": "堆排序",
+    "category": "sorting",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "linear.arrayAppend",
+    "name": "动态数组 - 追加（扩容）",
+    "category": "linear",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "linear.arrayInsert",
+    "name": "动态数组 - 插入/删除",
+    "category": "linear",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "linear.listInsert",
+    "name": "单向链表 - 插入/删除",
+    "category": "linear",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "linear.listTravel",
+    "name": "单向链表 - 查找/遍历",
+    "category": "linear",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "linear.stack",
+    "name": "栈 - push/pop",
+    "category": "linear",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "linear.queue",
+    "name": "队列 - 入队/出队",
+    "category": "linear",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "tree.preorder",
+    "name": "二叉树 - 前序遍历",
+    "category": "tree",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "tree.inorder",
+    "name": "二叉树 - 中序遍历",
+    "category": "tree",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "tree.levelorder",
+    "name": "二叉树 - 层序遍历",
+    "category": "tree",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "tree.bstInsert",
+    "name": "BST - 插入（递归）",
+    "category": "tree",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "tree.bstSearch",
+    "name": "BST - 查找",
+    "category": "tree",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "tree.bstDelete",
+    "name": "BST - 删除",
+    "category": "tree",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "tree.avlInsert",
+    "name": "AVL - 插入",
+    "category": "tree",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "tree.heapInsert",
+    "name": "堆 - 插入（上浮）",
+    "category": "tree",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "tree.heapDelete",
+    "name": "堆 - 删除堆顶（下沉）",
+    "category": "tree",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "tree.heapify",
+    "name": "建堆（Heapify）",
+    "category": "tree",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "tree.ufFind",
+    "name": "并查集 - Find（路径压缩）",
+    "category": "tree",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "tree.ufUnion",
+    "name": "并查集 - Union（按秩合并）",
+    "category": "tree",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "graph.dfs",
+    "name": "DFS - 递归",
+    "category": "graph",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "graph.bfs",
+    "name": "BFS",
+    "category": "graph",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "graph.topo",
+    "name": "拓扑排序 - Kahn",
+    "category": "graph",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "graph.dijkstra",
+    "name": "Dijkstra",
+    "category": "graph",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "graph.prim",
+    "name": "Prim 最小生成树",
+    "category": "graph",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "graph.kruskal",
+    "name": "Kruskal 最小生成树",
+    "category": "graph",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "string.kmpNext",
+    "name": "KMP - 构建 next 数组",
+    "category": "string",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "string.kmpMatch",
+    "name": "KMP - 主串匹配",
+    "category": "string",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "string.lcs",
+    "name": "最长公共子序列 (LCS)",
+    "category": "string",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "classic.binarySearch",
+    "name": "二分搜索",
+    "category": "classic",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "classic.fibRec",
+    "name": "斐波那契 - 原始递归",
+    "category": "classic",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "classic.fibDp",
+    "name": "斐波那契 - DP 优化",
+    "category": "classic",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "classic.knapsack",
+    "name": "0-1 背包 (DP)",
+    "category": "classic",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "classic.nqueens",
+    "name": "N 皇后",
+    "category": "classic",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "sorting.quickIter",
+    "name": "快速排序（非递归）",
+    "category": "sorting",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "sorting.mergeBottomUp",
+    "name": "归并排序（自底向上）",
+    "category": "sorting",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "sorting.shell",
+    "name": "希尔排序",
+    "category": "sorting",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "sorting.counting",
+    "name": "计数排序",
+    "category": "sorting",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "linear.doublyList",
+    "name": "双向链表 - 插入/删除",
+    "category": "linear",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "linear.circularQueue",
+    "name": "循环队列",
+    "category": "linear",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "linear.lru",
+    "name": "LRU 缓存",
+    "category": "linear",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "tree.preorderIter",
+    "name": "二叉树 - 前序遍历（非递归）",
+    "category": "tree",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "tree.inorderIter",
+    "name": "二叉树 - 中序遍历（非递归）",
+    "category": "tree",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "tree.bstInsertIter",
+    "name": "BST - 插入（非递归）",
+    "category": "tree",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "tree.ufFindIter",
+    "name": "并查集 - Find（非递归）",
+    "category": "tree",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "graph.dfsIter",
+    "name": "DFS - 非递归",
+    "category": "graph",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "graph.topoDfs",
+    "name": "拓扑排序 - DFS 逆后序",
+    "category": "graph",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "graph.dijkstraNaive",
+    "name": "Dijkstra（朴素版）",
+    "category": "graph",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "string.lcsSubstr",
+    "name": "最长公共子串",
+    "category": "string",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "classic.binarySearchRec",
+    "name": "二分搜索（递归）",
+    "category": "classic",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "classic.completeKnapsack",
+    "name": "完全背包 (DP)",
+    "category": "classic",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "classic.hanoi",
+    "name": "汉诺塔",
+    "category": "classic",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "sorting.quick3way",
+    "name": "三路快速排序",
+    "category": "sorting",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "sorting.bucket",
+    "name": "桶排序",
+    "category": "sorting",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "linear.deque",
+    "name": "双端队列",
+    "category": "linear",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "tree.postorderIter",
+    "name": "二叉树 - 后序遍历（非递归）",
+    "category": "tree",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "tree.postorderTwoStack",
+    "name": "二叉树 - 后序遍历（双栈法）",
+    "category": "tree",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "tree.segmentTree",
+    "name": "线段树（单点更新+区间查询）",
+    "category": "tree",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "tree.bit",
+    "name": "树状数组（BIT）",
+    "category": "tree",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "graph.floyd",
+    "name": "Floyd-Warshall 多源最短路径",
+    "category": "graph",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "string.rabinKarp",
+    "name": "Rabin-Karp 字符串匹配",
+    "category": "string",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "classic.knightTour",
+    "name": "骑士巡游（回溯）",
+    "category": "classic",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "sorting.parallelMerge",
+    "name": "并行归并排序（模拟）",
+    "category": "sorting",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "graph.spfa",
+    "name": "SPFA 最短路径",
+    "category": "graph",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "graph.eulerPath",
+    "name": "欧拉路径（Hierholzer）",
+    "category": "graph",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "graph.kosaraju",
+    "name": "Kosaraju 强连通分量",
+    "category": "graph",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "string.sunday",
+    "name": "Sunday 字符串匹配",
+    "category": "string",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "string.hash",
+    "name": "字符串哈希（多项式哈希）",
+    "category": "string",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "sorting.radixSort",
+    "name": "基数排序 (LSD)",
+    "category": "sorting",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "tree.postorderRec",
+    "name": "二叉树 - 后序遍历（递归）",
+    "category": "tree",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "tree.bstDeleteIter",
+    "name": "BST - 删除（非递归）",
+    "category": "tree",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "tree.avlDelete",
+    "name": "AVL - 删除",
+    "category": "tree",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "tree.rbInsert",
+    "name": "红黑树 - 插入",
+    "category": "tree",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "tree.rbDelete",
+    "name": "红黑树 - 删除",
+    "category": "tree",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "tree.segmentTreeQuery",
+    "name": "线段树 - 区间查询",
+    "category": "tree",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "tree.trieInsert",
+    "name": "Trie - 插入",
+    "category": "tree",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "tree.trieSearch",
+    "name": "Trie - 搜索",
+    "category": "tree",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "classic.sudoku",
+    "name": "数独求解",
+    "category": "classic",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "classic.producerConsumer",
+    "name": "生产者-消费者",
+    "category": "classic",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "advanced.skipListFind",
+    "name": "跳表 - 查找",
+    "category": "advanced",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "advanced.skipListInsert",
+    "name": "跳表 - 插入",
+    "category": "advanced",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "advanced.skipListDelete",
+    "name": "跳表 - 删除",
+    "category": "advanced",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "advanced.consistentHashAdd",
+    "name": "一致性哈希 - 节点加入",
+    "category": "advanced",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "advanced.consistentHashRemove",
+    "name": "一致性哈希 - 节点移除",
+    "category": "advanced",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "advanced.consistentHashVNode",
+    "name": "一致性哈希 - 虚拟节点",
+    "category": "advanced",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "advanced.raftLeader",
+    "name": "Raft - Leader 选举",
+    "category": "advanced",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "advanced.raftLog",
+    "name": "Raft - 日志复制",
+    "category": "advanced",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "string.lsd",
+    "name": "LSD 低位优先基数排序",
+    "category": "string",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "string.msd",
+    "name": "MSD 高位优先基数排序",
+    "category": "string",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "string.quick3string",
+    "name": "三路字符串快速排序",
+    "category": "string",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "string.boyerMoore",
+    "name": "Boyer-Moore 子串匹配",
+    "category": "string",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "string.lrs",
+    "name": "最长重复子串 (LRS)",
+    "category": "string",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "string.suffixArray",
+    "name": "后缀数组 (Suffix Array)",
+    "category": "string",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "string.huffman",
+    "name": "霍夫曼编码 (Huffman)",
+    "category": "string",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "graph.cc",
+    "name": "连通分量 (Connected Components)",
+    "category": "graph",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "graph.cycle",
+    "name": "无向图环检测",
+    "category": "graph",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "graph.bipartite",
+    "name": "二分图判定",
+    "category": "graph",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "graph.directedCycle",
+    "name": "有向图环检测",
+    "category": "graph",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "graph.acyclicSP",
+    "name": "DAG 最短路径 (AcyclicSP)",
+    "category": "graph",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "graph.acyclicLP",
+    "name": "DAG 最长路径 (AcyclicLP/CPM)",
+    "category": "graph",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "sorting.binaryInsertion",
+    "name": "二分插入排序",
+    "category": "sorting",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "sorting.insertionX",
+    "name": "插入排序哨兵优化版 (InsertionX)",
+    "category": "sorting",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "sorting.mergeX",
+    "name": "归并排序优化版 (MergeX)",
+    "category": "sorting",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "sorting.quickX",
+    "name": "快速排序优化版 (QuickX)",
+    "category": "sorting",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "string.multiway",
+    "name": "多路归并 (Multiway Merge)",
+    "category": "string",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "search.seqST",
+    "name": "顺序查找符号表",
+    "category": "linear",
+    "level": "P0",
+    "file": ""
+  },
+  {
+    "id": "search.binST",
+    "name": "二分查找符号表",
+    "category": "linear",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "search.linProbe",
+    "name": "线性探测哈希表",
+    "category": "linear",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "search.minPQ",
+    "name": "最小优先队列 (MinPQ)",
+    "category": "tree",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "search.maxPQ",
+    "name": "最大优先队列 (MaxPQ)",
+    "category": "tree",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "search.indexMinPQ",
+    "name": "索引最小优先队列 (IndexMinPQ)",
+    "category": "tree",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "search.indexMaxPQ",
+    "name": "索引最大优先队列 (IndexMaxPQ)",
+    "category": "tree",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "graph.tarjan",
+    "name": "Tarjan 强连通分量",
+    "category": "graph",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "graph.gabow",
+    "name": "Gabow 强连通分量",
+    "category": "graph",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "graph.transClosure",
+    "name": "传递闭包 (Warshall)",
+    "category": "graph",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "graph.topoX",
+    "name": "拓扑排序优化版 (Kahn)",
+    "category": "graph",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "graph.dfsOrder",
+    "name": "DFS 序（前/后/逆后序）",
+    "category": "graph",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "graph.nrDFS",
+    "name": "非递归 DFS（显式栈）",
+    "category": "graph",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "graph.nrDirDFS",
+    "name": "非递归有向 DFS",
+    "category": "graph",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "graph.dirDFS",
+    "name": "有向图可达性（多源）",
+    "category": "graph",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "graph.bfsDirPaths",
+    "name": "有向图 BFS 路径",
+    "category": "graph",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "graph.dfsDirPaths",
+    "name": "有向图 DFS 路径",
+    "category": "graph",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "graph.directedCycleX",
+    "name": "有向环检测优化版",
+    "category": "graph",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "graph.ewDirCycle",
+    "name": "带权有向图环检测",
+    "category": "graph",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "graph.lazyPrim",
+    "name": "惰性 Prim 最小生成树",
+    "category": "graph",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "graph.boruvka",
+    "name": "Boruvka 最小生成树",
+    "category": "graph",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "graph.dijkstraUndir",
+    "name": "无向图 Dijkstra",
+    "category": "graph",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "graph.dijkstraAll",
+    "name": "全源最短路 (Dijkstra×V)",
+    "category": "graph",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "graph.arbitrage",
+    "name": "货币套利（负环检测）",
+    "category": "graph",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "graph.cpm",
+    "name": "关键路径法 (CPM)",
+    "category": "graph",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "graph.eulerCycle",
+    "name": "无向欧拉回路",
+    "category": "graph",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "graph.dirEulerCycle",
+    "name": "有向欧拉回路",
+    "category": "graph",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "graph.dirEulerPath",
+    "name": "有向欧拉路径",
+    "category": "graph",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "graph.maxflow",
+    "name": "Ford-Fulkerson 最大流",
+    "category": "graph",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "graph.bipMatch",
+    "name": "二分图最大匹配（匈牙利）",
+    "category": "graph",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "graph.hopcroftKarp",
+    "name": "Hopcroft-Karp 匹配",
+    "category": "graph",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "graph.bipartiteX",
+    "name": "二分图判定优化版 (BFS)",
+    "category": "graph",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "graph.symbol",
+    "name": "符号图 (SymbolGraph)",
+    "category": "graph",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "graph.symbolDigraph",
+    "name": "符号有向图",
+    "category": "graph",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "graph.assignment",
+    "name": "分配问题（最小权匹配）",
+    "category": "graph",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "graph.zeroSum",
+    "name": "两人零和博弈",
+    "category": "graph",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "math.threeSum",
+    "name": "3-Sum 暴力解",
+    "category": "classic",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "math.threeSumFast",
+    "name": "3-Sum 排序+二分",
+    "category": "classic",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "math.closestPair",
+    "name": "最近点对（分治）",
+    "category": "classic",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "math.grahamScan",
+    "name": "Graham 扫描凸包",
+    "category": "classic",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "math.farthestPair",
+    "name": "最远点对（凸包直径）",
+    "category": "classic",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "math.fft",
+    "name": "快速傅里叶变换 FFT",
+    "category": "advanced",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "math.gaussElim",
+    "name": "高斯消元",
+    "category": "classic",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "math.gaussJordan",
+    "name": "高斯-约当消元",
+    "category": "classic",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "math.linProg",
+    "name": "单纯形法线性规划",
+    "category": "advanced",
+    "level": "P3",
+    "file": ""
+  },
+  {
+    "id": "math.linReg",
+    "name": "最小二乘线性回归",
+    "category": "classic",
+    "level": "P1",
+    "file": ""
+  },
+  {
+    "id": "graph.bellmanFord",
+    "name": "Bellman-Ford 单源最短路径",
+    "category": "graph",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "string.lzw",
+    "name": "LZW 压缩",
+    "category": "string",
+    "level": "P2",
+    "file": ""
+  },
+  {
+    "id": "sorting.topM",
+    "name": "TopM（最小堆选最大 M 个）",
+    "category": "sorting",
+    "level": "P2",
+    "file": ""
+  }
+]

@@ -2393,10 +2393,7 @@ function dine(i) {
             complexity: { time: 'O(d·(n+k))', space: 'O(n+k)' },
             keywords: ['radix', 'counting', 'bucket', 'LSD'],
             mnemonic: '低位起逐位入桶，d轮收集即有序',
-            description: `<div class="desc-section">
-                <h3>算法思想</h3><p>从最低位开始，按每一位做计数排序，d 轮后完成。d 为最大位数，k 为基数（10）。</p>
-                <h3>复杂度</h3><p>时间 O(d·(n+k))，空间 O(n+k)。稳定排序。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>按数位从低到高（或从高到低）逐位进行稳定排序，最终得到完整有序序列。</p></div><div class="desc-section"><h3>推导过程</h3><p>先按个位排序，再按十位排序……因为每次排序都是稳定的，前一轮的相对顺序会被保留。k 位数字做 k 轮计数排序，总时间 O(k·n)。</p></div><div class="desc-section"><h3>适用场景</h3><p>整数、字符串、定长关键字排序，需要稳定线性排序。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 电话号码排序。② 银行卡号排序。③ 字符串字典序排序。</p></div>`,
             code: radixSortCode,
             defaultData: [170, 45, 75, 90, 802, 24, 2, 66],
             dataParser: NUM_DATA,
@@ -2411,10 +2408,7 @@ function dine(i) {
             complexity: { time: 'O(n)', space: 'O(h)' },
             keywords: ['postorder', 'houxu', 'recursive', 'dfs'],
             mnemonic: '左右根递归深入，先访子树后访根',
-            description: `<div class="desc-section">
-                <h3>访问顺序</h3><p>左 → 右 → 根</p>
-                <h3>复杂度</h3><p>时间 O(n)，空间 O(h)（递归栈深度）</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>按特定顺序访问二叉树的每个节点：前序根-左-右，中序左-根-右，后序左-右-根，层序一层一层访问。</p></div><div class="desc-section"><h3>推导过程</h3><p>递归写法直接按定义访问。非递归写法用栈模拟递归过程：中序一路向左压栈，到底后弹出访问，再转向右子树；层序用队列按层扩展。</p></div><div class="desc-section"><h3>适用场景</h3><p>表达式求值、序列化树、按层次展示、BST 有序输出。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 文件系统目录树打印。② 表达式树求值。③ BST 中序输出有序序列。</p></div>`,
             code: postorderRecCode,
             run: postorderRecRun,
             buildState: buildBinaryTreeState
@@ -2425,9 +2419,7 @@ function dine(i) {
             complexity: { time: 'O(log n)', space: 'O(1)' },
             keywords: ['bst', 'delete', 'iterative', 'successor'],
             mnemonic: '迭代查找定目标，三情处理换后继',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>非递归删除：先迭代查找目标节点，再处理三种情况（叶子/单子/双子）。双子节点用后继替换。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>二叉搜索树保持“左子树 < 根 < 右子树”，查找/插入/删除都像二分查找一样沿一条路径走。</p></div><div class="desc-section"><h3>推导过程</h3><p>查找时与当前节点比较：小则向左，大则向右。插入找到空位置放入。删除分三种情况：叶子直接删；只有一个孩子则孩子顶替；有两个孩子则用右子树最小值（或左子树最大值）替换。</p></div><div class="desc-section"><h3>适用场景</h3><p>需要动态维护有序集合、频繁增删查。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 字典树实现。② 数据库索引（简单场景）。③ 实现有序 map。</p></div>`,
             code: bstDeleteIterCode,
             defaultData: [50, 30, 70, 20, 40, 60, 80],
             dataParser: NUM_DATA,
@@ -2440,9 +2432,7 @@ function dine(i) {
             complexity: { time: 'O(log n)', space: 'O(h)' },
             keywords: ['avl', 'delete', 'rebalance', 'rotation'],
             mnemonic: '递归删除回溯查，失衡旋转复平衡',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>递归删除节点后，回溯检查平衡因子并旋转恢复平衡。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>AVL 树是严格的平衡二叉搜索树，任何节点的左右子树高度差不超过 1。</p></div><div class="desc-section"><h3>推导过程</h3><p>插入/删除后检查祖先节点的平衡因子。若失衡，通过左旋、右旋或左右双旋恢复平衡。旋转只影响局部子树，保持 BST 性质不变。</p></div><div class="desc-section"><h3>适用场景</h3><p>查找性能必须稳定为 O(log n)、数据频繁变动的场景。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 数据库索引。② 内存有序 map。③ 需要最坏情况保证的系统。</p></div>`,
             code: avlDeleteCode,
             defaultData: [30, 20, 40, 10, 25, 35, 50, 5],
             dataParser: NUM_DATA,
@@ -2455,12 +2445,7 @@ function dine(i) {
             complexity: { time: 'O(log n)', space: 'O(1)' },
             keywords: ['red black tree', 'rb tree', 'insert', 'rotation', 'recolor'],
             mnemonic: '新插红节点变色，旋转修复红黑性',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>红黑树是自平衡 BST。插入新节点为红色，通过变色和旋转修复红黑性质。</p>
-                <h3>五种性质</h3>
-                <ul><li>节点是红色或黑色</li><li>根节点是黑色</li><li>叶子（NIL）是黑色</li>
-                <li>红节点的子节点都是黑色</li><li>任一节点到叶子的所有路径包含相同数量的黑节点</li></ul>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>红黑树用“红/黑”染色和五条规则保持近似平衡，插入删除的旋转次数比 AVL 少。</p></div><div class="desc-section"><h3>推导过程</h3><p>规则包括根黑、叶子（NIL）黑、红节点的孩子黑、从任意节点到叶子的黑高相同。插入/删除时若破坏规则，通过变色和旋转修复，最多 O(log n) 次调整。</p></div><div class="desc-section"><h3>适用场景</h3><p>需要频繁插入删除且要求 O(log n) 性能的标准库实现。</p></div><div class="desc-section"><h3>典型案例</h3><p>① Java TreeMap/TreeSet。② Linux 内核 CFS 调度。③ C++ std::map。</p></div>`,
             code: rbInsertCode,
             defaultData: [10, 20, 30, 15, 25, 5, 1],
             dataParser: NUM_DATA,
@@ -2473,9 +2458,7 @@ function dine(i) {
             complexity: { time: 'O(log n)', space: 'O(1)' },
             keywords: ['red black tree', 'rb tree', 'delete', 'fixup'],
             mnemonic: '删黑生双重黑，兄长旋转变色救',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>删除黑节点会产生"双重黑"问题，需要通过兄弟节点的旋转和变色来修复。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>红黑树用“红/黑”染色和五条规则保持近似平衡，插入删除的旋转次数比 AVL 少。</p></div><div class="desc-section"><h3>推导过程</h3><p>规则包括根黑、叶子（NIL）黑、红节点的孩子黑、从任意节点到叶子的黑高相同。插入/删除时若破坏规则，通过变色和旋转修复，最多 O(log n) 次调整。</p></div><div class="desc-section"><h3>适用场景</h3><p>需要频繁插入删除且要求 O(log n) 性能的标准库实现。</p></div><div class="desc-section"><h3>典型案例</h3><p>① Java TreeMap/TreeSet。② Linux 内核 CFS 调度。③ C++ std::map。</p></div>`,
             code: rbDeleteCode,
             defaultData: [10, 20, 30, 15, 25, 5, 1],
             dataParser: NUM_DATA,
@@ -2488,9 +2471,7 @@ function dine(i) {
             complexity: { time: 'O(log n)', space: 'O(n)' },
             keywords: ['segment tree', 'range query', 'sum'],
             mnemonic: '区间分解若干段，对数节点并集求',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>将查询区间分解为 O(log n) 个线段树节点的并集，避免逐元素累加。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>线段树把区间二分建造成树，每个节点维护一个子区间的聚合信息，支持区间查询和单点更新。</p></div><div class="desc-section"><h3>推导过程</h3><p>区间 [l,r] 对应节点，若长度大于 1 则分成 [l,mid] 和 [mid+1,r] 两个孩子。查询时把目标区间拆成若干已覆盖的子区间合并结果；更新时自底向上重新聚合。</p></div><div class="desc-section"><h3>适用场景</h3><p>区间最值/求和/修改、RMQ、动态区间统计。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 区间最大值查询。② 数组区间加减。③ 扫描线算法。</p></div>`,
             code: segQueryCode,
             defaultData: [3, 1, 4, 1, 5, 9, 2, 6],
             dataParser: NUM_DATA,
@@ -2502,10 +2483,7 @@ function dine(i) {
             complexity: { time: 'O(L)', space: 'O(Σ·N)' },
             keywords: ['trie', 'prefix tree', 'insert', 'word'],
             mnemonic: '逐字下降无则建，末尾标记单词完',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>逐字符沿树下降，不存在则创建新节点，末尾标记为单词结尾。</p>
-                <h3>复杂度</h3><p>时间 O(L)（L 为单词长度），空间 O(Σ·N)（Σ 为字符集大小，N 为节点数）</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>Trie（前缀树）把字符串按字符拆成边，从根到节点的路径就是一个前缀。</p></div><div class="desc-section"><h3>推导过程</h3><p>每个节点代表一个字符，从根到某节点拼起来就是前缀。插入时沿字符路径走，没有就新建；查找时同样沿路径走，走到头即存在。</p></div><div class="desc-section"><h3>适用场景</h3><p>前缀匹配、自动补全、拼写检查、IP 路由最长前缀匹配。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 输入法自动补全。② 路由器最长前缀匹配。③ 敏感词过滤。</p></div>`,
             code: trieInsertCode,
             defaultData: ['cat', 'car', 'card', 'care', 'dog'],
             dataParser: STR_DATA,
@@ -2518,9 +2496,7 @@ function dine(i) {
             complexity: { time: 'O(L)', space: 'O(1)' },
             keywords: ['trie', 'prefix tree', 'search', 'word'],
             mnemonic: '逐字下降全匹配，末尾有标即为找',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>逐字符沿树下降，全部匹配且末尾有单词标记则找到。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>Trie（前缀树）把字符串按字符拆成边，从根到节点的路径就是一个前缀。</p></div><div class="desc-section"><h3>推导过程</h3><p>每个节点代表一个字符，从根到某节点拼起来就是前缀。插入时沿字符路径走，没有就新建；查找时同样沿路径走，走到头即存在。</p></div><div class="desc-section"><h3>适用场景</h3><p>前缀匹配、自动补全、拼写检查、IP 路由最长前缀匹配。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 输入法自动补全。② 路由器最长前缀匹配。③ 敏感词过滤。</p></div>`,
             code: trieSearchCode,
             run: trieSearchRun,
             buildState: buildNaryTreeState
@@ -2533,9 +2509,7 @@ function dine(i) {
             complexity: { time: 'O(9^(n²))', space: 'O(n²)' },
             keywords: ['sudoku', 'backtracking', 'constraint'],
             mnemonic: '找空试数查合法，递归失败即回溯',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>回溯法：找到空格，尝试 1-9，检查合法性后递归，失败则回溯。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>通过递归尝试所有可能，遇到不满足条件就回退，直到找到可行解。</p></div><div class="desc-section"><h3>推导过程</h3><p>每步选择一个候选填入当前位置，检查约束是否满足。满足则继续下一层；不满足则撤销该选择并试下一个候选。剪枝可大幅缩小搜索空间。</p></div><div class="desc-section"><h3>适用场景</h3><p>组合优化、约束满足、棋类游戏、调度排班。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 数独求解。② N 皇后。③ 旅行商问题。</p></div>`,
             code: sudokuCode,
             run: sudokuRun
         },
@@ -2545,9 +2519,7 @@ function dine(i) {
             complexity: { time: 'O(1)', space: 'O(n)' },
             keywords: ['producer', 'consumer', 'buffer', 'concurrent'],
             mnemonic: '生产放入消费取，满等空等同步协',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>生产者往缓冲区放入数据，消费者从缓冲区取出数据。缓冲区满时生产者等待，空时消费者等待。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>生产者-消费者用队列解耦生产与消费速度不一致的问题。</p></div><div class="desc-section"><h3>推导过程</h3><p>生产者把数据放入缓冲区，消费者从缓冲区取出。缓冲区满时生产者等待，空时消费者等待。用锁或信号量保证互斥与同步。</p></div><div class="desc-section"><h3>适用场景</h3><p>异步处理、任务队列、日志收集、流式计算。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 消息队列 Kafka/RabbitMQ。② 线程池任务分发。③ 日志缓冲写入磁盘。</p></div>`,
             code: producerConsumerCode,
             run: producerConsumerRun
         },
@@ -2559,9 +2531,7 @@ function dine(i) {
             complexity: { time: 'O(log n)', space: 'O(n)' },
             keywords: ['skip list', 'search', 'find', 'probabilistic'],
             mnemonic: '高层向右低层降，期对数步到目标',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>从最高层开始向右搜索，当下一节点值 ≥ 目标时下降一层，直到最底层。期望 O(log n)。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>跳表是在有序链表上建立多层“快速通道”：底层保存全部元素，上层是下层的稀疏索引，查找时从顶层大步跳过无效区间。</p></div><div class="desc-section"><h3>推导过程</h3><p>假设你要在第 10 层楼找人。先在顶层（最稀疏）看目标应该在哪个区间，再下到下一层细化，直到底层精确定位。每层节点以 1/2 概率晋升，期望层数为 O(log n)，所以查找、插入、删除都是 O(log n)。</p></div><div class="desc-section"><h3>适用场景</h3><p>需要“有序 + 频繁增删查”的内存数据结构，且实现比平衡树简单。</p></div><div class="desc-section"><h3>典型案例</h3><p>① Redis 有序集合（zset）的近似实现。② LevelDB/RocksDB MemTable。③ 内存排行榜、区间查询索引。</p></div>`,
             code: skipListSearchCode,
             run: skipListSearchRun,
             buildState: buildSkipListState
@@ -2572,9 +2542,7 @@ function dine(i) {
             complexity: { time: 'O(log n)', space: 'O(n)' },
             keywords: ['skip list', 'insert', 'random level'],
             mnemonic: '查找记录各前驱，随机层数逐层插',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>先查找插入位置，记录各层前驱，随机决定新节点层数，然后逐层插入并更新指针。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>跳表是在有序链表上建立多层“快速通道”：底层保存全部元素，上层是下层的稀疏索引，查找时从顶层大步跳过无效区间。</p></div><div class="desc-section"><h3>推导过程</h3><p>假设你要在第 10 层楼找人。先在顶层（最稀疏）看目标应该在哪个区间，再下到下一层细化，直到底层精确定位。每层节点以 1/2 概率晋升，期望层数为 O(log n)，所以查找、插入、删除都是 O(log n)。</p></div><div class="desc-section"><h3>适用场景</h3><p>需要“有序 + 频繁增删查”的内存数据结构，且实现比平衡树简单。</p></div><div class="desc-section"><h3>典型案例</h3><p>① Redis 有序集合（zset）的近似实现。② LevelDB/RocksDB MemTable。③ 内存排行榜、区间查询索引。</p></div>`,
             code: skipListInsertCode,
             run: skipListInsertRun,
             buildState: buildSkipListState
@@ -2601,10 +2569,7 @@ function dine(i) {
             complexity: { time: 'O(log n)', space: 'O(n)' },
             keywords: ['consistent hash', 'ring', 'add node', 'distributed'],
             mnemonic: '新点入环迁局部，仅受影响键移动',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>新节点哈希到环上某位置，只需迁移后继节点上部分键，不影响其他节点。仅受影响范围的键需迁移。</p>
-                <h3>优势</h3><p>节点加入/移除时，平均只有 1/n 的键需要迁移（n 为节点数）。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>把节点和数据都映射到一个首尾相连的哈希环上，数据顺时针找最近的节点，节点增减只影响相邻数据。</p></div><div class="desc-section"><h3>推导过程</h3><p>普通哈希取模在节点数变化时会导致大量数据迁移。一致性哈希把 key 和 node 都 hash 到 0~2³²−1 的环上，key 的负责节点是顺时针第一个 node。加入虚拟节点后分布更均匀。</p></div><div class="desc-section"><h3>适用场景</h3><p>分布式缓存、分片数据库、负载均衡，需要动态扩缩容且减少数据迁移。</p></div><div class="desc-section"><h3>典型案例</h3><p>① Memcached 集群分片。② Redis Cluster 数据分布。③ CDN 节点调度。</p></div>`,
             code: consistentHashAddCode,
             run: consistentHashAddRun,
             buildState: buildHashRingState
@@ -2615,9 +2580,7 @@ function dine(i) {
             complexity: { time: 'O(log n)', space: 'O(n)' },
             keywords: ['consistent hash', 'ring', 'remove node', 'distributed'],
             mnemonic: '节点移除键归后，余者不动影响小',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>移除节点时，其所有键迁移到后继节点，其他节点不受影响。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>把节点和数据都映射到一个首尾相连的哈希环上，数据顺时针找最近的节点，节点增减只影响相邻数据。</p></div><div class="desc-section"><h3>推导过程</h3><p>普通哈希取模在节点数变化时会导致大量数据迁移。一致性哈希把 key 和 node 都 hash 到 0~2³²−1 的环上，key 的负责节点是顺时针第一个 node。加入虚拟节点后分布更均匀。</p></div><div class="desc-section"><h3>适用场景</h3><p>分布式缓存、分片数据库、负载均衡，需要动态扩缩容且减少数据迁移。</p></div><div class="desc-section"><h3>典型案例</h3><p>① Memcached 集群分片。② Redis Cluster 数据分布。③ CDN 节点调度。</p></div>`,
             code: consistentHashRemoveCode,
             run: consistentHashRemoveRun,
             buildState: buildHashRingState
@@ -2628,10 +2591,7 @@ function dine(i) {
             complexity: { time: 'O(log n)', space: 'O(n·v)' },
             keywords: ['consistent hash', 'virtual node', 'replica', 'balanced'],
             mnemonic: '一物多影散环上，负载均衡防倾斜',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>每个物理节点对应多个虚拟节点散布在环上，解决节点少时数据倾斜问题。</p>
-                <h3>效果</h3><p>虚拟节点越多，负载分布越均匀（通常 150-200 个/节点）。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>把节点和数据都映射到一个首尾相连的哈希环上，数据顺时针找最近的节点，节点增减只影响相邻数据。</p></div><div class="desc-section"><h3>推导过程</h3><p>普通哈希取模在节点数变化时会导致大量数据迁移。一致性哈希把 key 和 node 都 hash 到 0~2³²−1 的环上，key 的负责节点是顺时针第一个 node。加入虚拟节点后分布更均匀。</p></div><div class="desc-section"><h3>适用场景</h3><p>分布式缓存、分片数据库、负载均衡，需要动态扩缩容且减少数据迁移。</p></div><div class="desc-section"><h3>典型案例</h3><p>① Memcached 集群分片。② Redis Cluster 数据分布。③ CDN 节点调度。</p></div>`,
             code: consistentHashVNodeCode,
             run: consistentHashVNodeRun,
             buildState: buildHashRingState
@@ -2642,10 +2602,7 @@ function dine(i) {
             complexity: { time: 'O(n)', space: 'O(n)' },
             keywords: ['raft', 'leader election', 'consensus', 'distributed'],
             mnemonic: '超时变候选拉票，多数赞成即为主',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>Follower 选举超时后转为 Candidate，自增 term 并向其他节点发送 RequestVote。获得多数票后成为 Leader。</p>
-                <h3>关键</h3><p>每个 term 内每个节点只能投一票；获得多数票即可成为 Leader。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>Raft 通过“Leader 选举 + 日志复制 + 多数派提交”让多台机器状态一致。</p></div><div class="desc-section"><h3>推导过程</h3><p>所有写请求交给 Leader，Leader 先把日志发给多数 Follower，收到过半确认后再提交并返回客户端。Leader 失效时通过超时触发选举，任期号大的成为新 Leader。</p></div><div class="desc-section"><h3>适用场景</h3><p>分布式数据库、分布式配置中心、需要强一致性的多副本系统。</p></div><div class="desc-section"><h3>典型案例</h3><p>① etcd 配置存储。② TiKV/Raft 分布式 KV。③ Consul 服务发现。</p></div>`,
             code: raftLeaderCode,
             run: raftLeaderRun,
             buildState: buildGraphState
@@ -2656,10 +2613,7 @@ function dine(i) {
             complexity: { time: 'O(n·L)', space: 'O(n·L)' },
             keywords: ['raft', 'log replication', 'append entries', 'consensus'],
             mnemonic: 'Leader发日志复制，多数成功方提交',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>Leader 通过 AppendEntries RPC 将日志条目复制到所有 Follower。当多数节点复制成功后，Leader 提交该条目。</p>
-                <h3>提交规则</h3><p>commitIndex = 第 (n/2+1) 大的 matchIndex。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>Raft 通过“Leader 选举 + 日志复制 + 多数派提交”让多台机器状态一致。</p></div><div class="desc-section"><h3>推导过程</h3><p>所有写请求交给 Leader，Leader 先把日志发给多数 Follower，收到过半确认后再提交并返回客户端。Leader 失效时通过超时触发选举，任期号大的成为新 Leader。</p></div><div class="desc-section"><h3>适用场景</h3><p>分布式数据库、分布式配置中心、需要强一致性的多副本系统。</p></div><div class="desc-section"><h3>典型案例</h3><p>① etcd 配置存储。② TiKV/Raft 分布式 KV。③ Consul 服务发现。</p></div>`,
             code: raftLogCode,
             run: raftLogRun,
             buildState: buildGraphState

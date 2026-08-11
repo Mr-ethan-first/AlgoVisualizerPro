@@ -651,10 +651,7 @@ function computePrefixHash(s, base = 131, mod = 1e9+7) {
             complexity: { time: 'O(n log n)', space: 'O(n)' },
             keywords: ['parallel', 'merge', 'fork join', 'bing xing'],
             mnemonic: 'fork切分并行算，join合并深度限',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>使用 fork-join 模型：递归切分子任务，并行执行两个子区间排序，再合并。最大并行深度有限以控制线程数。</p>
-                <h3>复杂度</h3><p>并行时间 O(log² n)（理论），实际受限于核数与并行开销。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>通过比较或分桶等方式调整元素位置，使整个数组满足升序/降序要求。</p></div><div class="desc-section"><h3>推导过程</h3><p>排序的本质是消除逆序对。不同算法用不同策略减少比较/交换次数：有的逐个插入，有的分而治之，有的按特征分桶。</p></div><div class="desc-section"><h3>适用场景</h3><p>数据整理、结果展示、作为其他算法的前置步骤。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 电商商品按价格排序。② 日志按时间排序。③ 姓名按字典序排序。</p></div>`,
             code: parallelMergeCode,
             defaultData: DEFAULT_ARR,
             dataParser: NUM_DATA,
@@ -667,10 +664,7 @@ function computePrefixHash(s, base = 131, mod = 1e9+7) {
             complexity: { time: 'O(kE)~', space: 'O(V+E)' },
             keywords: ['spfa', 'shortest path', 'negative weight'],
             mnemonic: '队列优化松弛法，入队超n判负环',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>用队列优化 Bellman-Ford：仅当节点 dist 被松弛时才重新入队。每个节点可多次入队。</p>
-                <h3>应用</h3><p>支持负权边，可检测负环（节点入队次数 ≥ n 即存在负环）。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>Bellman-Ford 能处理负权边的单源最短路径，通过反复松弛所有边实现。</p></div><div class="desc-section"><h3>推导过程</h3><p>进行 n−1 轮松弛：对每条边 u→v，若 dist[u]+w < dist[v] 则更新。因为最短路径最多含 n−1 条边，n−1 轮足够。若第 n 轮还能更新，说明存在负环。SPFA 用队列只处理被更新的节点，常数更小。</p></div><div class="desc-section"><h3>适用场景</h3><p>含负权边的图、货币套利、差分约束。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 外汇套利检测。② 差分约束系统。③ 含负权边的网络路由。</p></div>`,
             code: spfaCode,
             run: spfaRun,
             buildState: buildGraphState
@@ -681,10 +675,7 @@ function computePrefixHash(s, base = 131, mod = 1e9+7) {
             complexity: { time: 'O(V+E)', space: 'O(V+E)' },
             keywords: ['euler', 'hierholzer', 'ou la'],
             mnemonic: '栈顶有边继续走，无路弹出补路径',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>栈辅助 DFS：栈顶节点有未走的边就走下去；无路可走时弹出并加入路径头部。最终逆序即为欧拉路径。</p>
-                <h3>判存在</h3><p>无向图：度数为奇数的节点数为 0 或 2。有向图：所有点出入度相等（回路）或恰有两个点出入度差为 1。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>欧拉路径/回路是经过图中每条边恰好一次的路径；回路要求起点终点相同。</p></div><div class="desc-section"><h3>推导过程</h3><p>Hierholzer 算法：从起点出发随便走，遇到死胡同时把路径倒序加入结果，再处理还有未访问边的点。无向图存在欧拉回路当且仅当连通且所有点度数为偶数。</p></div><div class="desc-section"><h3>适用场景</h3><p>路线规划、一笔画问题、DNA 序列拼接。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 邮递员路线（每条街走一次）。② 游戏“一笔画”。③ 基因组拼接。</p></div>`,
             code: eulerPathCode,
             run: eulerPathRun,
             buildState: buildGraphState
@@ -695,10 +686,7 @@ function computePrefixHash(s, base = 131, mod = 1e9+7) {
             complexity: { time: 'O(V+E)', space: 'O(V+E)' },
             keywords: ['kosaraju', 'scc', 'qiang lian tong'],
             mnemonic: '原图逆后序反图搜，两次深搜得强连',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>两遍 DFS：① 在原图上 DFS，记录节点完成顺序（逆后序）；② 在反图上按逆后序 DFS，每次 DFS 树即一个 SCC。</p>
-                <h3>应用</h3><p>缩点、2-SAT、依赖分析。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>强连通分量是图中互相可达的最大子图。</p></div><div class="desc-section"><h3>推导过程</h3><p>Kosaraju 做两次 DFS：第一次记录完成顺序，第二次在反向图上按逆序 DFS，每次得到 SCC。Tarjan 用一次 DFS 维护 dfn/low，当 low[u]==dfn[u] 时弹出栈中节点即为一个 SCC。</p></div><div class="desc-section"><h3>适用场景</h3><p>社交网络社群发现、依赖环检测、缩点建 DAG。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 微博互相关注圈子。② 代码模块循环依赖检测。③ 地图强连通区域分析。</p></div>`,
             code: kosarajuCode,
             run: kosarajuRun,
             buildState: buildGraphState
@@ -710,10 +698,7 @@ function computePrefixHash(s, base = 131, mod = 1e9+7) {
             complexity: { time: 'O(n)~', space: 'O(m)' },
             keywords: ['sunday', 'string match', 'shift'],
             mnemonic: '失配看下一字符，位移表定右移数',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>失配时观察模式串后紧跟的下一字符 next，根据 shift[next] 决定模式串右移位数：shift[c] = m - i（i 为 c 在模式串最右出现位置）。</p>
-                <h3>对比</h3><p>通常比 KMP 更快，跳过更多无效位置。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>从右向左比较模式串，利用坏字符和好后缀规则大步跳过不可能位置。</p></div><div class="desc-section"><h3>推导过程</h3><p>先根据模式串预处理每个字符最右出现位置。匹配时从模式串尾部开始，若遇到不匹配的字符，按规则计算最大安全滑动距离。Sunday 还看主串中模式串右侧第一个字符。</p></div><div class="desc-section"><h3>适用场景</h3><p>文本搜索、关键词过滤、日志匹配、大文本编辑器。</p></div><div class="desc-section"><h3>典型案例</h3><p>① grep 文本搜索。② 敏感词过滤。③ 日志中定位错误关键字。</p></div>`,
             code: sundayCode,
             run: sundayRun,
             buildState: buildStringMatchState
@@ -724,10 +709,7 @@ function computePrefixHash(s, base = 131, mod = 1e9+7) {
             complexity: { time: 'O(n)', space: 'O(n)' },
             keywords: ['hash', 'polynomial', 'zi fu chuan ha xi'],
             mnemonic: '进制展开求前缀，幂次预处理子串',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>把字符串视为 base 进制数：h[i+1] = h[i] * base + s[i] (mod)。预处理前缀哈希和 base 的幂，可在 O(1) 内求任意子串哈希。</p>
-                <h3>应用</h3><p>快速比较两子串是否相等、字符串匹配、去重。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>字符串哈希把字符串映射成一个整数，用于快速比较子串是否相等。</p></div><div class="desc-section"><h3>推导过程</h3><p>把字符串看作 p 进制数，如 hash(s)=Σ s[i]·p^(n−1−i) mod M。利用前缀哈希可在 O(1) 内得到任意子串哈希，从而快速比较。</p></div><div class="desc-section"><h3>适用场景</h3><p>子串判等、回文检测、字符串去重、滚动比较。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 判断两个子串是否相同。② 找最长回文子串。③ 大量字符串去重。</p></div>`,
             code: strHashCode,
             run: strHashRun
         }

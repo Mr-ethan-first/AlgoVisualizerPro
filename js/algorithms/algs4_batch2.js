@@ -720,84 +720,84 @@ MaxPQ.prototype.delMax = function() {
             id: 'sorting.binaryInsertion', name: '二分插入排序', category: 'sorting', level: 'P1',
             complexity: { time: 'O(n log n)', space: 'O(1)' }, keywords: ['binary insertion', 'sorting'],
             mnemonic: '二分定位再后移，比较少了移动仍',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>插入排序的改进：在已排序前缀中用二分查找确定插入位置，减少比较次数至 O(n log n)，但元素移动仍为 O(n²)。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>通过比较或分桶等方式调整元素位置，使整个数组满足升序/降序要求。</p></div><div class="desc-section"><h3>推导过程</h3><p>排序的本质是消除逆序对。不同算法用不同策略减少比较/交换次数：有的逐个插入，有的分而治之，有的按特征分桶。</p></div><div class="desc-section"><h3>适用场景</h3><p>数据整理、结果展示、作为其他算法的前置步骤。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 电商商品按价格排序。② 日志按时间排序。③ 姓名按字典序排序。</p></div>`,
             code: binInsertCode, defaultData: NUM_DEFAULT, dataParser: NUM_DATA, run: binaryInsertionRun
         },
         {
             id: 'sorting.insertionX', name: '插入排序哨兵优化版 (InsertionX)', category: 'sorting', level: 'P1',
             complexity: { time: 'O(n²)', space: 'O(1)' }, keywords: ['insertion sort', 'sentinel'],
             mnemonic: '最小元放当头，循环不用愁',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>先将最小元素交换到数组首位作为哨兵，内层 while 无需再检查下界，减少约一半比较。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>把数组分成已排序和未排序两部分，每次从未排序部分取一个元素，插入到已排序部分的正确位置。</p></div><div class="desc-section"><h3>推导过程</h3><p>前 i 个元素已经有序。取第 i+1 个元素，从后向前比较，遇到比它大的就后移，直到找到合适位置插入。扑克牌整理牌就是这个道理。</p></div><div class="desc-section"><h3>适用场景</h3><p>数据基本有序、数据量不大、需要稳定排序。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 扑克牌按点数整理。② 实时接收少量数据并不断维护有序列表。</p></div>`,
             code: insertionXCode, defaultData: NUM_DEFAULT, dataParser: NUM_DATA, run: insertionXRun
         },
         {
             id: 'sorting.mergeX', name: '归并排序优化版 (MergeX)', category: 'sorting', level: 'P2',
             complexity: { time: 'O(n log n)', space: 'O(n)' }, keywords: ['merge sort', 'optimized'],
             mnemonic: '小子数组插排替，已有序跳过 merge',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>对小规模子数组切换到插入排序减少递归开销；若左半最大值 ≤ 右半最小值则直接跳过 merge。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>把数组不断二分，直到每个子数组只有一个元素，再两两合并成有序数组。</p></div><div class="desc-section"><h3>推导过程</h3><p>长度为 1 的数组天然有序。合并两个有序数组时，用双指针依次取较小者放入结果，时间 O(n)。因为每次二分，递归深度 O(log n)，总时间 O(n log n)。</p></div><div class="desc-section"><h3>适用场景</h3><p>需要稳定排序、数据量大、链表排序、外部排序。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 合并两个已排序的日志文件。② 链表排序。③ 大数据外部归并排序。</p></div>`,
             code: mergeXCode, defaultData: NUM_DEFAULT16, dataParser: NUM_DATA, run: mergeXRun
         },
         {
             id: 'sorting.quickX', name: '快速排序优化版 (QuickX)', category: 'sorting', level: 'P2',
             complexity: { time: 'O(n log n)', space: 'O(log n)' }, keywords: ['quicksort', 'median-of-three'],
             mnemonic: '三数取中选好枢，小子数组插排补',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>用三数取中策略选择枢轴，降低最坏情况概率；小数组改用插入排序，兼顾效率与稳定性。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>选一个基准值，把数组分成“小于基准”和“大于基准”两部分，然后递归排序两部分。</p></div><div class="desc-section"><h3>推导过程</h3><p>关键在于 partition：用两个指针从两端向中间扫描，把小于 pivot 的放左边，大于的放右边。pivot 的最终位置就是它在有序数组中的位置。然后对左右子数组递归。</p></div><div class="desc-section"><h3>适用场景</h3><p>通用排序、数据量大、平均性能要求高的场景。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 数据库查询结果排序。② 大数据集内存排序。③ 快速求 Top-K（只递归一侧）。</p></div>`,
             code: quickXCode, defaultData: NUM_DEFAULT16, dataParser: NUM_DATA, run: quickXRun
         },
         {
             id: 'string.multiway', name: '多路归并 (Multiway Merge)', category: 'string', level: 'P2',
             complexity: { time: 'O(N log k)', space: 'O(k)' }, keywords: ['multiway merge', 'external sort'],
             mnemonic: 'k 路有序流，最小堆出头',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>将 k 个已排序输入流用最小优先队列合并成一个有序输出流，常用于外部排序。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>把 k 个已排序的输入流合并成一个有序输出流。</p></div><div class="desc-section"><h3>推导过程</h3><p>用最小堆维护每个输入流当前最小元素。每次取出堆顶放入结果，再从对应流取下一个元素入堆。k 路总时间 O(N log k)。</p></div><div class="desc-section"><h3>适用场景</h3><p>外部排序、日志合并、数据库归并连接、MapReduce。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 合并多个有序日志文件。② 数据库外部排序。③ 大数据分片合并。</p></div>`,
             code: multiwayCode, defaultData: [[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]], dataParser: (s) => { try { return JSON.parse(s); } catch (e) { return null; } }, run: multiwayRun
         },
         {
             id: 'search.seqST', name: '顺序查找符号表', category: 'linear', level: 'P0',
             complexity: { time: 'O(n)', space: 'O(n)' }, keywords: ['sequential search', 'symbol table'],
             mnemonic: '链表从头扫到尾，重复更新新插首',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>用无序链表存储键值对；查找时顺序扫描，新键插入表头，重复键更新值。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>符号表是 key→value 的映射；通过顺序查找、二分查找或哈希实现不同性能。</p></div><div class="desc-section"><h3>推导过程</h3><p>顺序查找逐个比较 key，O(n)。有序数组可用二分查找定位 key，O(log n)。哈希表用 hash 函数把 key 映射到桶，期望 O(1)。线性探测用开放寻址解决冲突。</p></div><div class="desc-section"><h3>适用场景</h3><p>字典、数据库索引、缓存、统计频次。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 电话号码簿查找。② 编译器符号表。③ URL 去重。</p></div>`,
             code: seqSTCode, defaultData: [{ k: 'S', v: 0 }, { k: 'E', v: 1 }, { k: 'A', v: 2 }, { k: 'R', v: 3 }, { k: 'C', v: 4 }, { k: 'H', v: 5 }, { k: 'E', v: 6 }, { k: 'X', v: 7 }], dataParser: (s) => null, run: seqSTRun
         },
         {
             id: 'search.binST', name: '二分查找符号表', category: 'linear', level: 'P1',
             complexity: { time: 'O(log n)', space: 'O(n)' }, keywords: ['binary search', 'symbol table'],
             mnemonic: '键数组保持有序，二分查找定插入',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>维护一个有序键数组，查找与插入都通过二分定位，插入时需要移动后续元素。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>符号表是 key→value 的映射；通过顺序查找、二分查找或哈希实现不同性能。</p></div><div class="desc-section"><h3>推导过程</h3><p>顺序查找逐个比较 key，O(n)。有序数组可用二分查找定位 key，O(log n)。哈希表用 hash 函数把 key 映射到桶，期望 O(1)。线性探测用开放寻址解决冲突。</p></div><div class="desc-section"><h3>适用场景</h3><p>字典、数据库索引、缓存、统计频次。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 电话号码簿查找。② 编译器符号表。③ URL 去重。</p></div>`,
             code: binSTCode, defaultData: [{ k: 'S', v: 0 }, { k: 'E', v: 1 }, { k: 'A', v: 2 }, { k: 'R', v: 3 }, { k: 'C', v: 4 }, { k: 'H', v: 5 }, { k: 'E', v: 6 }, { k: 'X', v: 7 }], dataParser: (s) => null, run: binSTRun
         },
         {
             id: 'search.linProbe', name: '线性探测哈希表', category: 'linear', level: 'P1',
             complexity: { time: 'O(1) ~ O(n)', space: 'O(n)' }, keywords: ['hash table', 'linear probing'],
             mnemonic: '冲突就往后走，空位即安家',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>开放寻址法：计算哈希位置后若被占用则顺序探测下一个槽位，直到找到空位或相同键。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>符号表是 key→value 的映射；通过顺序查找、二分查找或哈希实现不同性能。</p></div><div class="desc-section"><h3>推导过程</h3><p>顺序查找逐个比较 key，O(n)。有序数组可用二分查找定位 key，O(log n)。哈希表用 hash 函数把 key 映射到桶，期望 O(1)。线性探测用开放寻址解决冲突。</p></div><div class="desc-section"><h3>适用场景</h3><p>字典、数据库索引、缓存、统计频次。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 电话号码簿查找。② 编译器符号表。③ URL 去重。</p></div>`,
             code: linProbeCode, defaultData: [{ k: 'S', v: 0 }, { k: 'E', v: 1 }, { k: 'A', v: 2 }, { k: 'R', v: 3 }, { k: 'C', v: 4 }, { k: 'H', v: 5 }, { k: 'E', v: 6 }, { k: 'X', v: 7 }], dataParser: (s) => null, run: linProbeRun
         },
         {
             id: 'search.minPQ', name: '最小优先队列 (MinPQ)', category: 'tree', level: 'P1',
             complexity: { time: 'O(log n)', space: 'O(n)' }, keywords: ['min heap', 'priority queue'],
             mnemonic: '父小子上浮，删顶下沉补',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>基于完全二叉堆实现：插入时 swim 上浮，删除最小时 sink 下沉，保证根节点始终最小。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>优先队列每次取出优先级最高（或最低）的元素，通常用堆实现。</p></div><div class="desc-section"><h3>推导过程</h3><p>底层用堆维护。插入时上浮，删除堆顶时下沉。索引优先队列额外维护索引到堆位置的映射，支持 O(log n) 修改任意元素的优先级。</p></div><div class="desc-section"><h3>适用场景</h3><p>任务调度、Dijkstra 最短路径、Top-K、合并有序流。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 医院急诊叫号。② 打印机优先级队列。③ Dijkstra 算法。</p></div>`,
             code: minPQCode, defaultData: NUM_DEFAULT, dataParser: NUM_DATA, run: minPQRun
         },
         {
             id: 'search.maxPQ', name: '最大优先队列 (MaxPQ)', category: 'tree', level: 'P1',
             complexity: { time: 'O(log n)', space: 'O(n)' }, keywords: ['max heap', 'priority queue'],
             mnemonic: '父大子上浮，删顶下沉补',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>与 MinPQ 相反，父节点 ≥ 子节点；根节点始终为最大值。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>优先队列每次取出优先级最高（或最低）的元素，通常用堆实现。</p></div><div class="desc-section"><h3>推导过程</h3><p>底层用堆维护。插入时上浮，删除堆顶时下沉。索引优先队列额外维护索引到堆位置的映射，支持 O(log n) 修改任意元素的优先级。</p></div><div class="desc-section"><h3>适用场景</h3><p>任务调度、Dijkstra 最短路径、Top-K、合并有序流。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 医院急诊叫号。② 打印机优先级队列。③ Dijkstra 算法。</p></div>`,
             code: maxPQCode, defaultData: NUM_DEFAULT, dataParser: NUM_DATA, run: maxPQRun
         },
         {
             id: 'search.indexMinPQ', name: '索引最小优先队列 (IndexMinPQ)', category: 'tree', level: 'P2',
             complexity: { time: 'O(log n)', space: 'O(n)' }, keywords: ['indexed heap', 'priority queue'],
             mnemonic: 'pq 排队 qp 反向，索引改值堆内调',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>维护三个数组：pq（堆顺序）、qp（索引到堆位置）、keys（索引对应的键值），支持按索引更新键值，常用于 Dijkstra/Prim。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>优先队列每次取出优先级最高（或最低）的元素，通常用堆实现。</p></div><div class="desc-section"><h3>推导过程</h3><p>底层用堆维护。插入时上浮，删除堆顶时下沉。索引优先队列额外维护索引到堆位置的映射，支持 O(log n) 修改任意元素的优先级。</p></div><div class="desc-section"><h3>适用场景</h3><p>任务调度、Dijkstra 最短路径、Top-K、合并有序流。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 医院急诊叫号。② 打印机优先级队列。③ Dijkstra 算法。</p></div>`,
             code: indexMinPQCode, defaultData: NUM_DEFAULT, dataParser: NUM_DATA, run: indexMinPQRun
         },
         {
             id: 'search.indexMaxPQ', name: '索引最大优先队列 (IndexMaxPQ)', category: 'tree', level: 'P2',
             complexity: { time: 'O(log n)', space: 'O(n)' }, keywords: ['indexed heap', 'priority queue'],
             mnemonic: 'pq 排队 qp 反向，索引改值堆内调',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>与 IndexMinPQ 相同结构，比较方向相反，支持按索引更新并获取最大键值。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>优先队列每次取出优先级最高（或最低）的元素，通常用堆实现。</p></div><div class="desc-section"><h3>推导过程</h3><p>底层用堆维护。插入时上浮，删除堆顶时下沉。索引优先队列额外维护索引到堆位置的映射，支持 O(log n) 修改任意元素的优先级。</p></div><div class="desc-section"><h3>适用场景</h3><p>任务调度、Dijkstra 最短路径、Top-K、合并有序流。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 医院急诊叫号。② 打印机优先级队列。③ Dijkstra 算法。</p></div>`,
             code: indexMaxPQCode, defaultData: NUM_DEFAULT, dataParser: NUM_DATA, run: indexMaxPQRun
         }
     ];

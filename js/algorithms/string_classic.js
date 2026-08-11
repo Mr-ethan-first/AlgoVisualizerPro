@@ -504,10 +504,7 @@
             complexity: { time: 'O(m)', space: 'O(m)' },
             keywords: ['kmp', 'next', 'pattern'],
             mnemonic: '前缀自比最长相配，失配跳跃不回退',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>构建部分匹配表（next 数组），利用已匹配前缀信息，避免主串指针回退。</p>
-                <h3>复杂度</h3><p>构建 next: O(m)；匹配: O(n)</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>KMP 在匹配失败时利用已匹配部分的信息，让模式串滑动到最可能匹配的位置。</p></div><div class="desc-section"><h3>推导过程</h3><p>预处理模式串得到 next 数组：next[i] 表示子串 [0..i] 的最长相等真前缀与真后缀长度。匹配时若主串 j 与模式串 i 不等，i 回退到 next[i−1] 继续比较，避免主串指针回退。</p></div><div class="desc-section"><h3>适用场景</h3><p>单模式串精确匹配、文本搜索、DNA 序列比对。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 编辑器查找替换。② 病毒特征码匹配。③ 基因序列定位。</p></div>`,
             code: kmpNextCode,
             run: kmpNextRun
         },
@@ -517,9 +514,7 @@
             complexity: { time: 'O(n+m)', space: 'O(m)' },
             keywords: ['kmp', 'match', 'search'],
             mnemonic: '失配查next跳转，主串指针永不退',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>利用 next 数组在失配时跳过重复比较，主指针 i 不回退，时间复杂度 O(n)。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>KMP 在匹配失败时利用已匹配部分的信息，让模式串滑动到最可能匹配的位置。</p></div><div class="desc-section"><h3>推导过程</h3><p>预处理模式串得到 next 数组：next[i] 表示子串 [0..i] 的最长相等真前缀与真后缀长度。匹配时若主串 j 与模式串 i 不等，i 回退到 next[i−1] 继续比较，避免主串指针回退。</p></div><div class="desc-section"><h3>适用场景</h3><p>单模式串精确匹配、文本搜索、DNA 序列比对。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 编辑器查找替换。② 病毒特征码匹配。③ 基因序列定位。</p></div>`,
             code: kmpMatchCode,
             run: kmpMatchRun
         },
@@ -529,14 +524,7 @@
             complexity: { time: 'O(nm)', space: 'O(nm)' },
             keywords: ['lcs', 'longest common subsequence', 'dp'],
             mnemonic: '相等加一斜对角，不等取上左较大',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>动态规划：dp[i][j] = s1[0..i-1] 与 s2[0..j-1] 的 LCS 长度。</p>
-                <h3>状态转移</h3>
-                <ul>
-                    <li>s1[i-1] = s2[j-1]: dp[i][j] = dp[i-1][j-1] + 1</li>
-                    <li>否则: dp[i][j] = max(dp[i-1][j], dp[i][j-1])</li>
-                </ul>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>最长公共子序列求两个串中按顺序出现但不一定连续的最长相同序列长度。</p></div><div class="desc-section"><h3>推导过程</h3><p>设 dp[i][j] 表示 a[0..i−1] 与 b[0..j−1] 的 LCS。若 a[i−1]==b[j−1]，dp[i][j]=dp[i−1][j−1]+1；否则 dp[i][j]=max(dp[i−1][j], dp[i][j−1])。</p></div><div class="desc-section"><h3>适用场景</h3><p>DNA 比对、版本 diff、拼写纠错、蛋白质序列分析。</p></div><div class="desc-section"><h3>典型案例</h3><p>① git diff。② 基因序列相似度。③ 论文重复率初筛。</p></div>`,
             code: lcsCode,
             run: lcsRun
         },
@@ -546,10 +534,7 @@
             complexity: { time: 'O(log n)', space: 'O(1)' },
             keywords: ['binary search', 'er fen', 'search'],
             mnemonic: '有序折半查中点，左右缩区定目标',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>每次比较中点元素，将搜索区间减半。要求序列有序。</p>
-                <h3>复杂度</h3><p>时间 O(log n)，空间 O(1)</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>在有序数组中每次把搜索范围减半，快速定位目标。</p></div><div class="desc-section"><h3>推导过程</h3><p>取区间中间元素与目标比较：若相等则找到；若目标更小，在左半区间继续；否则在右半区间继续。区间长度每次减半，因此最多 O(log n) 次比较。</p></div><div class="desc-section"><h3>适用场景</h3><p>有序数据查找、范围查询、求上下界、旋转数组查找。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 字典查单词。② 在有序成绩表找分数。③ 查找第一个/最后一个满足条件的元素。</p></div>`,
             code: binarySearchCode,
             defaultData: [1, 3, 5, 7, 9, 11, 13, 15, 17, 19],
             dataParser: (s) => s.split(',').map(x => parseInt(x.trim(), 10)).filter(n => !isNaN(n)).sort((a,b)=>a-b),
@@ -561,10 +546,7 @@
             complexity: { time: 'O(2ⁿ)', space: 'O(n)' },
             keywords: ['fibonacci', 'recursion'],
             mnemonic: '递归两支同调用，指数爆炸重算多',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>直接按定义递归：fib(n) = fib(n-1) + fib(n-2)。存在大量重复子问题。</p>
-                <h3>复杂度</h3><p>时间 O(2ⁿ) 指数级，空间 O(n) 递归栈</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>斐波那契数列定义为 F(n)=F(n−1)+F(n−2)，体现递归与重叠子问题。</p></div><div class="desc-section"><h3>推导过程</h3><p>递归直接按定义计算会重复算很多子问题。DP 用数组保存已算结果，从 F(0)、F(1) 递推到 F(n)，时间 O(n)。矩阵快速幂可进一步优化到 O(log n)。</p></div><div class="desc-section"><h3>适用场景</h3><p>教学演示递归与 DP、自然界规律建模、组合计数。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 爬楼梯（每次 1 或 2 步）。② 兔子繁殖模型。③ 黄金分割近似。</p></div>`,
             code: fibRecCode,
             defaultData: [5],
             dataParser: (s) => [Math.min(10, parseInt(s.split(',')[0], 10) || 5)],
@@ -576,10 +558,7 @@
             complexity: { time: 'O(n)', space: 'O(n)' },
             keywords: ['fibonacci', 'dp', 'dynamic programming'],
             mnemonic: '自底向上填表，每算一次免重复',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>自底向上填表，避免重复计算。每个子问题只算一次。</p>
-                <h3>复杂度</h3><p>时间 O(n)，空间 O(n)（可优化为 O(1)）</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>斐波那契数列定义为 F(n)=F(n−1)+F(n−2)，体现递归与重叠子问题。</p></div><div class="desc-section"><h3>推导过程</h3><p>递归直接按定义计算会重复算很多子问题。DP 用数组保存已算结果，从 F(0)、F(1) 递推到 F(n)，时间 O(n)。矩阵快速幂可进一步优化到 O(log n)。</p></div><div class="desc-section"><h3>适用场景</h3><p>教学演示递归与 DP、自然界规律建模、组合计数。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 爬楼梯（每次 1 或 2 步）。② 兔子繁殖模型。③ 黄金分割近似。</p></div>`,
             code: fibDpCode,
             defaultData: [10],
             dataParser: (s) => [parseInt(s.split(',')[0], 10) || 10],
@@ -591,15 +570,7 @@
             complexity: { time: 'O(nW)', space: 'O(nW)' },
             keywords: ['knapsack', 'backpack', 'dp'],
             mnemonic: '选或不选取最大，容量倒推防重用',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>dp[i][w] = 前 i 件物品在容量 w 下的最大价值。</p>
-                <h3>状态转移</h3>
-                <ul>
-                    <li>不放第 i 件: dp[i][w] = dp[i-1][w]</li>
-                    <li>放第 i 件: dp[i][w] = dp[i-1][w - weights[i-1]] + values[i-1]</li>
-                    <li>取两者最大值</li>
-                </ul>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>背包问题在容量限制下选择物品，使价值最大。</p></div><div class="desc-section"><h3>推导过程</h3><p>设 dp[i][w] 表示前 i 个物品、容量 w 时的最大价值。0-1 背包：dp[i][w]=max(不选 i, 选 i 即 dp[i−1][w−weight[i]]+value[i])。完全背包物品可重复，顺序改为从小到大枚举容量。</p></div><div class="desc-section"><h3>适用场景</h3><p>资源分配、装载优化、预算分配、投资组合。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 旅行箱装行李使价值最大。② 项目预算选择。③ 广告投放组合优化。</p></div>`,
             code: knapsackCode,
             run: knapsackRun
         },
@@ -609,10 +580,7 @@
             complexity: { time: 'O(n!)', space: 'O(n²)' },
             keywords: ['nqueens', 'backtrack', 'hu su'],
             mnemonic: '逐行试列查冲突，合法递归非法退',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>回溯：逐行放置皇后，每行尝试每一列，合法则递归下一行，否则撤销回溯。</p>
-                <h3>复杂度</h3><p>时间 O(n!)，最坏需枚举所有排列</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>在 n×n 棋盘上放 n 个皇后，使她们互不攻击。</p></div><div class="desc-section"><h3>推导过程</h3><p>每行放一个皇后。逐行尝试每一列，检查是否与已放皇后同列或同对角线。若冲突则回溯；若放完所有行则找到一个解。</p></div><div class="desc-section"><h3>适用场景</h3><p>约束满足、回溯算法教学、棋盘游戏。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 八皇后 puzzle。② 数独求解。③ 约束满足问题原型。</p></div>`,
             code: nqueensCode,
             defaultData: [4],
             dataParser: (s) => [Math.min(8, Math.max(4, parseInt(s.split(',')[0], 10) || 4))],

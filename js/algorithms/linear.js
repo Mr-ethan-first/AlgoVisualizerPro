@@ -304,16 +304,7 @@ function find(head, target) {
             complexity: { time: '均摊 O(1)', space: 'O(n)' },
             keywords: ['dynamic array', 'append', 'expand'],
             mnemonic: '满则倍增扩容，尾部追加均摊一',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3>
-                <p>动态数组在容量不足时自动扩容（通常 ×2），通过均摊分析，单次 push 的均摊时间为 O(1)。</p>
-                <h3>关键点</h3>
-                <ul>
-                    <li>容量 cap：底层数组物理大小</li>
-                    <li>大小 size：实际元素个数</li>
-                    <li>扩容：分配新数组 → 复制旧元素 → 释放旧数组</li>
-                </ul>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>动态数组用一段连续内存存储元素，支持随机访问；容量不足时申请更大空间并搬移数据。</p></div><div class="desc-section"><h3>推导过程</h3><p>追加元素时，若 size < capacity 直接放入；否则扩容（通常 1.5~2 倍），把旧数据 copy 过去，再插入。均摊时间 O(1)。插入/删除中间元素需要搬移后续元素，时间 O(n)。</p></div><div class="desc-section"><h3>适用场景</h3><p>需要随机访问、动态增删尾部元素的集合。</p></div><div class="desc-section"><h3>典型案例</h3><p>① Python/Java 的 ArrayList/Vector。② 实现栈和队列的底层。③ 缓冲区。</p></div>`,
             code: appendCode,
             defaultData: [],
             dataParser: NUM_DATA,
@@ -325,10 +316,7 @@ function find(head, target) {
             complexity: { time: 'O(n)', space: 'O(1)' },
             keywords: ['insert', 'remove', 'shift'],
             mnemonic: '中间插入先腾位，后移元素再落座',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3>
-                <p>在中间插入/删除时，需要将后续元素整体右移/左移，时间复杂度 O(n)。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>动态数组用一段连续内存存储元素，支持随机访问；容量不足时申请更大空间并搬移数据。</p></div><div class="desc-section"><h3>推导过程</h3><p>追加元素时，若 size < capacity 直接放入；否则扩容（通常 1.5~2 倍），把旧数据 copy 过去，再插入。均摊时间 O(1)。插入/删除中间元素需要搬移后续元素，时间 O(n)。</p></div><div class="desc-section"><h3>适用场景</h3><p>需要随机访问、动态增删尾部元素的集合。</p></div><div class="desc-section"><h3>典型案例</h3><p>① Python/Java 的 ArrayList/Vector。② 实现栈和队列的底层。③ 缓冲区。</p></div>`,
             code: insertDeleteCode,
             defaultData: [],
             dataParser: NUM_DATA,
@@ -340,11 +328,7 @@ function find(head, target) {
             complexity: { time: 'O(n)', space: 'O(1)' },
             keywords: ['linked list', 'insert', 'remove'],
             mnemonic: '改指即插删，遍历找位先',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3>
-                <p>链表插入/删除只需修改 next 指针，但需先遍历到目标位置（O(n)）。</p>
-                <h3>优势</h3><p>插入/删除本身 O(1)，无需移动元素。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>链表用节点保存数据和 next 指针，通过指针连接形成线性序列，插入删除只需改指针。</p></div><div class="desc-section"><h3>推导过程</h3><p>每个节点记录 value 和 next。要插入新节点，先找到前驱，让新节点指向原后继，再让前驱指向新节点。删除则是让前驱跳过目标节点。</p></div><div class="desc-section"><h3>适用场景</h3><p>频繁插入删除、不需要随机访问、需要动态增长的场景。</p></div><div class="desc-section"><h3>典型案例</h3><p>① LRU 缓存。② 实现队列、栈。③ 多项式表示。</p></div>`,
             code: listInsDelCode,
             defaultData: [],
             dataParser: NUM_DATA,
@@ -356,10 +340,7 @@ function find(head, target) {
             complexity: { time: 'O(n)', space: 'O(1)' },
             keywords: ['linked list', 'find', 'traverse'],
             mnemonic: '从头顺次走，遇空即终止',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3>
-                <p>从头节点开始，依次访问每个节点，直到找到目标或链表末尾。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>链表用节点保存数据和 next 指针，通过指针连接形成线性序列，插入删除只需改指针。</p></div><div class="desc-section"><h3>推导过程</h3><p>每个节点记录 value 和 next。要插入新节点，先找到前驱，让新节点指向原后继，再让前驱指向新节点。删除则是让前驱跳过目标节点。</p></div><div class="desc-section"><h3>适用场景</h3><p>频繁插入删除、不需要随机访问、需要动态增长的场景。</p></div><div class="desc-section"><h3>典型案例</h3><p>① LRU 缓存。② 实现队列、栈。③ 多项式表示。</p></div>`,
             code: listTravelCode,
             defaultData: [],
             dataParser: NUM_DATA,
@@ -371,12 +352,7 @@ function find(head, target) {
             complexity: { time: 'O(1)', space: 'O(n)' },
             keywords: ['stack', 'push', 'pop', 'LIFO'],
             mnemonic: '后进先出栈顶忙，入出均一记得牢',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3>
-                <p>后进先出 (LIFO)。push 入栈顶，pop 出栈顶，均为 O(1)。</p>
-                <h3>典型应用</h3>
-                <ul><li>函数调用栈</li><li>括号匹配</li><li>表达式求值</li><li>DFS</li></ul>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>栈是一种“后进先出”的线性结构，只能在栈顶 push 和 pop。</p></div><div class="desc-section"><h3>推导过程</h3><p>用数组或链表维护一个 top 指针。push 时 top 加 1 并放入元素；pop 时取出 top 位置元素并减 1。最后进入的最先被取出。</p></div><div class="desc-section"><h3>适用场景</h3><p>函数调用、表达式求值、撤销操作、括号匹配。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 浏览器前进/后退。② 编译器表达式求值。③ 括号匹配检查。</p></div>`,
             code: stackCode,
             defaultData: [],
             dataParser: NUM_DATA,
@@ -388,12 +364,7 @@ function find(head, target) {
             complexity: { time: 'O(1)', space: 'O(n)' },
             keywords: ['queue', 'enqueue', 'dequeue', 'FIFO'],
             mnemonic: '先进先出排尾首，入出均一无等待',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3>
-                <p>先进先出 (FIFO)。enqueue 入队尾，dequeue 出队首，均为 O(1)。</p>
-                <h3>典型应用</h3>
-                <ul><li>BFS</li><li>任务调度</li><li>消息缓冲</li></ul>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>队列是“先进先出”的结构，队尾入队、队首出队；双端队列两端都可操作。</p></div><div class="desc-section"><h3>推导过程</h3><p>用数组循环队列或双向链表维护 head 和 tail。入队移动 tail，出队移动 head。循环队列用取模复用被释放的空间。</p></div><div class="desc-section"><h3>适用场景</h3><p>任务调度、BFS、缓存、流水线缓冲。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 打印机任务队列。② BFS 图遍历。③ 消息队列。</p></div>`,
             code: queueCode,
             defaultData: [],
             dataParser: NUM_DATA,

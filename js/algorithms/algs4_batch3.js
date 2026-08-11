@@ -1855,182 +1855,182 @@ function relax(e, v) {
             id: 'graph.tarjan', name: 'Tarjan 强连通分量', category: 'graph', level: 'P3',
             complexity: { time: 'O(V + E)', space: 'O(V)' }, keywords: ['tarjan', 'scc', 'low-link'],
             mnemonic: '一遍DFS记low值，low等num出分量',
-            description: D('核心思想', '单遍 DFS 为每个顶点维护 num（发现序）与 low（子树能回溯到的最小发现序）。当 low[v] === num[v] 时，v 是一个强连通分量的根，栈中 v 及其之上的顶点构成该分量。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>强连通分量是图中互相可达的最大子图。</p></div><div class="desc-section"><h3>推导过程</h3><p>Kosaraju 做两次 DFS：第一次记录完成顺序，第二次在反向图上按逆序 DFS，每次得到 SCC。Tarjan 用一次 DFS 维护 dfn/low，当 low[u]==dfn[u] 时弹出栈中节点即为一个 SCC。</p></div><div class="desc-section"><h3>适用场景</h3><p>社交网络社群发现、依赖环检测、缩点建 DAG。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 微博互相关注圈子。② 代码模块循环依赖检测。③ 地图强连通区域分析。</p></div>`,
             code: tarjanCode, ...G_, run: tarjanRun
         },
         {
             id: 'graph.gabow', name: 'Gabow 强连通分量', category: 'graph', level: 'P3',
             complexity: { time: 'O(V + E)', space: 'O(V)' }, keywords: ['gabow', 'scc', 'two stacks'],
             mnemonic: '双栈代替low值，栈顶即候选根',
-            description: D('核心思想', '用两个栈取代 low-link 数组：stack1 存所有已访问顶点，stack2 存当前分量的候选根。遇到回边时把 stack2 中发现序大于目标的候选根弹出；当 stack2 栈顶等于当前顶点时即找到一个 SCC。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>强连通分量是图中互相可达的最大子图。</p></div><div class="desc-section"><h3>推导过程</h3><p>Kosaraju 做两次 DFS：第一次记录完成顺序，第二次在反向图上按逆序 DFS，每次得到 SCC。Tarjan 用一次 DFS 维护 dfn/low，当 low[u]==dfn[u] 时弹出栈中节点即为一个 SCC。</p></div><div class="desc-section"><h3>适用场景</h3><p>社交网络社群发现、依赖环检测、缩点建 DAG。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 微博互相关注圈子。② 代码模块循环依赖检测。③ 地图强连通区域分析。</p></div>`,
             code: gabowCode, ...G_, run: gabowRun
         },
         {
             id: 'graph.transClosure', name: '传递闭包 (Warshall)', category: 'graph', level: 'P2',
             complexity: { time: 'O(V³)', space: 'O(V²)' }, keywords: ['transitive closure', 'warshall'],
             mnemonic: '三重循环转中点，可达关系全打通',
-            description: D('核心思想', '用布尔矩阵 reach[i][j] 表示 i 是否可达 j。以每个顶点 k 作为中转点做三重循环松弛：若 i→k 且 k→j 则 i→j。最终得到完整可达性矩阵。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>传递闭包回答“从 i 能否到达 j”这一布尔关系。</p></div><div class="desc-section"><h3>推导过程</h3><p>可视为所有点对最短路径的布尔版。Floyd 思想：枚举中间点 k，若 i 能到 k 且 k 能到 j，则 i 能到 j。</p></div><div class="desc-section"><h3>适用场景</h3><p>可达性查询、数据库关系闭包、工作流依赖分析。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 权限继承关系。② 数据库传递依赖。③ 工作流任务可达性。</p></div>`,
             code: transClosureCode, ...G_, run: transClosureRun
         },
         {
             id: 'graph.topoX', name: '拓扑排序优化版 (Kahn)', category: 'graph', level: 'P2',
             complexity: { time: 'O(V + E)', space: 'O(V)' }, keywords: ['topological sort', 'kahn', 'indegree'],
             mnemonic: '入度为零先出队，删边降度再入队',
-            description: D('核心思想', '基于入度的非递归拓扑排序：先把所有入度为 0 的顶点入队；每次出队一个顶点并输出，把它所有出边的终点入度减 1，减到 0 就入队。若输出顶点数 < V 则说明存在环。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>拓扑排序把 DAG 的顶点排成线性序列，使得所有边都从前指向后。</p></div><div class="desc-section"><h3>推导过程</h3><p>Kahn 算法反复找入度为 0 的点加入结果，并删除其出边。DFS 法则是记录后序遍历的逆序。若无法处理完所有点，说明图中有环。</p></div><div class="desc-section"><h3>适用场景</h3><p>任务调度、依赖解析、编译顺序、课程先修。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 大学选课计划。② Makefile 构建顺序。③ npm 依赖安装顺序。</p></div>`,
             code: topoXCode, ...G_, run: topoXRun
         },
         {
             id: 'graph.dfsOrder', name: 'DFS 序（前/后/逆后序）', category: 'graph', level: 'P2',
             complexity: { time: 'O(V + E)', space: 'O(V)' }, keywords: ['dfs order', 'preorder', 'postorder'],
             mnemonic: '进时记前离记后，后序反转即拓扑',
-            description: D('核心思想', 'DFS 过程中记录三种顺序：前序（进入顶点时入队）、后序（离开顶点时入队）、逆后序（后序反转）。对 DAG 而言逆后序即为拓扑序，这是 Kosaraju SCC 算法的基础。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>从起点出发，沿着一条路径一直走到底，走不通再回退试别的路。</p></div><div class="desc-section"><h3>推导过程</h3><p>用递归或显式栈实现。访问节点后标记，再递归访问未访问的邻居。回溯时撤销当前选择。可用于遍历、找环、求连通分量、拓扑排序。</p></div><div class="desc-section"><h3>适用场景</h3><p>路径搜索、连通性、环检测、拓扑排序、回溯。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 迷宫找通路。② 判断图是否有环。③ 解数独/ N 皇后。</p></div>`,
             code: dfsOrderCode, ...G_, run: dfsOrderRun
         },
         {
             id: 'graph.nrDFS', name: '非递归 DFS（显式栈）', category: 'graph', level: 'P1',
             complexity: { time: 'O(V + E)', space: 'O(V)' }, keywords: ['dfs', 'iterative', 'stack'],
             mnemonic: '显式栈替调用栈，深图不怕爆栈',
-            description: D('核心思想', '用显式栈模拟递归调用栈完成深度优先搜索，避免超深递归导致的栈溢出。入栈时即标记 marked，保证每个顶点只入栈一次。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>从起点出发，沿着一条路径一直走到底，走不通再回退试别的路。</p></div><div class="desc-section"><h3>推导过程</h3><p>用递归或显式栈实现。访问节点后标记，再递归访问未访问的邻居。回溯时撤销当前选择。可用于遍历、找环、求连通分量、拓扑排序。</p></div><div class="desc-section"><h3>适用场景</h3><p>路径搜索、连通性、环检测、拓扑排序、回溯。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 迷宫找通路。② 判断图是否有环。③ 解数独/ N 皇后。</p></div>`,
             code: nrDFSCode, ...G_, run: nrDFSRun
         },
         {
             id: 'graph.nrDirDFS', name: '非递归有向 DFS', category: 'graph', level: 'P1',
             complexity: { time: 'O(V + E)', space: 'O(V)' }, keywords: ['directed dfs', 'iterative'],
             mnemonic: '有向边单向走，栈中求可达集',
-            description: D('核心思想', '在有向图上用显式栈做 DFS，仅沿出边方向前进，最终 marked 集合即为源点的可达集合。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>从起点出发，沿着一条路径一直走到底，走不通再回退试别的路。</p></div><div class="desc-section"><h3>推导过程</h3><p>用递归或显式栈实现。访问节点后标记，再递归访问未访问的邻居。回溯时撤销当前选择。可用于遍历、找环、求连通分量、拓扑排序。</p></div><div class="desc-section"><h3>适用场景</h3><p>路径搜索、连通性、环检测、拓扑排序、回溯。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 迷宫找通路。② 判断图是否有环。③ 解数独/ N 皇后。</p></div>`,
             code: nrDFSCode, ...G_, run: nrDirDFSRun
         },
         {
             id: 'graph.dirDFS', name: '有向图可达性（多源）', category: 'graph', level: 'P1',
             complexity: { time: 'O(V + E)', space: 'O(V)' }, keywords: ['reachability', 'directed dfs'],
             mnemonic: '多源同标记，可达一次算',
-            description: D('核心思想', '从一组源点同时出发做 DFS，共用同一个 marked 数组，一遍扫描即可得到"任一源点可达"的顶点集合。垃圾回收的标记阶段正是这一算法。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>把问题建模成图，通过遍历、松弛或匹配等操作得到所需结果。</p></div><div class="desc-section"><h3>推导过程</h3><p>图的核心是顶点和边。根据问题选择 BFS/DFS、最短路径、最小生成树或网络流等算法，把实际问题转化为图上的计算。</p></div><div class="desc-section"><h3>适用场景</h3><p>关系网络、路径规划、依赖分析、资源分配。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 地图导航。② 社交网络分析。③ 软件依赖管理。</p></div>`,
             code: dirDFSCode, ...G_, run: dirDFSRun
         },
         {
             id: 'graph.bfsDirPaths', name: '有向图 BFS 路径', category: 'graph', level: 'P1',
             complexity: { time: 'O(V + E)', space: 'O(V)' }, keywords: ['bfs', 'shortest path', 'directed'],
             mnemonic: '按层扩展队列走，边数最少即最短',
-            description: D('核心思想', '在有向图上做广度优先搜索，distTo 记录源点到各顶点的最少边数，edgeTo 记录父节点用于回溯路径。这是无权图上的最短路径算法。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>从起点开始，一层一层地访问所有邻居，像水波扩散。</p></div><div class="desc-section"><h3>推导过程</h3><p>用队列维护当前层节点。弹出队首，把所有未访问的邻居入队。由于先入队的先处理，保证距离起点近的节点先被访问，从而找到无权图的最短路径。</p></div><div class="desc-section"><h3>适用场景</h3><p>无权图最短路径、层级遍历、连通性、社交网络扩散。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 迷宫最短步数。② 好友关系的“六度分隔”。③ 病毒传播模拟。</p></div>`,
             code: bfsDirCode, ...G_, run: bfsDirRun
         },
         {
             id: 'graph.dfsDirPaths', name: '有向图 DFS 路径', category: 'graph', level: 'P1',
             complexity: { time: 'O(V + E)', space: 'O(V)' }, keywords: ['dfs', 'path', 'directed'],
             mnemonic: 'edgeTo记父边，回溯得到一条路',
-            description: D('核心思想', 'DFS 遍历有向图，用 edgeTo[] 记录 DFS 树的父边。任意可达顶点都可以沿 edgeTo 回溯到源点，得到一条（不一定最短的）路径。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>从起点出发，沿着一条路径一直走到底，走不通再回退试别的路。</p></div><div class="desc-section"><h3>推导过程</h3><p>用递归或显式栈实现。访问节点后标记，再递归访问未访问的邻居。回溯时撤销当前选择。可用于遍历、找环、求连通分量、拓扑排序。</p></div><div class="desc-section"><h3>适用场景</h3><p>路径搜索、连通性、环检测、拓扑排序、回溯。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 迷宫找通路。② 判断图是否有环。③ 解数独/ N 皇后。</p></div>`,
             code: dirDFSCode, ...G_, run: dfsDirRun
         },
         {
             id: 'graph.directedCycleX', name: '有向环检测优化版', category: 'graph', level: 'P2',
             complexity: { time: 'O(V + E)', space: 'O(V)' }, keywords: ['cycle detection', 'indegree'],
             mnemonic: '反复删零入度点，剩下的都在环上',
-            description: D('核心思想', '非递归环检测：反复删除入度为 0 的顶点（即拓扑排序过程）。若最终仍有顶点未被删除，这些顶点必定构成有向环。避免了深度递归。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>检测图中是否存在环，以及找出环上的节点。</p></div><div class="desc-section"><h3>推导过程</h3><p>DFS 时记录递归栈，若遇到已在栈中的邻居，说明有环。并查集也可以：若一条边的两个端点已在同一集合，则形成环。</p></div><div class="desc-section"><h3>适用场景</h3><p>死锁检测、依赖冲突、电路网络、编译循环依赖。</p></div><div class="desc-section"><h3>典型案例</h3><p>① npm 循环依赖检测。② 数据库死锁检测。③ 判断课程先修是否有矛盾。</p></div>`,
             code: dcycXCode, ...G_, run: dcycXRun
         },
         {
             id: 'graph.ewDirCycle', name: '带权有向图环检测', category: 'graph', level: 'P2',
             complexity: { time: 'O(V + E)', space: 'O(V)' }, keywords: ['weighted', 'cycle', 'onStack'],
             mnemonic: '栈上遇旧点，即刻现环形',
-            description: D('核心思想', 'DFS 时维护 onStack[] 标记当前递归栈上的顶点。若遇到一条指向 onStack 顶点的边，则该边是回边，沿 edgeTo 回溯即可还原整个有向环。是 Bellman-Ford 负环检测的基础。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>检测图中是否存在环，以及找出环上的节点。</p></div><div class="desc-section"><h3>推导过程</h3><p>DFS 时记录递归栈，若遇到已在栈中的邻居，说明有环。并查集也可以：若一条边的两个端点已在同一集合，则形成环。</p></div><div class="desc-section"><h3>适用场景</h3><p>死锁检测、依赖冲突、电路网络、编译循环依赖。</p></div><div class="desc-section"><h3>典型案例</h3><p>① npm 循环依赖检测。② 数据库死锁检测。③ 判断课程先修是否有矛盾。</p></div>`,
             code: dcycXCode, ...G_, run: ewDirCycleRun
         },
         {
             id: 'graph.lazyPrim', name: '惰性 Prim 最小生成树', category: 'graph', level: 'P2',
             complexity: { time: 'O(E log E)', space: 'O(E)' }, keywords: ['mst', 'prim', 'lazy'],
             mnemonic: '横切边全入堆，取出再判失效',
-            description: D('核心思想', '优先队列中保存所有横切边（含可能已失效的）。每次取出权值最小的边，若两端点都已在树中则直接丢弃（惰性删除），否则加入 MST 并访问新顶点。实现简单，代价是队列可能变大。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>最小生成树选出一组边，连接所有顶点且总权重最小。</p></div><div class="desc-section"><h3>推导过程</h3><p>Prim 从一个点开始，每次选连接“已选集合”和“未选集合”的最短边，像长草。Kruskal 按边权排序，用并查集避免成环。Boruvka 每轮为每个连通块选最小边。</p></div><div class="desc-section"><h3>适用场景</h3><p>网络设计、电路布线、聚类、管道铺设。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 城市间铺设光纤使成本最低。② 电路板最小连线。③ 传感器网络连接。</p></div>`,
             code: lazyPrimCode, ...G_, run: lazyPrimRun
         },
         {
             id: 'graph.boruvka', name: 'Boruvka 最小生成树', category: 'graph', level: 'P3',
             complexity: { time: 'O(E log V)', space: 'O(V)' }, keywords: ['mst', 'boruvka', 'parallel'],
             mnemonic: '每轮各找最短出边，分量成对并起来',
-            description: D('核心思想', '每一轮为每个连通分量找出权值最小的出边并全部合并，分量数至少减半，因此最多 log V 轮。天然适合并行化，是分布式 MST 的基础。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>最小生成树选出一组边，连接所有顶点且总权重最小。</p></div><div class="desc-section"><h3>推导过程</h3><p>Prim 从一个点开始，每次选连接“已选集合”和“未选集合”的最短边，像长草。Kruskal 按边权排序，用并查集避免成环。Boruvka 每轮为每个连通块选最小边。</p></div><div class="desc-section"><h3>适用场景</h3><p>网络设计、电路布线、聚类、管道铺设。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 城市间铺设光纤使成本最低。② 电路板最小连线。③ 传感器网络连接。</p></div>`,
             code: boruvkaCode, ...G_, run: boruvkaRun
         },
         {
             id: 'graph.dijkstraUndir', name: '无向图 Dijkstra', category: 'graph', level: 'P2',
             complexity: { time: 'O(E log V)', space: 'O(V)' }, keywords: ['dijkstra', 'shortest path', 'undirected'],
             mnemonic: '每次取最近点，松弛所有邻边',
-            description: D('核心思想', '把无向边视作两条方向相反的有向边后套用 Dijkstra。每次从未确定顶点中取 dist 最小者确定其最短路，再松弛它的所有邻边。要求边权非负。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>用于非负权图的单源最短路径：每次都选当前距离最小的点，用它更新邻居。</p></div><div class="desc-section"><h3>推导过程</h3><p>维护 dist[] 表示起点到各点的当前最短距离。初始 dist[start]=0，其余为 ∞。用优先队列取 dist 最小的点 u，对每条边 u→v，若 dist[u]+w < dist[v] 则更新。贪心成立的前提是所有边权非负。</p></div><div class="desc-section"><h3>适用场景</h3><p>地图导航、网络路由、物流配送、游戏寻路。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 高德地图最短路径。② 网络路由协议 OSPF。③ 外卖骑手路径规划。</p></div>`,
             code: dijkstraUndirCode, ...G_, run: dijkstraUndirRun
         },
         {
             id: 'graph.dijkstraAll', name: '全源最短路 (Dijkstra×V)', category: 'graph', level: 'P2',
             complexity: { time: 'O(V·E log V)', space: 'O(V²)' }, keywords: ['all pairs', 'dijkstra'],
             mnemonic: '每点当源跑一遍，距离矩阵全填满',
-            description: D('核心思想', '以每个顶点为源各跑一次 Dijkstra，得到完整的全源最短距离矩阵。稀疏图上优于 Floyd-Warshall 的 O(V³)，但要求边权非负。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>用于非负权图的单源最短路径：每次都选当前距离最小的点，用它更新邻居。</p></div><div class="desc-section"><h3>推导过程</h3><p>维护 dist[] 表示起点到各点的当前最短距离。初始 dist[start]=0，其余为 ∞。用优先队列取 dist 最小的点 u，对每条边 u→v，若 dist[u]+w < dist[v] 则更新。贪心成立的前提是所有边权非负。</p></div><div class="desc-section"><h3>适用场景</h3><p>地图导航、网络路由、物流配送、游戏寻路。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 高德地图最短路径。② 网络路由协议 OSPF。③ 外卖骑手路径规划。</p></div>`,
             code: dijkstraUndirCode, ...G_, run: dijkstraAllRun
         },
         {
             id: 'graph.arbitrage', name: '货币套利（负环检测）', category: 'graph', level: 'P3',
             complexity: { time: 'O(V·E)', space: 'O(V)' }, keywords: ['arbitrage', 'negative cycle', 'bellman-ford'],
             mnemonic: '取负对数化乘为加，负环就是套利环',
-            description: D('核心思想', '汇率相乘大于 1 意味着套利。对每条边取权值 -ln(rate) 后，"乘积 > 1" 等价于"权重和 < 0"，于是套利检测转化为 Bellman-Ford 的负权环检测。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>检测图中是否存在环，以及找出环上的节点。</p></div><div class="desc-section"><h3>推导过程</h3><p>DFS 时记录递归栈，若遇到已在栈中的邻居，说明有环。并查集也可以：若一条边的两个端点已在同一集合，则形成环。</p></div><div class="desc-section"><h3>适用场景</h3><p>死锁检测、依赖冲突、电路网络、编译循环依赖。</p></div><div class="desc-section"><h3>典型案例</h3><p>① npm 循环依赖检测。② 数据库死锁检测。③ 判断课程先修是否有矛盾。</p></div>`,
             code: arbitrageCode, ...G_, run: arbitrageRun
         },
         {
             id: 'graph.cpm', name: '关键路径法 (CPM)', category: 'graph', level: 'P3',
             complexity: { time: 'O(V + E)', space: 'O(V)' }, keywords: ['cpm', 'critical path', 'scheduling'],
             mnemonic: 'DAG上求最长路，关键路径定工期',
-            description: D('核心思想', '把作业调度问题建模为 DAG：顶点是作业，边权是前驱作业的工期。按拓扑序求最长路即得每个作业的最早开始时间，最长路即项目最短工期，路径上的作业构成关键路径（不可延误）。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>关键路径法找出项目中最长的依赖路径，决定了项目的最短完成时间。</p></div><div class="desc-section"><h3>推导过程</h3><p>把任务按依赖关系建成 DAG，边权为任务持续时间。先拓扑排序，再正向求最早开始时间、反向求最晚开始时间，两者差为 0 的任务在关键路径上。</p></div><div class="desc-section"><h3>适用场景</h3><p>项目管理、工程调度、生产计划。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 建筑项目排期。② 软件开发里程碑规划。③ 工厂流水线调度。</p></div>`,
             code: cpmCode, ...G_, run: cpmRun
         },
         {
             id: 'graph.eulerCycle', name: '无向欧拉回路', category: 'graph', level: 'P3',
             complexity: { time: 'O(E)', space: 'O(E)' }, keywords: ['eulerian', 'hierholzer'],
             mnemonic: '度数全偶有回路，走不动就回溯记',
-            description: D('核心思想', '欧拉回路要求连通且所有顶点度数为偶。Hierholzer 算法用栈模拟：能走就沿未使用的边前进，走不动就把栈顶弹出加入回路，最终反转即得欧拉回路（一笔画）。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>欧拉路径/回路是经过图中每条边恰好一次的路径；回路要求起点终点相同。</p></div><div class="desc-section"><h3>推导过程</h3><p>Hierholzer 算法：从起点出发随便走，遇到死胡同时把路径倒序加入结果，再处理还有未访问边的点。无向图存在欧拉回路当且仅当连通且所有点度数为偶数。</p></div><div class="desc-section"><h3>适用场景</h3><p>路线规划、一笔画问题、DNA 序列拼接。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 邮递员路线（每条街走一次）。② 游戏“一笔画”。③ 基因组拼接。</p></div>`,
             code: eulerCode, ...G_, run: eulerCycleRun
         },
         {
             id: 'graph.dirEulerCycle', name: '有向欧拉回路', category: 'graph', level: 'P3',
             complexity: { time: 'O(E)', space: 'O(E)' }, keywords: ['directed eulerian', 'hierholzer'],
             mnemonic: '入度等出度，一笔画回原点',
-            description: D('核心思想', '有向欧拉回路要求每个顶点入度等于出度且连通。同样用 Hierholzer 栈算法，只是沿出边前进。DNA 序列拼接的 de Bruijn 图正是靠它求解。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>欧拉路径/回路是经过图中每条边恰好一次的路径；回路要求起点终点相同。</p></div><div class="desc-section"><h3>推导过程</h3><p>Hierholzer 算法：从起点出发随便走，遇到死胡同时把路径倒序加入结果，再处理还有未访问边的点。无向图存在欧拉回路当且仅当连通且所有点度数为偶数。</p></div><div class="desc-section"><h3>适用场景</h3><p>路线规划、一笔画问题、DNA 序列拼接。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 邮递员路线（每条街走一次）。② 游戏“一笔画”。③ 基因组拼接。</p></div>`,
             code: eulerCode, ...G_, run: dirEulerCycleRun
         },
         {
             id: 'graph.dirEulerPath', name: '有向欧拉路径', category: 'graph', level: 'P3',
             complexity: { time: 'O(E)', space: 'O(E)' }, keywords: ['eulerian path', 'directed'],
             mnemonic: '出多一起点，入多一终点',
-            description: D('核心思想', '有向欧拉路径要求恰有一个顶点出度比入度多 1（起点）、一个顶点入度比出度多 1（终点），其余入出度相等。从起点开始跑 Hierholzer 即可。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>欧拉路径/回路是经过图中每条边恰好一次的路径；回路要求起点终点相同。</p></div><div class="desc-section"><h3>推导过程</h3><p>Hierholzer 算法：从起点出发随便走，遇到死胡同时把路径倒序加入结果，再处理还有未访问边的点。无向图存在欧拉回路当且仅当连通且所有点度数为偶数。</p></div><div class="desc-section"><h3>适用场景</h3><p>路线规划、一笔画问题、DNA 序列拼接。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 邮递员路线（每条街走一次）。② 游戏“一笔画”。③ 基因组拼接。</p></div>`,
             code: eulerCode, ...G_, run: dirEulerPathRun
         },
         {
             id: 'graph.maxflow', name: 'Ford-Fulkerson 最大流', category: 'graph', level: 'P3',
             complexity: { time: 'O(V·E²)', space: 'O(V²)' }, keywords: ['max flow', 'edmonds-karp', 'min cut'],
             mnemonic: 'BFS找增广路，瓶颈流量往上加',
-            description: D('核心思想', '不断在残量网络中用 BFS 寻找增广路（Edmonds-Karp），沿路径把瓶颈流量推过去并添加反向边，直到不存在增广路为止。最终流量即最大流，源点可达集合与其补集构成最小割。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>最大流求从源点到汇点能通过的最大流量，同时满足每条边的容量限制。</p></div><div class="desc-section"><h3>推导过程</h3><p>Ford-Fulkerson 在残量网络上不断找增广路径，沿路径增加流量，直到找不到增广路。 Edmonds-Karp 用 BFS 找最短增广路，保证多项式时间。</p></div><div class="desc-section"><h3>适用场景</h3><p>交通网络、供水/电网、二分图匹配、物流。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 城市供水最大输送量。② 物流配送瓶颈分析。③ 二分图最大匹配。</p></div>`,
             code: maxflowCode, ...G_, run: maxflowRun
         },
         {
             id: 'graph.bipMatch', name: '二分图最大匹配（匈牙利）', category: 'graph', level: 'P3',
             complexity: { time: 'O(V·E)', space: 'O(V)' }, keywords: ['bipartite matching', 'hungarian', 'augmenting path'],
             mnemonic: '逐点找增广，让位再让位',
-            description: D('核心思想', '为每个左侧顶点尝试寻找增广路：若目标右点未匹配则直接匹配，否则递归让它当前的匹配对象另寻他路。每找到一条增广路匹配数加一。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>二分图匹配把左边的点与右边的点配对，使每点最多配一次，目标是匹配数最大或总权最小。</p></div><div class="desc-section"><h3>推导过程</h3><p>匈牙利算法用 DFS 给每个左部点找增广路：若右部点未匹配或已匹配点能找到新匹配，则配对成功。Hopcroft-Karp 用 BFS 分层+多路增广，效率更高。</p></div><div class="desc-section"><h3>适用场景</h3><p>任务分配、资源匹配、推荐系统、调度。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 员工任务分配。② 网约车派单。③ 广告与广告位匹配。</p></div>`,
             code: bipMatchCode, ...G_, run: bipMatchRun
         },
         {
             id: 'graph.hopcroftKarp', name: 'Hopcroft-Karp 匹配', category: 'graph', level: 'P3',
             complexity: { time: 'O(E√V)', space: 'O(V)' }, keywords: ['hopcroft-karp', 'matching', 'layered'],
             mnemonic: 'BFS分层DFS增广，一轮多条同时上',
-            description: D('核心思想', '每轮先用 BFS 构造层次图，再用 DFS 在同一层次上一次性找出多条顶点不相交的最短增广路。阶段数为 O(√V)，总复杂度 O(E√V)，优于匈牙利算法。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>二分图匹配把左边的点与右边的点配对，使每点最多配一次，目标是匹配数最大或总权最小。</p></div><div class="desc-section"><h3>推导过程</h3><p>匈牙利算法用 DFS 给每个左部点找增广路：若右部点未匹配或已匹配点能找到新匹配，则配对成功。Hopcroft-Karp 用 BFS 分层+多路增广，效率更高。</p></div><div class="desc-section"><h3>适用场景</h3><p>任务分配、资源匹配、推荐系统、调度。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 员工任务分配。② 网约车派单。③ 广告与广告位匹配。</p></div>`,
             code: hkCode, ...G_, run: hkRun
         },
         {
             id: 'graph.bipartiteX', name: '二分图判定优化版 (BFS)', category: 'graph', level: 'P1',
             complexity: { time: 'O(V + E)', space: 'O(V)' }, keywords: ['bipartite', 'bfs', 'two coloring'],
             mnemonic: '逐层交替染两色，同色相邻即出局',
-            description: D('核心思想', '非递归的二分图判定：BFS 逐层给顶点交替染红/蓝两色。若发现一条边两端同色，说明存在奇数长度的环，图不是二分图。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>从起点开始，一层一层地访问所有邻居，像水波扩散。</p></div><div class="desc-section"><h3>推导过程</h3><p>用队列维护当前层节点。弹出队首，把所有未访问的邻居入队。由于先入队的先处理，保证距离起点近的节点先被访问，从而找到无权图的最短路径。</p></div><div class="desc-section"><h3>适用场景</h3><p>无权图最短路径、层级遍历、连通性、社交网络扩散。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 迷宫最短步数。② 好友关系的“六度分隔”。③ 病毒传播模拟。</p></div>`,
             code: dcycXCode, ...G_, run: bipartiteXRun
         },
         {
             id: 'graph.symbol', name: '符号图 (SymbolGraph)', category: 'graph', level: 'P1',
             complexity: { time: 'O(E)', space: 'O(V + E)' }, keywords: ['symbol graph', 'string vertex'],
             mnemonic: '名字映索引，普通图复用',
-            description: D('核心思想', '现实世界的图顶点常是字符串（机场代码、人名）。符号图用哈希表建立"名字 → 整数索引"的双向映射，从而把字符串图转化为普通的整数索引图复用所有图算法。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>符号图把字符串（如课程名）映射为整数，再用图算法处理。</p></div><div class="desc-section"><h3>推导过程</h3><p>建立两个哈希表：name→index 和 index→name。图的顶点是整数索引，边用索引表示。这样既保留原始名称，又方便图算法运行。</p></div><div class="desc-section"><h3>适用场景</h3><p>顶点是字符串的图、依赖解析、社交网络中用户名作为节点。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 课程先修图。② 电影演员合作图。③ 软件包依赖图。</p></div>`,
             code: symbolCode, ...G_, run: symbolRun, buildState: buildSymbolState
         },
         {
@@ -2047,14 +2047,14 @@ function relax(e, v) {
             id: 'graph.assignment', name: '分配问题（最小权匹配）', category: 'graph', level: 'P3',
             complexity: { time: 'O(n³)', space: 'O(n²)' }, keywords: ['assignment problem', 'hungarian', 'kuhn-munkres'],
             mnemonic: '行减列减出零点，零点匹配最优解',
-            description: D('核心思想', '为 n 个人分配 n 项任务使总成本最小，等价于二分图最小权完美匹配。匈牙利（Kuhn-Munkres）算法先做行/列归约产生 0 元素，再在 0 元素上寻找完美匹配。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>二分图匹配把左边的点与右边的点配对，使每点最多配一次，目标是匹配数最大或总权最小。</p></div><div class="desc-section"><h3>推导过程</h3><p>匈牙利算法用 DFS 给每个左部点找增广路：若右部点未匹配或已匹配点能找到新匹配，则配对成功。Hopcroft-Karp 用 BFS 分层+多路增广，效率更高。</p></div><div class="desc-section"><h3>适用场景</h3><p>任务分配、资源匹配、推荐系统、调度。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 员工任务分配。② 网约车派单。③ 广告与广告位匹配。</p></div>`,
             code: assignCode, ...G_, run: assignRun
         },
         {
             id: 'graph.zeroSum', name: '两人零和博弈', category: 'graph', level: 'P3',
             complexity: { time: 'O(n³)', space: 'O(n²)' }, keywords: ['game theory', 'minimax', 'saddle point'],
             mnemonic: '行求最大化最小，列求最小化最大',
-            description: D('核心思想', '给定支付矩阵，行玩家求 maximin（每行最小值中的最大者），列玩家求 minimax（每列最大值中的最小者）。若两者相等则存在纯策略鞍点，否则需要用线性规划求混合策略。'),
+            description: `<div class="desc-section"><h3>核心思想</h3><p>两人零和博弈中，一方收益等于另一方损失，可用线性规划或 minimax 求解最优混合策略。</p></div><div class="desc-section"><h3>推导过程</h3><p>把博弈写成矩阵，玩家 A 选择策略使最小期望收益最大，玩家 B 选择策略使最大期望损失最小。根据极小极大定理，二者相等时即为纳什均衡。</p></div><div class="desc-section"><h3>适用场景</h3><p>博弈论、经济模型、对抗性 AI、安全策略。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 石头剪刀布最优策略。② 拍卖竞价模型。③ 网络安全攻防。</p></div>`,
             code: zeroSumCode, ...G_, run: zeroSumRun
         }
     ];

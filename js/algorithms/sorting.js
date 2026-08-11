@@ -412,14 +412,7 @@ function siftDown(arr, i, n) {
             complexity: { time: 'O(n²)', space: 'O(1)' },
             keywords: ['bubble', 'mao pao'],
             mnemonic: '相邻比较逆则换，每轮最大沉底端',
-            description: `<div class="desc-section">
-                <h3>算法思想</h3>
-                <p>比较相邻元素，如果顺序错误就交换。每轮把最大元素"冒泡"到末尾。</p>
-                <h3>复杂度</h3>
-                <table class="complexity-table"><tr><th>最好</th><th>平均</th><th>最坏</th><th>空间</th></tr>
-                <tr><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr></table>
-                <h3>稳定性</h3><p>稳定排序。相等的元素不会交换，相对位置保持不变。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>反复比较相邻两个元素，顺序不对就交换，让大的元素像气泡一样“浮”到右边。</p></div><div class="desc-section"><h3>推导过程</h3><p>第 1 轮把最大元素移到末尾，第 2 轮把次大元素移到倒数第 2 位……最多 n−1 轮。如果某轮没有发生交换，说明已经有序，可以提前退出。</p></div><div class="desc-section"><h3>适用场景</h3><p>数据量很小、教学演示、基本有序的数据。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 10 个数的简单排序演示。② 已经基本排好序的列表再做一次确认。</p></div>`,
             code: bubbleCode,
             defaultData: DEFAULT_DATA,
             dataParser: DATA_PARSER,
@@ -431,14 +424,7 @@ function siftDown(arr, i, n) {
             complexity: { time: 'O(n²)', space: 'O(1)' },
             keywords: ['selection', 'xuanze'],
             mnemonic: '每轮扫描找最小，换到首位逐步排',
-            description: `<div class="desc-section">
-                <h3>算法思想</h3>
-                <p>每轮在未排序区间中找到最小元素，与未排序起点交换。</p>
-                <h3>复杂度</h3>
-                <table class="complexity-table"><tr><th>最好</th><th>平均</th><th>最坏</th><th>空间</th></tr>
-                <tr><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr></table>
-                <h3>稳定性</h3><p>不稳定。交换可能改变相等元素的相对顺序。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>每一轮从剩余元素中选出最小（或最大）的，放到已排序区间的末尾。</p></div><div class="desc-section"><h3>推导过程</h3><p>已排序部分从 0 开始。第 i 轮在 [i, n−1] 里找最小值，与位置 i 交换。n−1 轮后全部有序。</p></div><div class="desc-section"><h3>适用场景</h3><p>数据量小、对交换次数敏感（每次只交换一次）的场景。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 只关心最小/最大元素逐步归位的过程展示。② 手写排序的嵌入式设备。</p></div>`,
             code: selectionCode,
             defaultData: DEFAULT_DATA,
             dataParser: DATA_PARSER,
@@ -450,14 +436,7 @@ function siftDown(arr, i, n) {
             complexity: { time: 'O(n²)', space: 'O(1)' },
             keywords: ['insertion', 'charu'],
             mnemonic: '逐个抽取往前插，已序部分保有序',
-            description: `<div class="desc-section">
-                <h3>算法思想</h3>
-                <p>将每个元素插入到前面已排序部分的合适位置，类似整理扑克牌。</p>
-                <h3>复杂度</h3>
-                <table class="complexity-table"><tr><th>最好</th><th>平均</th><th>最坏</th><th>空间</th></tr>
-                <tr><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr></table>
-                <h3>稳定性</h3><p>稳定排序。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>把数组分成已排序和未排序两部分，每次从未排序部分取一个元素，插入到已排序部分的正确位置。</p></div><div class="desc-section"><h3>推导过程</h3><p>前 i 个元素已经有序。取第 i+1 个元素，从后向前比较，遇到比它大的就后移，直到找到合适位置插入。扑克牌整理牌就是这个道理。</p></div><div class="desc-section"><h3>适用场景</h3><p>数据基本有序、数据量不大、需要稳定排序。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 扑克牌按点数整理。② 实时接收少量数据并不断维护有序列表。</p></div>`,
             code: insertionCode,
             defaultData: DEFAULT_DATA,
             dataParser: DATA_PARSER,
@@ -469,14 +448,7 @@ function siftDown(arr, i, n) {
             complexity: { time: 'O(n log n)', space: 'O(log n)' },
             keywords: ['quick', 'kuaisu', 'partition'],
             mnemonic: '选基准分左右，递归治之快如风',
-            description: `<div class="desc-section">
-                <h3>算法思想</h3>
-                <p>选取 pivot 将数组分为两部分：小于 pivot 的在左、大于的在右，递归处理左右子区间。</p>
-                <h3>复杂度</h3>
-                <table class="complexity-table"><tr><th>最好</th><th>平均</th><th>最坏</th><th>空间</th></tr>
-                <tr><td>O(n log n)</td><td>O(n log n)</td><td>O(n²)</td><td>O(log n)</td></tr></table>
-                <h3>稳定性</h3><p>不稳定。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>选一个基准值，把数组分成“小于基准”和“大于基准”两部分，然后递归排序两部分。</p></div><div class="desc-section"><h3>推导过程</h3><p>关键在于 partition：用两个指针从两端向中间扫描，把小于 pivot 的放左边，大于的放右边。pivot 的最终位置就是它在有序数组中的位置。然后对左右子数组递归。</p></div><div class="desc-section"><h3>适用场景</h3><p>通用排序、数据量大、平均性能要求高的场景。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 数据库查询结果排序。② 大数据集内存排序。③ 快速求 Top-K（只递归一侧）。</p></div>`,
             code: quickCode,
             defaultData: DEFAULT_DATA,
             dataParser: DATA_PARSER,
@@ -488,14 +460,7 @@ function siftDown(arr, i, n) {
             complexity: { time: 'O(n log n)', space: 'O(n)' },
             keywords: ['merge', 'guibing'],
             mnemonic: '分治拆到单，两两归并保稳定',
-            description: `<div class="desc-section">
-                <h3>算法思想</h3>
-                <p>分治：递归拆分到单元素，再两两归并形成有序数组。</p>
-                <h3>复杂度</h3>
-                <table class="complexity-table"><tr><th>最好</th><th>平均</th><th>最坏</th><th>空间</th></tr>
-                <tr><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n)</td></tr></table>
-                <h3>稳定性</h3><p>稳定排序。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>把数组不断二分，直到每个子数组只有一个元素，再两两合并成有序数组。</p></div><div class="desc-section"><h3>推导过程</h3><p>长度为 1 的数组天然有序。合并两个有序数组时，用双指针依次取较小者放入结果，时间 O(n)。因为每次二分，递归深度 O(log n)，总时间 O(n log n)。</p></div><div class="desc-section"><h3>适用场景</h3><p>需要稳定排序、数据量大、链表排序、外部排序。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 合并两个已排序的日志文件。② 链表排序。③ 大数据外部归并排序。</p></div>`,
             code: mergeCode,
             defaultData: DEFAULT_DATA,
             dataParser: DATA_PARSER,
@@ -507,14 +472,7 @@ function siftDown(arr, i, n) {
             complexity: { time: 'O(n log n)', space: 'O(1)' },
             keywords: ['heap', 'dui', 'siftdown'],
             mnemonic: '建大堆顶最大，换尾缩堆下沉',
-            description: `<div class="desc-section">
-                <h3>算法思想</h3>
-                <p>先建立最大堆，然后将堆顶（最大值）与末尾交换，缩小堆并下沉恢复堆性质。</p>
-                <h3>复杂度</h3>
-                <table class="complexity-table"><tr><th>最好</th><th>平均</th><th>最坏</th><th>空间</th></tr>
-                <tr><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>O(1)</td></tr></table>
-                <h3>稳定性</h3><p>不稳定。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>先把数组建成大顶堆，然后反复把堆顶（最大元素）移到数组末尾，并调整剩余元素保持堆性质。</p></div><div class="desc-section"><h3>推导过程</h3><p>大顶堆满足父节点 ≥ 子节点。建堆从最后一个非叶子节点开始下沉。排序时交换堆顶与末尾，堆大小减 1，再对堆顶下沉。这样每次都能确定一个元素的最终位置。</p></div><div class="desc-section"><h3>适用场景</h3><p>需要原地排序、求 Top-K、实现优先队列。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 从 100 万个数中取最大的 100 个。② 任务调度按优先级执行。</p></div>`,
             code: heapCode,
             defaultData: DEFAULT_DATA,
             dataParser: DATA_PARSER,

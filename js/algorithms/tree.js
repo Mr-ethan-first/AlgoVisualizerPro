@@ -836,10 +836,7 @@ function siftDown(arr, i, n) {
             complexity: { time: 'O(n)', space: 'O(h)' },
             keywords: ['preorder', 'qianxu', 'dfs'],
             mnemonic: '根左右先访问，递归回溯一路行',
-            description: `<div class="desc-section">
-                <h3>访问顺序</h3><p>根 → 左 → 右</p>
-                <h3>复杂度</h3><p>时间 O(n)，空间 O(h)（递归栈深度，h 为树高）</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>按特定顺序访问二叉树的每个节点：前序根-左-右，中序左-根-右，后序左-右-根，层序一层一层访问。</p></div><div class="desc-section"><h3>推导过程</h3><p>递归写法直接按定义访问。非递归写法用栈模拟递归过程：中序一路向左压栈，到底后弹出访问，再转向右子树；层序用队列按层扩展。</p></div><div class="desc-section"><h3>适用场景</h3><p>表达式求值、序列化树、按层次展示、BST 有序输出。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 文件系统目录树打印。② 表达式树求值。③ BST 中序输出有序序列。</p></div>`,
             code: preorderCode,
             run: preorderRun,
             buildState: buildBinaryTreeState
@@ -850,10 +847,7 @@ function siftDown(arr, i, n) {
             complexity: { time: 'O(n)', space: 'O(h)' },
             keywords: ['inorder', 'zhongxu'],
             mnemonic: '左根右遍历不偏，BST中序得升序',
-            description: `<div class="desc-section">
-                <h3>访问顺序</h3><p>左 → 根 → 右</p>
-                <h3>性质</h3><p>对 BST 做中序遍历得到升序序列。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>按特定顺序访问二叉树的每个节点：前序根-左-右，中序左-根-右，后序左-右-根，层序一层一层访问。</p></div><div class="desc-section"><h3>推导过程</h3><p>递归写法直接按定义访问。非递归写法用栈模拟递归过程：中序一路向左压栈，到底后弹出访问，再转向右子树；层序用队列按层扩展。</p></div><div class="desc-section"><h3>适用场景</h3><p>表达式求值、序列化树、按层次展示、BST 有序输出。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 文件系统目录树打印。② 表达式树求值。③ BST 中序输出有序序列。</p></div>`,
             code: inorderCode,
             run: inorderRun,
             buildState: buildBinaryTreeState
@@ -864,10 +858,7 @@ function siftDown(arr, i, n) {
             complexity: { time: 'O(n)', space: 'O(w)' },
             keywords: ['levelorder', 'cengxu', 'bfs'],
             mnemonic: '逐层从左到右，队列辅助访问',
-            description: `<div class="desc-section">
-                <h3>访问顺序</h3><p>逐层从左到右访问，使用队列实现。</p>
-                <h3>复杂度</h3><p>时间 O(n)，空间 O(w)（w 为树最大宽度）</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>按特定顺序访问二叉树的每个节点：前序根-左-右，中序左-根-右，后序左-右-根，层序一层一层访问。</p></div><div class="desc-section"><h3>推导过程</h3><p>递归写法直接按定义访问。非递归写法用栈模拟递归过程：中序一路向左压栈，到底后弹出访问，再转向右子树；层序用队列按层扩展。</p></div><div class="desc-section"><h3>适用场景</h3><p>表达式求值、序列化树、按层次展示、BST 有序输出。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 文件系统目录树打印。② 表达式树求值。③ BST 中序输出有序序列。</p></div>`,
             code: levelorderCode,
             run: levelorderRun,
             buildState: buildBinaryTreeState
@@ -878,10 +869,7 @@ function siftDown(arr, i, n) {
             complexity: { time: 'O(log n)', space: 'O(h)' },
             keywords: ['bst', 'insert', 'binary search tree', 'recursive'],
             mnemonic: '小左大右下降，遇空即插新节点',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>递归下降：小于当前节点 → 进入左子树；大于 → 进入右子树；遇到空位置插入新节点。</p>
-                <h3>复杂度</h3><p>平均 O(log n)，最坏 O(n)（退化为链）</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>二叉搜索树保持“左子树 < 根 < 右子树”，查找/插入/删除都像二分查找一样沿一条路径走。</p></div><div class="desc-section"><h3>推导过程</h3><p>查找时与当前节点比较：小则向左，大则向右。插入找到空位置放入。删除分三种情况：叶子直接删；只有一个孩子则孩子顶替；有两个孩子则用右子树最小值（或左子树最大值）替换。</p></div><div class="desc-section"><h3>适用场景</h3><p>需要动态维护有序集合、频繁增删查。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 字典树实现。② 数据库索引（简单场景）。③ 实现有序 map。</p></div>`,
             code: bstInsertCode,
             defaultData: [50, 30, 70, 20, 40, 60, 80, 35, 45],
             dataParser: (s) => s.split(',').map(x => parseInt(x.trim(), 10)).filter(n => !isNaN(n)),
@@ -894,9 +882,7 @@ function siftDown(arr, i, n) {
             complexity: { time: 'O(log n)', space: 'O(h)' },
             keywords: ['bst', 'search'],
             mnemonic: '比节点定方向，左小右大找目标',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>类似二分搜索：根据与当前节点的比较决定走向左/右子树。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>二叉搜索树保持“左子树 < 根 < 右子树”，查找/插入/删除都像二分查找一样沿一条路径走。</p></div><div class="desc-section"><h3>推导过程</h3><p>查找时与当前节点比较：小则向左，大则向右。插入找到空位置放入。删除分三种情况：叶子直接删；只有一个孩子则孩子顶替；有两个孩子则用右子树最小值（或左子树最大值）替换。</p></div><div class="desc-section"><h3>适用场景</h3><p>需要动态维护有序集合、频繁增删查。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 字典树实现。② 数据库索引（简单场景）。③ 实现有序 map。</p></div>`,
             code: bstSearchCode,
             run: bstSearchRun,
             buildState: buildBinaryTreeState
@@ -907,14 +893,7 @@ function siftDown(arr, i, n) {
             complexity: { time: 'O(log n)', space: 'O(h)' },
             keywords: ['bst', 'delete', 'remove'],
             mnemonic: '叶子直删单子替，双子后继补位来',
-            description: `<div class="desc-section">
-                <h3>三种情况</h3>
-                <ul>
-                    <li>叶子节点：直接删除</li>
-                    <li>单子节点：用子节点替换</li>
-                    <li>双子节点：用右子树最小值（后继）替换，再删除后继</li>
-                </ul>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>二叉搜索树保持“左子树 < 根 < 右子树”，查找/插入/删除都像二分查找一样沿一条路径走。</p></div><div class="desc-section"><h3>推导过程</h3><p>查找时与当前节点比较：小则向左，大则向右。插入找到空位置放入。删除分三种情况：叶子直接删；只有一个孩子则孩子顶替；有两个孩子则用右子树最小值（或左子树最大值）替换。</p></div><div class="desc-section"><h3>适用场景</h3><p>需要动态维护有序集合、频繁增删查。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 字典树实现。② 数据库索引（简单场景）。③ 实现有序 map。</p></div>`,
             code: bstDeleteCode,
             run: bstDeleteRun,
             buildState: buildBinaryTreeState
@@ -925,16 +904,7 @@ function siftDown(arr, i, n) {
             complexity: { time: 'O(log n)', space: 'O(h)' },
             keywords: ['avl', 'rotation', 'balance', 'rotate'],
             mnemonic: '插入回溯查平衡，四型旋转复稳定',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>AVL 是自平衡 BST。插入后回溯检查平衡因子，失衡时通过旋转恢复平衡。</p>
-                <h3>四种失衡情况</h3>
-                <ul>
-                    <li><strong>LL</strong>：左子树左插 → 一次右旋</li>
-                    <li><strong>RR</strong>：右子树右插 → 一次左旋</li>
-                    <li><strong>LR</strong>：左子树右插 → 先左旋后右旋</li>
-                    <li><strong>RL</strong>：右子树左插 → 先右旋后左旋</li>
-                </ul>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>AVL 树是严格的平衡二叉搜索树，任何节点的左右子树高度差不超过 1。</p></div><div class="desc-section"><h3>推导过程</h3><p>插入/删除后检查祖先节点的平衡因子。若失衡，通过左旋、右旋或左右双旋恢复平衡。旋转只影响局部子树，保持 BST 性质不变。</p></div><div class="desc-section"><h3>适用场景</h3><p>查找性能必须稳定为 O(log n)、数据频繁变动的场景。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 数据库索引。② 内存有序 map。③ 需要最坏情况保证的系统。</p></div>`,
             code: avlInsertCode,
             defaultData: [10, 20, 30, 40, 50, 25],
             dataParser: (s) => s.split(',').map(x => parseInt(x.trim(), 10)).filter(n => !isNaN(n)),
@@ -947,9 +917,7 @@ function siftDown(arr, i, n) {
             complexity: { time: 'O(log n)', space: 'O(1)' },
             keywords: ['heap', 'insert', 'sift up'],
             mnemonic: '末尾追加比较父，大于则换上浮去',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>新元素加到末尾，与父节点比较，大于则交换（最大堆），直到不需要交换或到达根。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>堆是一棵完全二叉树，大顶堆父节点 ≥ 子节点，小顶堆父节点 ≤ 子节点。</p></div><div class="desc-section"><h3>推导过程</h3><p>用数组存储：父节点 i 的左右孩子分别是 2i+1 和 2i+2。插入时上浮（与父节点交换），删除堆顶时下沉（与孩子中较大/较小者交换）。建堆可从最后一个非叶子节点开始下沉。</p></div><div class="desc-section"><h3>适用场景</h3><p>优先队列、Top-K、堆排序、任务调度。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 合并 K 个有序数组。② 操作系统进程优先级调度。③ 找中位数的数据流。</p></div>`,
             code: heapInsertCode,
             defaultData: [50, 30, 70, 20, 60, 90],
             dataParser: (s) => s.split(',').map(x => parseInt(x.trim(), 10)).filter(n => !isNaN(n)),
@@ -962,9 +930,7 @@ function siftDown(arr, i, n) {
             complexity: { time: 'O(log n)', space: 'O(1)' },
             keywords: ['heap', 'delete', 'sift down', 'pop'],
             mnemonic: '尾代堆顶再下沉，大子交换保堆性',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>用末尾元素替换堆顶，然后下沉：与较大的子节点比较交换，直到恢复堆性质。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>堆是一棵完全二叉树，大顶堆父节点 ≥ 子节点，小顶堆父节点 ≤ 子节点。</p></div><div class="desc-section"><h3>推导过程</h3><p>用数组存储：父节点 i 的左右孩子分别是 2i+1 和 2i+2。插入时上浮（与父节点交换），删除堆顶时下沉（与孩子中较大/较小者交换）。建堆可从最后一个非叶子节点开始下沉。</p></div><div class="desc-section"><h3>适用场景</h3><p>优先队列、Top-K、堆排序、任务调度。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 合并 K 个有序数组。② 操作系统进程优先级调度。③ 找中位数的数据流。</p></div>`,
             code: heapDeleteCode,
             run: heapDeleteRun,
             buildState: buildHeapState
@@ -975,9 +941,7 @@ function siftDown(arr, i, n) {
             complexity: { time: 'O(n)', space: 'O(1)' },
             keywords: ['heapify', 'build heap'],
             mnemonic: '末父逆序下沉，线性建堆真神奇',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>从最后一个非叶节点开始，逆序执行 siftDown。整体复杂度 O(n)（而非 O(n log n)）。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>堆是一棵完全二叉树，大顶堆父节点 ≥ 子节点，小顶堆父节点 ≤ 子节点。</p></div><div class="desc-section"><h3>推导过程</h3><p>用数组存储：父节点 i 的左右孩子分别是 2i+1 和 2i+2。插入时上浮（与父节点交换），删除堆顶时下沉（与孩子中较大/较小者交换）。建堆可从最后一个非叶子节点开始下沉。</p></div><div class="desc-section"><h3>适用场景</h3><p>优先队列、Top-K、堆排序、任务调度。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 合并 K 个有序数组。② 操作系统进程优先级调度。③ 找中位数的数据流。</p></div>`,
             code: heapifyCode,
             defaultData: [4, 10, 3, 5, 1, 8, 2, 7, 6, 9],
             dataParser: (s) => s.split(',').map(x => parseInt(x.trim(), 10)).filter(n => !isNaN(n)),
@@ -990,10 +954,7 @@ function siftDown(arr, i, n) {
             complexity: { time: 'α(n)', space: 'O(n)' },
             keywords: ['union find', 'find', 'path compression'],
             mnemonic: '递归找根回溯挂，路径压缩秒变一',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>递归查找根节点，回溯时把路径上所有节点直接挂到根下，使后续查找变为 O(1)。</p>
-                <h3>复杂度</h3><p>均摊 α(n) ≈ O(1)（结合按秩合并）</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>并查集维护若干不相交集合，支持“合并两个集合”和“查询是否同一集合”。</p></div><div class="desc-section"><h3>推导过程</h3><p>每个元素指向父节点，根节点代表集合。Find 时路径压缩（把访问过的节点直接连到根），Union 时按秩合并（小树挂大树）。这样均摊复杂度接近 O(α(n))。</p></div><div class="desc-section"><h3>适用场景</h3><p>连通性判断、Kruskal 最小生成树、等价类划分。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 社交网络好友圈判断。② 迷宫连通性。③ 最小生成树 Kruskal。</p></div>`,
             code: ufFindCode,
             run: ufFindRun,
             buildState: (tracerStates, _step, ctxInfo) => {
@@ -1014,9 +975,7 @@ function siftDown(arr, i, n) {
             complexity: { time: 'α(n)', space: 'O(n)' },
             keywords: ['union find', 'union', 'rank'],
             mnemonic: '矮树挂高树下，按秩合并防退化',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>合并两棵树时，把矮树挂到高树下，避免树退化。结合路径压缩，均摊复杂度 α(n) ≈ O(1)。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>并查集维护若干不相交集合，支持“合并两个集合”和“查询是否同一集合”。</p></div><div class="desc-section"><h3>推导过程</h3><p>每个元素指向父节点，根节点代表集合。Find 时路径压缩（把访问过的节点直接连到根），Union 时按秩合并（小树挂大树）。这样均摊复杂度接近 O(α(n))。</p></div><div class="desc-section"><h3>适用场景</h3><p>连通性判断、Kruskal 最小生成树、等价类划分。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 社交网络好友圈判断。② 迷宫连通性。③ 最小生成树 Kruskal。</p></div>`,
             code: ufUnionCode,
             run: ufUnionRun,
             buildState: (tracerStates, _step, ctxInfo) => {

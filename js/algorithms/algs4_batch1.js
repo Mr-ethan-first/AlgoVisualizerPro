@@ -615,91 +615,91 @@ function dfs(v) {
             id: 'string.lsd', name: 'LSD 低位优先基数排序', category: 'string', level: 'P1',
             complexity: { time: 'O(W·N)', space: 'O(N)' }, keywords: ['radix', 'lsd', 'string sort'],
             mnemonic: '从右到左逐位排，计数稳定不串台',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>对长度固定的字符串，从最低位（最右）字符开始，按每个字符做稳定计数排序，共 W 趟即可整体有序。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>按字符进行多轮稳定排序，实现字符串字典序排序。</p></div><div class="desc-section"><h3>推导过程</h3><p>LSD 从最低位字符向最高位逐轮计数排序；MSD 从最高位开始递归分组。因为每轮稳定，前一轮的顺序会被保留。</p></div><div class="desc-section"><h3>适用场景</h3><p>大量等长或变长字符串排序、数据库索引、字典生成。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 电话号码字典序排序。② 单词列表排序。③ 车牌号排序。</p></div>`,
             code: lsdCode, defaultData: STR_DEFAULT, dataParser: STR_DATA, run: lsdRun
         },
         {
             id: 'string.msd', name: 'MSD 高位优先基数排序', category: 'string', level: 'P1',
             complexity: { time: 'O(W·N)', space: 'O(W+N)' }, keywords: ['radix', 'msd', 'string sort'],
             mnemonic: '从左到右逐位分，整组有序即收兵',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>从最高位（最左）字符开始排序，第 d 位相同的子串再按下一位递归处理；整组已有序则提前终止。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>按字符进行多轮稳定排序，实现字符串字典序排序。</p></div><div class="desc-section"><h3>推导过程</h3><p>LSD 从最低位字符向最高位逐轮计数排序；MSD 从最高位开始递归分组。因为每轮稳定，前一轮的顺序会被保留。</p></div><div class="desc-section"><h3>适用场景</h3><p>大量等长或变长字符串排序、数据库索引、字典生成。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 电话号码字典序排序。② 单词列表排序。③ 车牌号排序。</p></div>`,
             code: msdCode, defaultData: STR_DEFAULT, dataParser: STR_DATA, run: msdRun
         },
         {
             id: 'string.quick3string', name: '三路字符串快速排序', category: 'string', level: 'P1',
             complexity: { time: 'O(N·log N)', space: 'O(log N)' }, keywords: ['3-way', 'string quicksort'],
             mnemonic: '当前字符三路划，相等再往深里查',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>按当前字符将字符串三路划分为「小于 / 等于 / 大于」基准，相等段再按下一个字符递归，对含大量重复前缀的字符串极高效。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>按字符进行多轮稳定排序，实现字符串字典序排序。</p></div><div class="desc-section"><h3>推导过程</h3><p>LSD 从最低位字符向最高位逐轮计数排序；MSD 从最高位开始递归分组。因为每轮稳定，前一轮的顺序会被保留。</p></div><div class="desc-section"><h3>适用场景</h3><p>大量等长或变长字符串排序、数据库索引、字典生成。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 电话号码字典序排序。② 单词列表排序。③ 车牌号排序。</p></div>`,
             code: q3Code, defaultData: STR_DEFAULT, dataParser: STR_DATA, run: q3Run
         },
         {
             id: 'string.boyerMoore', name: 'Boyer-Moore 子串匹配', category: 'string', level: 'P1',
             complexity: { time: 'O(N/M)', space: 'O(M)' }, keywords: ['boyer-moore', 'substring', 'pattern'],
             mnemonic: '坏字符表记右移，跳跃匹配省力气',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>预处理模式串每个字符最右出现位置（坏字符规则），匹配时从右向左比较，失配则利用坏字符表大幅右移对齐。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>从右向左比较模式串，利用坏字符和好后缀规则大步跳过不可能位置。</p></div><div class="desc-section"><h3>推导过程</h3><p>先根据模式串预处理每个字符最右出现位置。匹配时从模式串尾部开始，若遇到不匹配的字符，按规则计算最大安全滑动距离。Sunday 还看主串中模式串右侧第一个字符。</p></div><div class="desc-section"><h3>适用场景</h3><p>文本搜索、关键词过滤、日志匹配、大文本编辑器。</p></div><div class="desc-section"><h3>典型案例</h3><p>① grep 文本搜索。② 敏感词过滤。③ 日志中定位错误关键字。</p></div>`,
             code: bmCode, defaultData: 'ABAAABCDABC|ABC', dataParser: (s) => s, run: bmRun
         },
         {
             id: 'string.lrs', name: '最长重复子串 (LRS)', category: 'string', level: 'P1',
             complexity: { time: 'O(N·log N)', space: 'O(N)' }, keywords: ['lrs', 'suffix', 'lcp'],
             mnemonic: '后缀排序邻相比，最长公共即答案',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>列出所有后缀并字典序排序，最长重复子串必出现在某对相邻后缀的最长公共前缀中。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>最长重复子串找字符串中出现至少两次的最长子串。</p></div><div class="desc-section"><h3>推导过程</h3><p>常用后缀数组或后缀自动机：把所有后缀排序后，相邻后缀的最长公共前缀就是候选重复子串，取最大值。</p></div><div class="desc-section"><h3>适用场景</h3><p>DNA 重复片段、文本压缩、抄袭检测、音乐旋律重复。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 基因组重复序列分析。② 音乐指纹去重。③ 日志模式挖掘。</p></div>`,
             code: lrsCode, defaultData: 'aabaaaab', dataParser: (s) => s, run: lrsRun
         },
         {
             id: 'string.suffixArray', name: '后缀数组 (Suffix Array)', category: 'string', level: 'P1',
             complexity: { time: 'O(N·log N)', space: 'O(N)' }, keywords: ['suffix array', 'suffix'],
             mnemonic: '所有后缀排个序，原下标记成行',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>把字符串所有后缀按字典序排序，记录其原起始下标，得到后缀数组 SA，是许多字符串算法的基础结构。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>后缀数组存储字符串所有后缀按字典序排序后的起始下标，可高效解决大量字符串问题。</p></div><div class="desc-section"><h3>推导过程</h3><p>把所有后缀排序。任意两个后缀的最长公共前缀等于它们在排序后相邻位置的 LCP 的最小值。配合 LCP 数组可做最长重复子串、不同子串计数等。</p></div><div class="desc-section"><h3>适用场景</h3><p>字符串模式挖掘、DNA 分析、文本压缩、拼写检查。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 最长重复子串。② 不同子串数量。③ 字符串相似度。</p></div>`,
             code: lrsCode, defaultData: 'banana', dataParser: (s) => s, run: suffixRun
         },
         {
             id: 'string.huffman', name: '霍夫曼编码 (Huffman)', category: 'string', level: 'P1',
             complexity: { time: 'O(N·log N)', space: 'O(N)' }, keywords: ['huffman', 'compression', 'prefix code'],
             mnemonic: '频率最小俩合并，自底向上前缀码',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>反复合并频率最小的两棵子树，构造最优二叉树，左 0 右 1 得到无歧义前缀码，频率高的字符编码更短。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>霍夫曼编码按字符出现频率构建最优前缀树，高频字符短编码、低频字符长编码。</p></div><div class="desc-section"><h3>推导过程</h3><p>每次选频率最小的两个节点合并成新节点，新节点频率为二者之和。重复直到只剩一棵树。从根到叶子的路径就是该字符的编码，左 0 右 1。</p></div><div class="desc-section"><h3>适用场景</h3><p>无损数据压缩、文件压缩、通信编码。</p></div><div class="desc-section"><h3>典型案例</h3><p>① ZIP 压缩。② JPEG 图像熵编码。③ 摩斯码变长编码思想。</p></div>`,
             code: huffCode, defaultData: 'abracadabra', dataParser: (s) => s, run: huffRun
         },
         {
             id: 'graph.cc', name: '连通分量 (Connected Components)', category: 'graph', level: 'P1',
             complexity: { time: 'O(V+E)', space: 'O(V)' }, keywords: ['cc', 'connected components', 'dfs'],
             mnemonic: '未标号便新块，DFS 染同色',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>对无向图做 DFS/BFS，每遇到未访问顶点即开启一个新分量，把可达顶点全部染成同一编号。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>找出图中互相连通的最大子集。</p></div><div class="desc-section"><h3>推导过程</h3><p>对每个未访问节点做 DFS/BFS，所有访问到的节点属于同一个连通分量。有向图需分强连通分量和弱连通分量。</p></div><div class="desc-section"><h3>适用场景</h3><p>社交网络社群、网络连通性、聚类分析。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 社交圈发现。② 网络故障隔离。③ 图像区域分割。</p></div>`,
             code: ccCode, defaultData: [], dataParser: (s) => s, run: ccRun
         },
         {
             id: 'graph.cycle', name: '无向图环检测', category: 'graph', level: 'P1',
             complexity: { time: 'O(V+E)', space: 'O(V)' }, keywords: ['cycle', 'undirected', 'dfs'],
             mnemonic: '遇已访非父边，环现无疑问',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>DFS 时记录父节点；若遇到已访问的、且不是父节点的邻居，说明存在一条「回边」，即存在环。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>检测图中是否存在环，以及找出环上的节点。</p></div><div class="desc-section"><h3>推导过程</h3><p>DFS 时记录递归栈，若遇到已在栈中的邻居，说明有环。并查集也可以：若一条边的两个端点已在同一集合，则形成环。</p></div><div class="desc-section"><h3>适用场景</h3><p>死锁检测、依赖冲突、电路网络、编译循环依赖。</p></div><div class="desc-section"><h3>典型案例</h3><p>① npm 循环依赖检测。② 数据库死锁检测。③ 判断课程先修是否有矛盾。</p></div>`,
             code: cycCode, defaultData: [], dataParser: (s) => s, run: cycRun
         },
         {
             id: 'graph.bipartite', name: '二分图判定', category: 'graph', level: 'P1',
             complexity: { time: 'O(V+E)', space: 'O(V)' }, keywords: ['bipartite', '2-coloring', 'bfs'],
             mnemonic: '邻点必异色，同色即失败',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>用两种颜色对顶点着色，BFS 中相邻顶点必须异色；若出现相邻同色则不是二分图。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>二分图能把顶点分成两组，使所有边都跨在两组之间。</p></div><div class="desc-section"><h3>推导过程</h3><p>用 BFS/DFS 给节点染色，相邻节点颜色必须不同。若发现相邻节点同色，则不是二分图。等价于图中没有奇数长度的环。</p></div><div class="desc-section"><h3>适用场景</h3><p>冲突检测、资源分配、推荐系统、染色问题。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 任务与机器分配冲突检查。② 电影与用户二分推荐。③ 棋盘染色问题。</p></div>`,
             code: bipCode, defaultData: [], dataParser: (s) => s, run: bipRun
         },
         {
             id: 'graph.directedCycle', name: '有向图环检测', category: 'graph', level: 'P1',
             complexity: { time: 'O(V+E)', space: 'O(V)' }, keywords: ['directed cycle', 'dfs', 'recursion stack'],
             mnemonic: '栈中遇回边，有向环显现',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>DFS 维护「递归栈」标记，遇到指向栈中节点的边即存在有向环。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>检测图中是否存在环，以及找出环上的节点。</p></div><div class="desc-section"><h3>推导过程</h3><p>DFS 时记录递归栈，若遇到已在栈中的邻居，说明有环。并查集也可以：若一条边的两个端点已在同一集合，则形成环。</p></div><div class="desc-section"><h3>适用场景</h3><p>死锁检测、依赖冲突、电路网络、编译循环依赖。</p></div><div class="desc-section"><h3>典型案例</h3><p>① npm 循环依赖检测。② 数据库死锁检测。③ 判断课程先修是否有矛盾。</p></div>`,
             code: dcycCode, defaultData: [], dataParser: (s) => s, run: dcycRun
         },
         {
             id: 'graph.acyclicSP', name: 'DAG 最短路径 (AcyclicSP)', category: 'graph', level: 'P1',
             complexity: { time: 'O(V+E)', space: 'O(V)' }, keywords: ['dag', 'shortest path', 'topological'],
             mnemonic: '拓扑序中松弛边，最短距离自然现',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>对有向无环图按拓扑序处理顶点，依次松弛出边，可一遍求得单源最短路径（无负权限制）。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>把问题建模成图，通过遍历、松弛或匹配等操作得到所需结果。</p></div><div class="desc-section"><h3>推导过程</h3><p>图的核心是顶点和边。根据问题选择 BFS/DFS、最短路径、最小生成树或网络流等算法，把实际问题转化为图上的计算。</p></div><div class="desc-section"><h3>适用场景</h3><p>关系网络、路径规划、依赖分析、资源分配。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 地图导航。② 社交网络分析。③ 软件依赖管理。</p></div>`,
             code: spCode, defaultData: [], dataParser: (s) => s, run: (ctx) => dagRun(ctx, 'sp')
         },
         {
             id: 'graph.acyclicLP', name: 'DAG 最长路径 (AcyclicLP/CPM)', category: 'graph', level: 'P1',
             complexity: { time: 'O(V+E)', space: 'O(V)' }, keywords: ['dag', 'longest path', 'cpm'],
             mnemonic: '拓扑序取最大，关键路径靠它',
-            description: '<div class="desc-section"><h3>核心思想</h3><p>同样按拓扑序处理，但松弛时取「更大」距离，得到单源最长路径，是关键路径法（CPM）的核心。</p></div>',
+            description: `<div class="desc-section"><h3>核心思想</h3><p>把问题建模成图，通过遍历、松弛或匹配等操作得到所需结果。</p></div><div class="desc-section"><h3>推导过程</h3><p>图的核心是顶点和边。根据问题选择 BFS/DFS、最短路径、最小生成树或网络流等算法，把实际问题转化为图上的计算。</p></div><div class="desc-section"><h3>适用场景</h3><p>关系网络、路径规划、依赖分析、资源分配。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 地图导航。② 社交网络分析。③ 软件依赖管理。</p></div>`,
             code: lpCode, defaultData: [], dataParser: (s) => s, run: (ctx) => dagRun(ctx, 'lp')
         }
     ];

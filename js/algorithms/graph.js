@@ -515,10 +515,7 @@
             complexity: { time: 'O(V+E)', space: 'O(V)' },
             keywords: ['dfs', 'depth first', 'shen du you xian'],
             mnemonic: '深入到底再回溯，递归栈记来时路',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>从起点出发，深入到无法继续为止，再回溯探索其他分支。</p>
-                <h3>复杂度</h3><p>时间 O(V+E)，空间 O(V)（递归栈）</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>从起点出发，沿着一条路径一直走到底，走不通再回退试别的路。</p></div><div class="desc-section"><h3>推导过程</h3><p>用递归或显式栈实现。访问节点后标记，再递归访问未访问的邻居。回溯时撤销当前选择。可用于遍历、找环、求连通分量、拓扑排序。</p></div><div class="desc-section"><h3>适用场景</h3><p>路径搜索、连通性、环检测、拓扑排序、回溯。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 迷宫找通路。② 判断图是否有环。③ 解数独/ N 皇后。</p></div>`,
             code: dfsCode,
             run: dfsRun,
             buildState: buildGraphState
@@ -529,10 +526,7 @@
             complexity: { time: 'O(V+E)', space: 'O(V)' },
             keywords: ['bfs', 'breadth first', 'guang du you xian'],
             mnemonic: '队列按层向外扩，无权最短随手得',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>使用队列，按层扩展访问节点，常用于求无权图最短路径。</p>
-                <h3>复杂度</h3><p>时间 O(V+E)，空间 O(V)（队列）</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>从起点开始，一层一层地访问所有邻居，像水波扩散。</p></div><div class="desc-section"><h3>推导过程</h3><p>用队列维护当前层节点。弹出队首，把所有未访问的邻居入队。由于先入队的先处理，保证距离起点近的节点先被访问，从而找到无权图的最短路径。</p></div><div class="desc-section"><h3>适用场景</h3><p>无权图最短路径、层级遍历、连通性、社交网络扩散。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 迷宫最短步数。② 好友关系的“六度分隔”。③ 病毒传播模拟。</p></div>`,
             code: bfsCode,
             run: bfsRun,
             buildState: buildGraphState
@@ -543,9 +537,7 @@
             complexity: { time: 'O(V+E)', space: 'O(V)' },
             keywords: ['topological', 'kahn', 'indegree'],
             mnemonic: '入度为零入队列，依次输出拓扑序',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>不断取出入度为 0 的节点加入队列，输出顺序即为拓扑序。仅适用于 DAG。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>拓扑排序把 DAG 的顶点排成线性序列，使得所有边都从前指向后。</p></div><div class="desc-section"><h3>推导过程</h3><p>Kahn 算法反复找入度为 0 的点加入结果，并删除其出边。DFS 法则是记录后序遍历的逆序。若无法处理完所有点，说明图中有环。</p></div><div class="desc-section"><h3>适用场景</h3><p>任务调度、依赖解析、编译顺序、课程先修。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 大学选课计划。② Makefile 构建顺序。③ npm 依赖安装顺序。</p></div>`,
             code: topoCode,
             run: topoRun,
             buildState: buildDAGState
@@ -556,10 +548,7 @@
             complexity: { time: 'O(V²)', space: 'O(V)' },
             keywords: ['dijkstra', 'shortest path', 'zui duan lu jing'],
             mnemonic: '贪心选近标记定，邻边松弛更新距',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>贪心：每次从未访问节点中选 dist 最小者，标记为已确定，并松弛其邻边。不适用于负权边。</p>
-                <h3>复杂度</h3><p>数组实现 O(V²)；优先队列实现 O((V+E) log V)</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>用于非负权图的单源最短路径：每次都选当前距离最小的点，用它更新邻居。</p></div><div class="desc-section"><h3>推导过程</h3><p>维护 dist[] 表示起点到各点的当前最短距离。初始 dist[start]=0，其余为 ∞。用优先队列取 dist 最小的点 u，对每条边 u→v，若 dist[u]+w < dist[v] 则更新。贪心成立的前提是所有边权非负。</p></div><div class="desc-section"><h3>适用场景</h3><p>地图导航、网络路由、物流配送、游戏寻路。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 高德地图最短路径。② 网络路由协议 OSPF。③ 外卖骑手路径规划。</p></div>`,
             code: dijkstraCode,
             run: dijkstraRun,
             buildState: buildGraphState
@@ -570,9 +559,7 @@
             complexity: { time: 'O(V²)', space: 'O(V)' },
             keywords: ['prim', 'mst', 'minimum spanning tree'],
             mnemonic: '任选起点逐步扩，最近邻边入树来',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>从任一节点开始，每次加入距离 MST 最近的非树节点，直到覆盖所有节点。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>最小生成树选出一组边，连接所有顶点且总权重最小。</p></div><div class="desc-section"><h3>推导过程</h3><p>Prim 从一个点开始，每次选连接“已选集合”和“未选集合”的最短边，像长草。Kruskal 按边权排序，用并查集避免成环。Boruvka 每轮为每个连通块选最小边。</p></div><div class="desc-section"><h3>适用场景</h3><p>网络设计、电路布线、聚类、管道铺设。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 城市间铺设光纤使成本最低。② 电路板最小连线。③ 传感器网络连接。</p></div>`,
             code: primCode,
             run: primRun,
             buildState: buildGraphState
@@ -583,9 +570,7 @@
             complexity: { time: 'O(E log E)', space: 'O(V)' },
             keywords: ['kruskal', 'mst', 'union find'],
             mnemonic: '边权排序依次取，并查集判不成环',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>按边权排序，依次尝试加入每条边，若两端点不在同一集合（用并查集判断）则加入 MST。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>最小生成树选出一组边，连接所有顶点且总权重最小。</p></div><div class="desc-section"><h3>推导过程</h3><p>Prim 从一个点开始，每次选连接“已选集合”和“未选集合”的最短边，像长草。Kruskal 按边权排序，用并查集避免成环。Boruvka 每轮为每个连通块选最小边。</p></div><div class="desc-section"><h3>适用场景</h3><p>网络设计、电路布线、聚类、管道铺设。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 城市间铺设光纤使成本最低。② 电路板最小连线。③ 传感器网络连接。</p></div>`,
             code: kruskalCode,
             run: kruskalRun,
             buildState: buildGraphState

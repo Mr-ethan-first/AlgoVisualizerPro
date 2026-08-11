@@ -1328,10 +1328,7 @@ class DoublyLinkedList {
             complexity: { time: 'O(n log n)', space: 'O(log n)' },
             keywords: ['quick', 'iterative', 'stack', 'kuai su'],
             mnemonic: '显式栈模拟递归，区间入栈再分区',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>使用显式栈模拟递归调用，避免递归栈溢出。每次取出区间→分区→把左右子区间压栈。</p>
-                <h3>对比</h3><p>与递归版逻辑等价，但空间由手动栈控制。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>选一个基准值，把数组分成“小于基准”和“大于基准”两部分，然后递归排序两部分。</p></div><div class="desc-section"><h3>推导过程</h3><p>关键在于 partition：用两个指针从两端向中间扫描，把小于 pivot 的放左边，大于的放右边。pivot 的最终位置就是它在有序数组中的位置。然后对左右子数组递归。</p></div><div class="desc-section"><h3>适用场景</h3><p>通用排序、数据量大、平均性能要求高的场景。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 数据库查询结果排序。② 大数据集内存排序。③ 快速求 Top-K（只递归一侧）。</p></div>`,
             code: quickIterCode,
             defaultData: DEFAULT_ARR,
             dataParser: NUM_DATA,
@@ -1343,9 +1340,7 @@ class DoublyLinkedList {
             complexity: { time: 'O(n log n)', space: 'O(n)' },
             keywords: ['merge', 'bottom up', 'iterative', 'gui bing'],
             mnemonic: '从一倍增两两合，无需递归自底起',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>从 size=1 开始，两两合并相邻子数组，size 倍增直到覆盖整个数组。无需递归。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>把数组不断二分，直到每个子数组只有一个元素，再两两合并成有序数组。</p></div><div class="desc-section"><h3>推导过程</h3><p>长度为 1 的数组天然有序。合并两个有序数组时，用双指针依次取较小者放入结果，时间 O(n)。因为每次二分，递归深度 O(log n)，总时间 O(n log n)。</p></div><div class="desc-section"><h3>适用场景</h3><p>需要稳定排序、数据量大、链表排序、外部排序。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 合并两个已排序的日志文件。② 链表排序。③ 大数据外部归并排序。</p></div>`,
             code: mergeBottomUpCode,
             defaultData: DEFAULT_ARR,
             dataParser: NUM_DATA,
@@ -1357,9 +1352,7 @@ class DoublyLinkedList {
             complexity: { time: 'O(n^1.3)', space: 'O(1)' },
             keywords: ['shell', 'gap', 'xi er'],
             mnemonic: '分组插入缩步长，gap递减终为一',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>分组插入排序：以 gap 为步长分组，gap 递减直至 1。提前让元素大体有序，减少插入排序的移动次数。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>插入排序的改进版：先按较大间隔分组排序，让元素快速接近正确位置，再逐步缩小间隔做精细排序。</p></div><div class="desc-section"><h3>推导过程</h3><p>普通插入排序每次只移动一步。希尔排序先让相距 gap 的元素有序，元素可以一次跳 gap 步；最后 gap=1 时就是普通插入排序，此时数组已基本有序，速度很快。</p></div><div class="desc-section"><h3>适用场景</h3><p>中等规模数据、对实现简单性有要求、不适合递归的场景。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 嵌入式系统排序。② 教学演示“减少逆序对”的思想。</p></div>`,
             code: shellSortCode,
             defaultData: DEFAULT_ARR,
             dataParser: NUM_DATA,
@@ -1371,10 +1364,7 @@ class DoublyLinkedList {
             complexity: { time: 'O(n+k)', space: 'O(k)' },
             keywords: ['counting', 'ji shu'],
             mnemonic: '统计次数按值填，非比排序整数限',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>统计每个值出现次数，再按值顺序回填。非比较排序，时间 O(n+k)。</p>
-                <h3>限制</h3><p>仅适用于值域较小的整数。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>统计每个数值出现的次数，再按数值从小到大依次输出，得到有序序列。</p></div><div class="desc-section"><h3>推导过程</h3><p>假设数据范围是 0~k。开一个长度为 k+1 的计数数组，遍历原数组统计频次。然后按计数数组的下标顺序输出对应个数的元素。</p></div><div class="desc-section"><h3>适用场景</h3><p>数据范围小且为整数、需要稳定线性排序。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 学生成绩（0~100 分）排序。② 年龄统计排序。</p></div>`,
             code: countingSortCode,
             defaultData: [3, 1, 4, 1, 5, 9, 2, 6, 5, 3],
             dataParser: NUM_DATA,
@@ -1388,10 +1378,7 @@ class DoublyLinkedList {
             complexity: { time: 'O(n)', space: 'O(1)' },
             keywords: ['doubly', 'linked list', 'shuang xiang'],
             mnemonic: '前后双指互链接，反向遍历删除易',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>每个节点维护 prev 和 next 两个指针。插入/删除时双向修改前后节点的指针。</p>
-                <h3>优势</h3><p>支持 O(1) 反向遍历，删除节点仅需给定节点本身（无需前驱）。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>在线性结构上按规则执行插入、删除、查找或遍历操作。</p></div><div class="desc-section"><h3>推导过程</h3><p>线性结构的核心是维护好头尾指针或索引。操作时要注意边界（空表、只有一个节点、尾部节点）。</p></div><div class="desc-section"><h3>适用场景</h3><p>数据存取、缓存、表达式处理、任务调度。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 联系人列表。②  undo 历史。③ 消息队列。</p></div>`,
             code: doublyListCode,
             run: doublyListRun
         },
@@ -1401,10 +1388,7 @@ class DoublyLinkedList {
             complexity: { time: 'O(1)', space: 'O(k)' },
             keywords: ['circular', 'queue', 'xun huan'],
             mnemonic: '数组取模首尾连，入出均一免搬移',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>用数组 + 取模索引实现队列，避免普通数组队列 dequeue 时 O(n) 的元素搬移。</p>
-                <h3>关键</h3><p>tail = (head + size) % cap，head = (head + 1) % cap。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>在线性结构上按规则执行插入、删除、查找或遍历操作。</p></div><div class="desc-section"><h3>推导过程</h3><p>线性结构的核心是维护好头尾指针或索引。操作时要注意边界（空表、只有一个节点、尾部节点）。</p></div><div class="desc-section"><h3>适用场景</h3><p>数据存取、缓存、表达式处理、任务调度。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 联系人列表。②  undo 历史。③ 消息队列。</p></div>`,
             code: circularQueueCode,
             run: circularQueueRun
         },
@@ -1414,10 +1398,7 @@ class DoublyLinkedList {
             complexity: { time: 'O(1)', space: 'O(cap)' },
             keywords: ['lru', 'cache', '淘汰'],
             mnemonic: '哈希双向链表配，访问移头满删尾',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>使用哈希表 + 双向链表。访问/插入时把节点移到头部；满时淘汰尾部节点。</p>
-                <h3>典型应用</h3><p>Redis 缓存淘汰、操作系统页面置换。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>LRU 缓存保留最近使用过的数据，淘汰最久未使用的，兼顾 O(1) 读写。</p></div><div class="desc-section"><h3>推导过程</h3><p>用哈希表做 key→节点的映射，用双向链表维护使用顺序。访问时把节点移到头部；满时淘汰尾部节点。两者配合实现 O(1)。</p></div><div class="desc-section"><h3>适用场景</h3><p>缓存淘汰、数据库缓冲池、页面置换。</p></div><div class="desc-section"><h3>典型案例</h3><p>① Redis 内存淘汰策略。② 操作系统页面置换。③ LeetCode 146 LRU Cache。</p></div>`,
             code: lruCode,
             run: lruRun
         },
@@ -1429,9 +1410,7 @@ class DoublyLinkedList {
             complexity: { time: 'O(n)', space: 'O(h)' },
             keywords: ['preorder', 'iterative', 'qian xu'],
             mnemonic: '显式栈压右再左，弹出即访序不乱',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>使用显式栈模拟递归：先压右子，再压左子，弹出时访问。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>按特定顺序访问二叉树的每个节点：前序根-左-右，中序左-根-右，后序左-右-根，层序一层一层访问。</p></div><div class="desc-section"><h3>推导过程</h3><p>递归写法直接按定义访问。非递归写法用栈模拟递归过程：中序一路向左压栈，到底后弹出访问，再转向右子树；层序用队列按层扩展。</p></div><div class="desc-section"><h3>适用场景</h3><p>表达式求值、序列化树、按层次展示、BST 有序输出。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 文件系统目录树打印。② 表达式树求值。③ BST 中序输出有序序列。</p></div>`,
             code: preorderIterCode,
             run: preorderIterRun,
             buildState: buildBinaryTreeState
@@ -1442,9 +1421,7 @@ class DoublyLinkedList {
             complexity: { time: 'O(n)', space: 'O(h)' },
             keywords: ['inorder', 'iterative', 'zhong xu'],
             mnemonic: '左链下钻一路压，弹访转右循环走',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>沿左子链一路下钻并压栈，到尽头后弹出访问，再转向右子。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>按特定顺序访问二叉树的每个节点：前序根-左-右，中序左-根-右，后序左-右-根，层序一层一层访问。</p></div><div class="desc-section"><h3>推导过程</h3><p>递归写法直接按定义访问。非递归写法用栈模拟递归过程：中序一路向左压栈，到底后弹出访问，再转向右子树；层序用队列按层扩展。</p></div><div class="desc-section"><h3>适用场景</h3><p>表达式求值、序列化树、按层次展示、BST 有序输出。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 文件系统目录树打印。② 表达式树求值。③ BST 中序输出有序序列。</p></div>`,
             code: inorderIterCode,
             run: inorderIterRun,
             buildState: buildBinaryTreeState
@@ -1455,9 +1432,7 @@ class DoublyLinkedList {
             complexity: { time: 'O(log n)', space: 'O(1)' },
             keywords: ['bst', 'insert', 'iterative'],
             mnemonic: '迭代下降比大小，遇空即插无栈耗',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>迭代下降：比较当前节点，决定走向左/右子树；遇到空位即插入新节点。空间 O(1)（无需递归栈）。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>二叉搜索树保持“左子树 < 根 < 右子树”，查找/插入/删除都像二分查找一样沿一条路径走。</p></div><div class="desc-section"><h3>推导过程</h3><p>查找时与当前节点比较：小则向左，大则向右。插入找到空位置放入。删除分三种情况：叶子直接删；只有一个孩子则孩子顶替；有两个孩子则用右子树最小值（或左子树最大值）替换。</p></div><div class="desc-section"><h3>适用场景</h3><p>需要动态维护有序集合、频繁增删查。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 字典树实现。② 数据库索引（简单场景）。③ 实现有序 map。</p></div>`,
             code: bstInsertIterCode,
             defaultData: [50, 30, 70, 20, 40, 60, 80, 35, 45],
             dataParser: (s) => s.split(',').map(x => parseInt(x.trim(), 10)).filter(n => !isNaN(n)),
@@ -1470,9 +1445,7 @@ class DoublyLinkedList {
             complexity: { time: 'α(n)', space: 'O(1)' },
             keywords: ['union find', 'find', 'iterative', 'path compression'],
             mnemonic: '两遍迭代找根挂，路径压缩同样行',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>两遍迭代：第一遍循环找到根；第二遍把路径上所有节点直接挂到根下，完成路径压缩。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>并查集维护若干不相交集合，支持“合并两个集合”和“查询是否同一集合”。</p></div><div class="desc-section"><h3>推导过程</h3><p>每个元素指向父节点，根节点代表集合。Find 时路径压缩（把访问过的节点直接连到根），Union 时按秩合并（小树挂大树）。这样均摊复杂度接近 O(α(n))。</p></div><div class="desc-section"><h3>适用场景</h3><p>连通性判断、Kruskal 最小生成树、等价类划分。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 社交网络好友圈判断。② 迷宫连通性。③ 最小生成树 Kruskal。</p></div>`,
             code: ufFindIterCode,
             run: ufFindIterRun,
             buildState: buildUFState
@@ -1485,9 +1458,7 @@ class DoublyLinkedList {
             complexity: { time: 'O(V+E)', space: 'O(V)' },
             keywords: ['dfs', 'iterative', 'stack'],
             mnemonic: '显式栈替代递归，弹出查重防重复',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>使用显式栈替代递归。注意：弹出后需检查是否已访问，避免重复处理。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>从起点出发，沿着一条路径一直走到底，走不通再回退试别的路。</p></div><div class="desc-section"><h3>推导过程</h3><p>用递归或显式栈实现。访问节点后标记，再递归访问未访问的邻居。回溯时撤销当前选择。可用于遍历、找环、求连通分量、拓扑排序。</p></div><div class="desc-section"><h3>适用场景</h3><p>路径搜索、连通性、环检测、拓扑排序、回溯。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 迷宫找通路。② 判断图是否有环。③ 解数独/ N 皇后。</p></div>`,
             code: dfsIterCode,
             run: dfsIterRun,
             buildState: buildGraphState
@@ -1498,9 +1469,7 @@ class DoublyLinkedList {
             complexity: { time: 'O(V+E)', space: 'O(V)' },
             keywords: ['topological', 'dfs', 'ni hou xu'],
             mnemonic: '深度搜索记完成，逆后序即拓扑序',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>对 DAG 做 DFS，节点完成时加入结果头部。逆后序即为拓扑序。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>从起点出发，沿着一条路径一直走到底，走不通再回退试别的路。</p></div><div class="desc-section"><h3>推导过程</h3><p>用递归或显式栈实现。访问节点后标记，再递归访问未访问的邻居。回溯时撤销当前选择。可用于遍历、找环、求连通分量、拓扑排序。</p></div><div class="desc-section"><h3>适用场景</h3><p>路径搜索、连通性、环检测、拓扑排序、回溯。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 迷宫找通路。② 判断图是否有环。③ 解数独/ N 皇后。</p></div>`,
             code: topoDfsCode,
             run: topoDfsRun,
             buildState: buildDAGState
@@ -1511,9 +1480,7 @@ class DoublyLinkedList {
             complexity: { time: 'O(V²)', space: 'O(V)' },
             keywords: ['dijkstra', 'naive', 'array'],
             mnemonic: '数组线性扫最小，稠密图上更占优',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>数组实现：每轮线性扫描找最小 dist 节点。无优先队列，时间 O(V²)，稠密图上反而更优。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>用于非负权图的单源最短路径：每次都选当前距离最小的点，用它更新邻居。</p></div><div class="desc-section"><h3>推导过程</h3><p>维护 dist[] 表示起点到各点的当前最短距离。初始 dist[start]=0，其余为 ∞。用优先队列取 dist 最小的点 u，对每条边 u→v，若 dist[u]+w < dist[v] 则更新。贪心成立的前提是所有边权非负。</p></div><div class="desc-section"><h3>适用场景</h3><p>地图导航、网络路由、物流配送、游戏寻路。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 高德地图最短路径。② 网络路由协议 OSPF。③ 外卖骑手路径规划。</p></div>`,
             code: dijkstraNaiveCode,
             run: dijkstraNaiveRun,
             buildState: buildGraphState
@@ -1526,15 +1493,7 @@ class DoublyLinkedList {
             complexity: { time: 'O(m·n)', space: 'O(m·n)' },
             keywords: ['lcs', 'substring', 'zui chang gong gong zi chuan'],
             mnemonic: '相等斜加一，不等归零重开始',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>dp[i][j] = 以 s1[i-1]、s2[j-1] 结尾的最长公共子串长度。</p>
-                <h3>状态转移</h3>
-                <ul>
-                    <li>s1[i-1] = s2[j-1]: dp[i][j] = dp[i-1][j-1] + 1</li>
-                    <li>否则: dp[i][j] = 0（重新开始）</li>
-                </ul>
-                <p>与 LCS 不同：子串必须连续，故不等时直接归零。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>对字符串进行查找、比较、编码或排序操作。</p></div><div class="desc-section"><h3>推导过程</h3><p>字符串可看作字符序列。利用前缀、后缀、哈希或自动机等结构，避免暴力 O(n·m) 的比较。</p></div><div class="desc-section"><h3>适用场景</h3><p>文本处理、生物信息学、日志分析、数据压缩。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 关键词搜索。② DNA 序列分析。③ 文本去重与压缩。</p></div>`,
             code: lcsSubstrCode,
             run: lcsSubstrRun
         },
@@ -1546,9 +1505,7 @@ class DoublyLinkedList {
             complexity: { time: 'O(log n)', space: 'O(log n)' },
             keywords: ['binary', 'recursive', 'er fen'],
             mnemonic: '递归折半查中点，左右择一深入找',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>递归二分：每次比较中点，根据大小递归左半或右半。空间 O(log n)（递归栈）。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>在有序数组中每次把搜索范围减半，快速定位目标。</p></div><div class="desc-section"><h3>推导过程</h3><p>取区间中间元素与目标比较：若相等则找到；若目标更小，在左半区间继续；否则在右半区间继续。区间长度每次减半，因此最多 O(log n) 次比较。</p></div><div class="desc-section"><h3>适用场景</h3><p>有序数据查找、范围查询、求上下界、旋转数组查找。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 字典查单词。② 在有序成绩表找分数。③ 查找第一个/最后一个满足条件的元素。</p></div>`,
             code: binarySearchRecCode,
             defaultData: [1, 3, 5, 7, 9, 11, 13, 15, 17, 19],
             dataParser: (s) => s.split(',').map(x => parseInt(x.trim(), 10)).filter(n => !isNaN(n)).sort((a, b) => a - b),
@@ -1560,10 +1517,7 @@ class DoublyLinkedList {
             complexity: { time: 'O(nW)', space: 'O(W)' },
             keywords: ['knapsack', 'complete', 'wan quan bei bao'],
             mnemonic: '物品无限正序遍，可重复用取最大',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>每个物品可使用无限次。与 0-1 背包对比：内层 w 正序遍历（允许重复使用同一物品）。</p>
-                <h3>状态转移</h3><p>dp[w] = max(dp[w], dp[w - weights[i]] + values[i])</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>背包问题在容量限制下选择物品，使价值最大。</p></div><div class="desc-section"><h3>推导过程</h3><p>设 dp[i][w] 表示前 i 个物品、容量 w 时的最大价值。0-1 背包：dp[i][w]=max(不选 i, 选 i 即 dp[i−1][w−weight[i]]+value[i])。完全背包物品可重复，顺序改为从小到大枚举容量。</p></div><div class="desc-section"><h3>适用场景</h3><p>资源分配、装载优化、预算分配、投资组合。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 旅行箱装行李使价值最大。② 项目预算选择。③ 广告投放组合优化。</p></div>`,
             code: completeKnapsackCode,
             run: completeKnapsackRun
         },
@@ -1573,10 +1527,7 @@ class DoublyLinkedList {
             complexity: { time: 'O(2ⁿ)', space: 'O(n)' },
             keywords: ['hanoi', 'tower', 'han nuo ta'],
             mnemonic: 'n减一借柱先移走，最大落座再回归',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>递归：把 n-1 个盘子从 A 移到 B（借助 C），再把第 n 个盘子从 A 移到 C，最后把 n-1 个盘子从 B 移到 C。</p>
-                <h3>复杂度</h3><p>时间 O(2ⁿ)，移动次数 2ⁿ - 1。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>把 n 个盘子从 A 柱移到 C 柱，借助 B 柱，大盘不能压小盘。</p></div><div class="desc-section"><h3>推导过程</h3><p>递归：先把上面 n−1 个盘子从 A 移到 B，再把最大盘从 A 移到 C，最后把 n−1 个盘子从 B 移到 C。移动次数为 2ⁿ−1。</p></div><div class="desc-section"><h3>适用场景</h3><p>递归教学、栈操作演示、分治思想入门。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 经典益智游戏。② 递归算法入门示例。③ 机器人搬箱子规划。</p></div>`,
             code: hanoiCode,
             defaultData: [3],
             dataParser: (s) => [Math.min(6, Math.max(1, parseInt(s.split(',')[0], 10) || 3))],

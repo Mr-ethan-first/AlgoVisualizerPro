@@ -947,10 +947,7 @@ function query(bit, i) {
             complexity: { time: 'O(n log n)', space: 'O(log n)' },
             keywords: ['3-way', 'quick', 'dijkstra', 'san lu'],
             mnemonic: '三段划分小等大，重复元素免递归',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>将数组划分为三段：&lt;pivot、=pivot、&gt;pivot。对大量重复元素的数组尤其高效。</p>
-                <h3>优势</h3><p>对含大量重复元素的数组，避免重复元素进入递归，最坏 O(n)。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>选一个基准值，把数组分成“小于基准”和“大于基准”两部分，然后递归排序两部分。</p></div><div class="desc-section"><h3>推导过程</h3><p>关键在于 partition：用两个指针从两端向中间扫描，把小于 pivot 的放左边，大于的放右边。pivot 的最终位置就是它在有序数组中的位置。然后对左右子数组递归。</p></div><div class="desc-section"><h3>适用场景</h3><p>通用排序、数据量大、平均性能要求高的场景。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 数据库查询结果排序。② 大数据集内存排序。③ 快速求 Top-K（只递归一侧）。</p></div>`,
             code: quick3WayCode,
             defaultData: [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5],
             dataParser: NUM_DATA,
@@ -962,10 +959,7 @@ function query(bit, i) {
             complexity: { time: 'O(n+k)', space: 'O(n+k)' },
             keywords: ['bucket', 'tong'],
             mnemonic: '按值分桶内排序，顺序合并即成',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>把元素按值分到若干桶中，桶内单独排序，最后顺序合并。非比较排序。</p>
-                <h3>限制</h3><p>适用于均匀分布的数据。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>把数据分到若干个桶里，每个桶内部单独排序，最后按桶顺序收集结果。</p></div><div class="desc-section"><h3>推导过程</h3><p>假设数据均匀分布。把区间 [min, max] 分成 k 个桶，每个元素放入对应桶。桶内元素少，用插入排序即可。理想情况下总时间接近 O(n)。</p></div><div class="desc-section"><h3>适用场景</h3><p>数据分布均匀、浮点数排序、需要并行化的场景。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 高考成绩按分数段分班。② 分布式排序（每个节点处理一个桶）。</p></div>`,
             code: bucketSortCode,
             defaultData: [29, 10, 14, 37, 13, 25, 41, 22, 31, 8],
             dataParser: NUM_DATA,
@@ -978,10 +972,7 @@ function query(bit, i) {
             complexity: { time: 'O(1)', space: 'O(n)' },
             keywords: ['deque', 'double ended queue', 'shuang duan'],
             mnemonic: '两端均可入与出，均摊常数应用广',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>两端都支持入队/出队操作的数据结构，时间复杂度均为 O(1)。</p>
-                <h3>应用</h3><p>单调队列、滑动窗口最大值、DFS 非递归等。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>队列是“先进先出”的结构，队尾入队、队首出队；双端队列两端都可操作。</p></div><div class="desc-section"><h3>推导过程</h3><p>用数组循环队列或双向链表维护 head 和 tail。入队移动 tail，出队移动 head。循环队列用取模复用被释放的空间。</p></div><div class="desc-section"><h3>适用场景</h3><p>任务调度、BFS、缓存、流水线缓冲。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 打印机任务队列。② BFS 图遍历。③ 消息队列。</p></div>`,
             code: dequeCode,
             run: dequeRun
         },
@@ -992,9 +983,7 @@ function query(bit, i) {
             complexity: { time: 'O(n)', space: 'O(h)' },
             keywords: ['postorder', 'iterative', 'hou xu'],
             mnemonic: '左链压栈判右子，记prev防重复访',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>单栈法：先一路向左压栈；栈顶元素若有右子且未访问过，转向右子；否则访问并出栈，记录 prev 防止重复。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>按特定顺序访问二叉树的每个节点：前序根-左-右，中序左-根-右，后序左-右-根，层序一层一层访问。</p></div><div class="desc-section"><h3>推导过程</h3><p>递归写法直接按定义访问。非递归写法用栈模拟递归过程：中序一路向左压栈，到底后弹出访问，再转向右子树；层序用队列按层扩展。</p></div><div class="desc-section"><h3>适用场景</h3><p>表达式求值、序列化树、按层次展示、BST 有序输出。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 文件系统目录树打印。② 表达式树求值。③ BST 中序输出有序序列。</p></div>`,
             code: postorderIterCode,
             run: postorderIterRun,
             buildState: buildBinaryTreeState
@@ -1005,10 +994,7 @@ function query(bit, i) {
             complexity: { time: 'O(n)', space: 'O(n)' },
             keywords: ['postorder', 'two stack', 'shuang zhan'],
             mnemonic: 's1按根右左收集，s2反转即后序',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>后序 = 反转「根→右→左」。s1 按根、右、左的顺序弹出并压入 s2（左子先入 s1、右子后入 s1 从而先弹出）；s2 依次弹出即为「左→右→根」的后序序列。</p>
-                <h3>特点</h3><p>不需要记录 prev 指针，代码更简洁；代价是额外 O(n) 的 s2 空间。适合作为单栈 prev 标记法的对照变体。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>按特定顺序访问二叉树的每个节点：前序根-左-右，中序左-根-右，后序左-右-根，层序一层一层访问。</p></div><div class="desc-section"><h3>推导过程</h3><p>递归写法直接按定义访问。非递归写法用栈模拟递归过程：中序一路向左压栈，到底后弹出访问，再转向右子树；层序用队列按层扩展。</p></div><div class="desc-section"><h3>适用场景</h3><p>表达式求值、序列化树、按层次展示、BST 有序输出。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 文件系统目录树打印。② 表达式树求值。③ BST 中序输出有序序列。</p></div>`,
             code: postorderTwoStackCode,
             run: postorderTwoStackRun,
             buildState: buildBinaryTreeState
@@ -1019,10 +1005,7 @@ function query(bit, i) {
             complexity: { time: 'O(log n)', space: 'O(n)' },
             keywords: ['segment tree', 'xian duan shu', 'range query'],
             mnemonic: '节点管区间聚合，单点更新区间查',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>每个节点维护一段区间的聚合值（如和、最值）。支持单点更新 O(log n)、区间查询 O(log n)。</p>
-                <h3>存储</h3><p>用 1-indexed 数组，节点 i 的子节点为 2i、2i+1。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>线段树把区间二分建造成树，每个节点维护一个子区间的聚合信息，支持区间查询和单点更新。</p></div><div class="desc-section"><h3>推导过程</h3><p>区间 [l,r] 对应节点，若长度大于 1 则分成 [l,mid] 和 [mid+1,r] 两个孩子。查询时把目标区间拆成若干已覆盖的子区间合并结果；更新时自底向上重新聚合。</p></div><div class="desc-section"><h3>适用场景</h3><p>区间最值/求和/修改、RMQ、动态区间统计。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 区间最大值查询。② 数组区间加减。③ 扫描线算法。</p></div>`,
             code: segmentTreeCode,
             defaultData: [1, 3, 5, 7, 9, 11],
             dataParser: NUM_DATA,
@@ -1034,10 +1017,7 @@ function query(bit, i) {
             complexity: { time: 'O(log n)', space: 'O(n)' },
             keywords: ['fenwick', 'bit', 'shu zhuang shu zu'],
             mnemonic: '位运算巧拆下标，前缀查询更新快',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>利用 lowbit(i) = i & -i 把下标拆分为若干区间。支持前缀查询 O(log n)、单点更新 O(log n)。</p>
-                <h3>对比线段树</h3><p>常数更小，代码更短，但只能处理可减性问题（前缀和）。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>树状数组用 lowbit 维护前缀信息，以 O(log n) 支持单点修改和前缀查询。</p></div><div class="desc-section"><h3>推导过程</h3><p>每个节点 c[i] 负责一段长度为 lowbit(i) 的区间。更新 a[x] 时，沿 x += lowbit(x) 更新所有相关节点；查询前缀和时，沿 x -= lowbit(x) 累加。</p></div><div class="desc-section"><h3>适用场景</h3><p>前缀和/频次统计、逆序对、动态区间和。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 动态求前缀和。② 统计逆序对数量。③ 实时频次统计。</p></div>`,
             code: bitCode,
             defaultData: [1, 3, 5, 7, 9, 11],
             dataParser: NUM_DATA,
@@ -1050,10 +1030,7 @@ function query(bit, i) {
             complexity: { time: 'O(n³)', space: 'O(n²)' },
             keywords: ['floyd', 'warshall', 'all pairs', 'duo yuan'],
             mnemonic: '依次中转松所有，多源最短动态规',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>动态规划：dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])，依次以每个节点 k 为中转松弛。</p>
-                <h3>应用</h3><p>求所有点对最短路径，可处理负权边（不能有负环）。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>Floyd-Warshall 求任意两点间的最短路径，基于动态规划。</p></div><div class="desc-section"><h3>推导过程</h3><p>设 dist[i][j] 表示 i 到 j 的最短距离。枚举中间点 k，若 dist[i][k]+dist[k][j] < dist[i][j] 则更新。三重循环后得到全源最短路。</p></div><div class="desc-section"><h3>适用场景</h3><p>全源最短路径、节点数较少的稠密图、传递闭包。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 全国城市间最短距离表。② 网络中任意两节点延迟。③ 判断任意两点是否可达。</p></div>`,
             code: floydCode,
             run: floydRun
         },
@@ -1064,10 +1041,7 @@ function query(bit, i) {
             complexity: { time: 'O(n+m)~', space: 'O(1)' },
             keywords: ['rabin', 'karp', 'hash', 'string match'],
             mnemonic: '滚动哈希滑窗口，命中再比字符详',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>对模式串和文本滑动窗口计算滚动哈希，哈希匹配后再逐字符比对。</p>
-                <h3>优势</h3><p>哈希冲突概率低时接近 O(n+m)，便于扩展到多维匹配。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>用滚动哈希把子串转成数值，先比哈希再逐字符确认，实现多模式匹配。</p></div><div class="desc-section"><h3>推导过程</h3><p>选一个基数和模数，把长度为 m 的子串看作 m 位“数”。利用前一个子串的哈希在 O(1) 内推出下一个子串的哈希。哈希相等时再逐字符验证，避免冲突误判。</p></div><div class="desc-section"><h3>适用场景</h3><p>多模式匹配、抄袭检测、DNA 重复片段查找。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 论文查重。② 病毒库多特征匹配。③ 字符串中出现次数统计。</p></div>`,
             code: rabinKarpCode,
             run: rabinKarpRun,
             buildState: buildStringMatchState
@@ -1079,10 +1053,7 @@ function query(bit, i) {
             complexity: { time: 'O(8^(n²))', space: 'O(n²)' },
             keywords: ['knight', 'tour', 'backtrack', 'qi shi'],
             mnemonic: '八方试向递归深，无解回溯撤一步',
-            description: `<div class="desc-section">
-                <h3>核心思想</h3><p>回溯：骑士从起点出发，尝试 8 个方向，递归深入；无解则回溯撤销，尝试下一方向。</p>
-                <h3>复杂度</h3><p>最坏指数级，但 Warnsdorff 启发式可大幅优化。</p>
-            </div>`,
+            description: `<div class="desc-section"><h3>核心思想</h3><p>通过递归尝试所有可能，遇到不满足条件就回退，直到找到可行解。</p></div><div class="desc-section"><h3>推导过程</h3><p>每步选择一个候选填入当前位置，检查约束是否满足。满足则继续下一层；不满足则撤销该选择并试下一个候选。剪枝可大幅缩小搜索空间。</p></div><div class="desc-section"><h3>适用场景</h3><p>组合优化、约束满足、棋类游戏、调度排班。</p></div><div class="desc-section"><h3>典型案例</h3><p>① 数独求解。② N 皇后。③ 旅行商问题。</p></div>`,
             code: knightTourCode,
             defaultData: [5],
             dataParser: (s) => [Math.min(6, Math.max(4, parseInt(s.split(',')[0], 10) || 5))],
