@@ -340,14 +340,16 @@
                 if (b && b.maxY > maxY) maxY = b.maxY;
             }
 
-            const minH = 280;
             const maxH = Math.max(360, Math.round(vh * 0.88)); // 不超过视口 88%，避免过度滚动
             // 内容实际需要的画布高度（底部留 24px 边距）。
             const needed = maxY + 24;
-            const h = Math.max(minH, Math.min(needed, maxH));
+            // 不再强制 280 下限：内容较小时让画布“恰好包住”内容，避免汉诺塔类动画
+            // 上方/下方出现大片无效高度、把代码区挤到一屏之外；剩余空间全部让给代码/日志区。
+            const h = Math.min(needed, maxH);
 
-            // 修复“页面底部无效空白”：内容未占满视口时，把剩余高度均匀分配给
-            // 动画区(canvasSection) 与 执行日志+代码区(bottomSection)，消除空白。
+            // 动画展示优先：画布高度=内容所需高度，把剩余视口空间全部让给代码/日志区，
+            // 争取“一屏内动画+代码都完整可见”；内容过大时由 _redistributeHeight 设上限，
+            // 保证动画完整展示（内容随画布高度自适应缩放）且代码区始终有一屏可滚动条带。
             const heights = this._redistributeHeight(canvasSection, h);
 
             canvasSection.classList.remove('canvas-tall');
@@ -360,7 +362,8 @@
         }
 
         // 把“内容所需高度”与“剩余视口空间”重新分配：
-        // 动画区与 日志+代码区 各拿一半剩余空间，页面底部不再出现无效空白。
+        // 动画区优先完整展示（画布高度=内容所需高度），其余空间全部给 日志+代码区，
+        // 争取一屏内动画与代码都完整可见；内容过大时给代码区保留最小条带、动画自适应缩放。
         _redistributeHeight(canvasSection, contentH) {
             const bottomSection = document.querySelector('.bottom-section');
             const header = document.querySelector('.algo-header');
@@ -369,21 +372,20 @@
             if (!bottomSection || !header || !infoPanel) {
                 return { canvas: contentH, bottom: null };
             }
-            // 先还原底部区高度到 CSS 基线（响应式断点下的 260/220/180），避免重复累加。
+            // 还原底部区高度到 CSS 基线，避免重复累加。
             bottomSection.style.height = '';
-            const baseBottom = bottomSection.offsetHeight || 260;
             const headerH = header.offsetHeight || 56;
             const infoH = infoPanel.offsetHeight || 52;
             // 视口中扣除固定栏后，可供“动画区 + 底部区”分配的高度预算。
             const budget = vh - headerH - infoH;
-            let canvasH = contentH;
-            let bottomH = baseBottom;
-            // 内容 + 基线底部区能放下 → 把剩余空间五五开分配。
-            if (contentH + baseBottom <= budget) {
-                const free = budget - baseBottom - contentH;
-                canvasH = contentH + free * 0.5;
-                bottomH = baseBottom + free * 0.5;
-            }
+            const canvasMin = 200;   // 动画区最小可读高度（过小的动画也不会被压成一条线）
+            const codeMin = 180;     // 代码/日志区最小条带（始终可滚动查看）
+            // 内容过大时，画布上限 = 预算 - 代码最小高度，确保代码区至少留一条可滚动条带。
+            const canvasCap = Math.max(canvasMin, budget - codeMin);
+            let canvasH = Math.min(contentH, canvasCap);
+            if (canvasH < canvasMin) canvasH = canvasMin;
+            let bottomH = budget - canvasH;
+            if (bottomH < codeMin) bottomH = codeMin;
             bottomSection.style.height = Math.round(bottomH) + 'px';
             return { canvas: Math.round(canvasH), bottom: Math.round(bottomH) };
         }
@@ -655,7 +657,7 @@
             return shapes;
         }
 
-        _buildDPTableShapes(dp, canvasH = 0, hasArrayAbove = false, arrBottom = 0) {
+        _buildDPTableShapes(dp, canvasH = 0, hasArrayAbove = false, arrBottom = 0, region = null) {
             const shapes = [];
             const tokens = this.renderer._tokens();
             const { rows, cols, cells, rowLabels, colLabels } = dp;
@@ -664,7 +666,8 @@
             const compact = rows >= 10;
             const gap = compact ? 2 : 3;
             const baseFont = compact ? 12 : 15;
-            const maxTotalW = this.renderer.width - 40;
+            // region 给定时（左右分框的右框），按 region 宽度与原点居中，而非整块画布。
+            const maxTotalW = (region ? region.w : this.renderer.width) - 40;
 
             // 1) 测量最长单元格文字宽度，让列宽根据内容自适应变大（不再固定 54px）。
             //    超长数字（如字符串哈希的 h/pw 值，可达 10 位）此前会溢出小方框，故此处按内容定宽。
@@ -708,7 +711,9 @@
                 if (contentFont < fontSize) fontSize = contentFont;
             }
             const totalW = cols * (cellW + gap) - gap;
-            const startX = Math.max(40, (this.renderer.width - totalW) / 2);
+            const startX = region
+                ? region.x + Math.max(0, (region.w - totalW) / 2)
+                : Math.max(40, (this.renderer.width - totalW) / 2);
             // 行标签
             for (let i = 0; i < rows; i++) {
                 shapes.push({

@@ -528,7 +528,128 @@
         // 屏蔽默认数组/dptable，避免重复渲染
         delete base.array;
         return base;
+    },
+
+    /**
+     * 通用“左右双框”状态构建器：把同时含两种主结构（图/树 + 数组/DP表）的算法
+     * 拆成左侧一个方框、右侧一个方框，各自完整展示一种动画，杜绝两种动画相互重叠。
+     * 参考堆算法 buildHeapState 的左右分框思路，但更通用：
+     *   - 左框：第一个“空间型”结构（图 graph / 树 tree）
+     *   - 右框：第一个“表格型”结构（数组 array / DP表 dptable）
+     *   若两侧都只有空间型或都只有表格型，则各取前两个分框。
+     *   仅当主结构数 ≠ 2 或存在不支持的类型时，回退到默认构建器（不丢数据）。
+     * @param {object} tracerStates
+     * @param {number} [step]
+     * @param {object} [ctxInfo] - { width, height }
+     */
+    buildSplitState(tracerStates, step, ctxInfo) {
+        const self = this;
+        const w = (ctxInfo && ctxInfo.width) ||
+            (typeof window !== 'undefined' && window.app && window.app.renderer && window.app.renderer.width) || 900;
+        const h = (ctxInfo && ctxInfo.height) ||
+            (typeof window !== 'undefined' && window.app && window.app.renderer && window.app.renderer.height) || 560;
+        const names = Object.keys(tracerStates || {});
+
+        // 分类主结构（排除辅助栈/队列，它们以 overlay 浮层保留）
+        const graphs = [], trees = [], arrays = [], dptables = [], chess = [], linked = [];
+        for (const name of names) {
+            const snap = tracerStates[name];
+            if (!snap || !snap._type) continue;
+            switch (snap._type) {
+                case 'graph': graphs.push({ name, snap }); break;
+                case 'tree': trees.push({ name, snap }); break;
+                case 'array': arrays.push({ name, snap }); break;
+                case 'dptable': dptables.push({ name, snap }); break;
+                case 'chessboard': chess.push({ name, snap }); break;
+                case 'linkedlist': linked.push({ name, snap }); break;
+            }
+        }
+        const spatial = graphs.concat(trees);
+        const tabular = arrays.concat(dptables).concat(chess).concat(linked);
+
+        let left = null, right = null;
+        if (spatial.length >= 1 && tabular.length >= 1) { left = spatial[0]; right = tabular[0]; }
+        else if (spatial.length >= 2) { left = spatial[0]; right = spatial[1]; }
+        else if (tabular.length >= 2) { left = tabular[0]; right = tabular[1]; }
+
+        const fallback = () => (self && self._defaultStateBuilder)
+            ? self._defaultStateBuilder(tracerStates, step, ctxInfo)
+            : null;
+        // 无法干净拆分（结构数≠2，或含 chess/linked 等暂不支持类型）→ 回退默认，避免丢数据
+        const supported = { graph: 1, tree: 1, array: 1, dptable: 1 };
+        if (!left || !right || !supported[left.snap._type] || !supported[right.snap._type]) {
+            return fallback();
+        }
+
+        const base = (self && self._defaultStateBuilder) ? (self._defaultStateBuilder(tracerStates, step, ctxInfo) || {}) : {};
+
+        // 左右两框布局：中间留间隔，顶部留出标题空间
+        const ML = 16, MR = 16, GAP = 18;
+        const boxTop = 34;
+        const boxBottom = Math.max(boxTop + 120, h - 8);
+        const boxH = boxBottom - boxTop;
+        const leftW = Math.max(160, Math.round((w - ML - MR - GAP) * 0.5));
+        const rightX = ML + leftW + GAP;
+        const rightW = Math.max(160, w - MR - rightX);
+
+        const buildRegion = (item, region) => {
+            const t = item.snap._type;
+            if (t === 'graph') {
+                const s = self._buildGraphState(item.snap, region.w, region.h);
+                s.graph.vertices.forEach(v => { v.x += region.x; });
+                return { graph: s.graph };
+            }
+            if (t === 'tree') {
+                const s = self._buildTreeState(item.snap, region.w, region.h);
+                s.tree.nodes.forEach(n => { n.x += region.x; });
+                return { tree: s.tree };
+            }
+            if (t === 'array') {
+                const items = item.snap.items || [];
+                const opts = self._arrayOptions(item.name || 'array', region.w, items.length, region.h, {});
+                opts.x += region.x;
+                return {
+                    array: {
+                        items,
+                        pointers: item.snap.pointers,
+                        ranges: item.snap.ranges,
+                        options: opts
+                    }
+                };
+            }
+            if (t === 'dptable') {
+                const shapes = self._buildDPTableShapes(item.snap, region.h, false, 0, { x: region.x, w: region.w });
+                return { shapes };
+            }
+            return {};
+        };
+
+        // 清除默认构建出的全画幅主结构，改用分框版本覆盖（保留 aux overlay 浮层）
+        delete base.graph;
+        delete base.tree;
+        delete base.array;
+        delete base.shapes;
+
+        const leftState = buildRegion(left, { x: ML, y: boxTop, w: leftW, h: boxH });
+        const rightState = buildRegion(right, { x: rightX, y: boxTop, w: rightW, h: boxH });
+        Object.assign(base, leftState, rightState);
+
+        const labelOf = (item) => {
+            switch (item.snap._type) {
+                case 'graph': return '图 (Graph)';
+                case 'tree': return '树 (Tree)';
+                case 'array': return '数组 (Array)';
+                case 'dptable': return '表 (Table)';
+                default: return '视图';
+            }
+        };
+        base.boxes = [
+            { x: ML, y: boxTop, w: leftW, h: boxH, label: labelOf(left), fill: true, align: 'right' },
+            { x: rightX, y: boxTop, w: rightW, h: boxH, label: labelOf(right), fill: true, align: 'right' }
+        ];
+        return base;
     }
+
     };
 
     global.StateBuilders = StateBuilders;
