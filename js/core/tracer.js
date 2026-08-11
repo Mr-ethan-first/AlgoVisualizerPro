@@ -262,13 +262,19 @@
     class GraphTracer extends BaseTracer {
         constructor(name, vertices = [], edges = []) {
             super(name, 'graph');
-            this.vertices = vertices.map((v, i) => ({
-                id: i,
-                label: v.label !== undefined ? v.label : i,
-                state: 'default',
-                tag: '',
-                dist: null
-            }));
+            this.vertices = vertices.map((v, i) => {
+                const node = {
+                    id: i,
+                    label: v.label !== undefined ? v.label : i,
+                    state: 'default',
+                    tag: '',
+                    dist: null
+                };
+                // 几何类算法可携带归一化坐标（0..1），由状态构建器决定是否启用坐标布局
+                if (typeof v.nx === 'number') node.nx = v.nx;
+                if (typeof v.ny === 'number') node.ny = v.ny;
+                return node;
+            });
             this.edges = edges.map(e => ({
                 u: e.u, v: e.v,
                 weight: e.weight || 1,

@@ -247,7 +247,9 @@
             });
             (state.graph ? state.graph.vertices : []).forEach(v => {
                 const r = (state.graph.options && state.graph.options.radius) || 22;
-                acc(v.x - r, v.y - r, v.x + r, v.y + r);
+                // tag（pill）绘制在顶点上方 cy - r - 16 处，pill 半高约 9，再留 2px 边距
+                const tagReserve = v.tag ? 28 : 0;
+                acc(v.x - r, v.y - r - tagReserve, v.x + r, v.y + r);
             });
             (state.overlays || []).forEach(o => {
                 if (o.panel) acc(o.panel.x, o.panel.y, o.panel.x + o.panel.w, o.panel.y + o.panel.h);
@@ -257,10 +259,11 @@
         }
 
         // 根据动画内容自适应画布（canvas-wrap）高度：
-        // - 统一使用主内容区剩余高度（canvas-section flex:1），消除底部无效留白，
-        //   同时保证代码区/日志区始终可见，不会被上方动画挤出视口。
-        // - 内容构建器收到 ctxInfo.height 后按该高度等比缩放；各构建器内部有 CELL_MAX/MAX_R
-        //   等上限，避免“小内容被放得过大”的不协调感。
+        // - 纯数组 / 无结构动画：保持弹性填充，让 .canvas-section flex:1 自动占用主内容区剩余空间。
+        // - 结构化动画（树/图/数组+DP表/棋盘/栈队列辅助面板/Trie 等）：按内容包围盒实际高度
+        //   设置 canvas-section 高度，避免“画布太矮导致图/树被压扁”。高度由 _measureBounds 计算，
+        //   并迭代一次以消除“画布变大后内容同步放大”的耦合；同时设置上下限，防止过小或过高。
+        // - 代码区/日志区仍在 .main-content 内可滚动查看，不会被挤出视口。
         _applyContentSizing() {
             const canvasWrap = document.getElementById('canvasWrap');
             const canvasSection = document.querySelector('.canvas-section');
@@ -288,15 +291,13 @@
             const hasStructure = states.some(s => s.tree || s.graph || s.overlays || (s.shapes && s.shapes.length));
             const pureArray = states.every(s => s.array && !(s.shapes && s.shapes.length) && !s.tree && !s.graph && !s.overlays);
 
-            // Trie：拉高动画区，让节点放大、避免与五角星（★标签）挤压重叠；
-            // 代码区/日志区在 .main-content 内可滚动查看（不撑满整屏，避免代码/日志完全不可见）。
+            // Trie：固定高度，避免节点被压扁；其余树/图/结构化内容走下方 content-driven 分支。
             if (states.some(s => s._isTrie)) {
                 const vh = (typeof window !== 'undefined' && window.innerHeight) || 800;
                 const targetH = Math.min(520, Math.max(380, Math.round(vh * 0.6)));
                 canvasSection.classList.remove('canvas-tall');
                 canvasSection.style.flex = '0 0 auto';
                 canvasSection.style.height = targetH + 'px';
-                // canvasWrap 自然填充（减去工具栏），按真实高度设置渲染分辨率，避免纵向拉伸错位
                 canvasWrap.style.flex = '';
                 canvasWrap.style.height = '';
                 const wrapH = canvasWrap.clientHeight || (targetH - 38);
@@ -311,11 +312,34 @@
                 return;
             }
 
-            // 所有结构化动画（树/堆/图/数组+DP表/棋盘/栈队列辅助面板/Trie 等）：
-            // 统一使用弹性填充，画布高度 = 主内容区可用高度；内容按画布尺寸等比缩放，
-            // 且各自有上限（如 layoutNaryTree 的 MAX_R），既不放大过度也展示完整，
-            // 代码区/日志区始终可见。不再对 Trie 启用撑满视口的“高画布模式”。
-            elasticFill();
+            // 结构化动画：按内容实际包围盒高度驱动画布高度。
+            // 先在“参考高度”（视口 70%）下测量内容自然高度，再以此为依据设置画布高度，
+            // 避免“当前弹性高度太小 → 内容被压扁 → 测量值也小”的耦合。
+            const vh = (typeof window !== 'undefined' && window.innerHeight) || 800;
+            const measureIndices = [-1, 0, Math.floor(this.steps.length / 2), this.steps.length - 1]
+                .filter((v, i, a) => v >= -1 && a.indexOf(v) === i);
+            const refH = Math.max(360, Math.round(vh * 0.7));
+            r.resize(w, refH);
+            let maxY = 0;
+            for (const idx of measureIndices) {
+                const st = this._buildStateForStep(idx);
+                const b = this._measureBounds(st);
+                if (b && b.maxY > maxY) maxY = b.maxY;
+            }
+
+            const minH = 280;
+            const maxH = Math.max(360, Math.round(vh * 0.88)); // 不超过视口 88%，避免过度滚动
+            // 底部留 24px 边距；若内容未填满参考高度则按实际高度，避免浪费空间。
+            const needed = maxY + 24;
+            const h = Math.max(minH, Math.min(needed, maxH));
+
+            canvasSection.classList.remove('canvas-tall');
+            canvasSection.style.flex = '0 0 auto';
+            canvasSection.style.height = h + 'px';
+            canvasWrap.style.flex = '1';
+            canvasWrap.style.height = '';
+            r.resize(w, canvasWrap.clientHeight || h);
+            this._renderCurrent();
         }
 
         _defaultStateBuilder(tracerStates, _step, ctxInfo) {
@@ -838,11 +862,30 @@
             const edges = snap.edges || [];
             if (!vertices.length) return { graph: { vertices: [], edges: [] } };
 
+            const n = vertices.length;
+
+            // 几何类算法（凸包/最近点对等）会在顶点上带归一化坐标 nx/ny（0..1）。
+            // 仅当"所有顶点都提供了 nx/ny"时才启用坐标布局；否则保持既有圆形布局，
+            // 因此不影响任何未设置 nx/ny 的既有图算法。
+            const useXY = n > 0 && vertices.every(v => typeof v.nx === 'number' && typeof v.ny === 'number');
+            if (useXY) {
+                const pad = 46;
+                const w = Math.max(1, canvasW - pad * 2);
+                const h = Math.max(1, canvasH - pad * 2);
+                const renderVertices = vertices.map(v => ({
+                    x: pad + v.nx * w,
+                    y: pad + (1 - v.ny) * h, // 数学坐标系：y 轴向上
+                    label: v.label !== undefined ? v.label : '',
+                    state: v.state || 'default',
+                    tag: v.tag || ''
+                }));
+                return { graph: { vertices: renderVertices, edges, options: { radius: 13, fontSize: 11, directed: snap.directed } } };
+            }
+
             // 使用圆形布局，自动适配画布
             const cx = canvasW / 2;
             const cy = canvasH / 2;
             const r = Math.min(canvasW, canvasH) * 0.35;
-            const n = vertices.length;
 
             const renderVertices = vertices.map((v, i) => {
                 const angle = (i / n) * Math.PI * 2 - Math.PI / 2;

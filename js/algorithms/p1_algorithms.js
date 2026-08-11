@@ -1060,10 +1060,20 @@ class DoublyLinkedList {
                 }
             }
         }
-        // 高亮最大值位置
-        dp.cells[endI][endJ].state = 'sorted';
-        dp._commit({ type: 'snapshot', payload: {}, description: `最长公共子串长度 = ${maxLen}` });
-        log.printSuccess(`最长公共子串: "${s1.substring(endI - maxLen, endI)}"，长度 ${maxLen}`);
+        // 高亮最大值位置，并回溯高亮整条公共子串
+        const substr = s1.substring(endI - maxLen, endI);
+        let ri = endI, rj = endJ;
+        for (let k = 0; k < maxLen && ri > 0 && rj > 0; k++) {
+            dp.cells[ri][rj].state = 'sorted';
+            dp._commit({
+                type: 'snapshot',
+                payload: {},
+                description: `公共子串第 ${k + 1}/${maxLen} 个字符：${s1[ri - 1]}`
+            });
+            ri--; rj--;
+        }
+        dp._commit({ type: 'snapshot', payload: {}, description: `最长公共子串 = "${substr}"，长度 ${maxLen}` });
+        log.printSuccess(`最长公共子串: "${substr}"，长度 ${maxLen}`);
     }
 
     // ====================================================================

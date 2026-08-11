@@ -401,16 +401,16 @@
 
         // 布局参数：左右边距、两区间隙、上下留白
         const MARGIN_L = 28, MARGIN_R = 24, GAP_MID = 34;
-        const MARGIN_TOP = 34, MARGIN_BOT = 20;
+        const MARGIN_TOP = 20, MARGIN_BOT = 20;
         const availH = Math.max(160, h - MARGIN_TOP - MARGIN_BOT);
 
         // 右侧桶表：高度铺满 availH，10 行均分；先按 availH 算单元格高，再 clamp 到 [18,64]，
         // 并回退一行高确保 bucketRowsH <= availH（防止底部裁切）。列标签在 bucketTop 上方 12px，
         // 故 bucketTop 至少留出 12px 上边距。
-        const rightX0 = Math.round(w * 0.38);   // 左区占约 38%，右区从 38% 开始
+        const rightX0 = Math.round(w * 0.34);   // 左区占约 34%，右区更宽以放大桶表
         const rightW = w - rightX0 - MARGIN_R;
         const bucketGap = 3;
-        const bucketTopMin = MARGIN_TOP + 14;   // 给顶部列标签留 12px + 2px 余量
+        const bucketTopMin = MARGIN_TOP + 6;   // 给顶部列标签留 12px，收紧顶部留白
         const bucketAvailH = Math.max(rows * 18, h - bucketTopMin - MARGIN_BOT);
         let bucketCellH = Math.floor((bucketAvailH + bucketGap) / rows) - bucketGap;
         bucketCellH = Math.max(18, Math.min(64, bucketCellH));
@@ -435,7 +435,7 @@
         }
         const bucketCellWFromContent = Math.max(34, maxValW + 18);
         const bucketCellWFromWidth = Math.max(20, Math.floor((rightW - 32 - bucketGap) / Math.max(cols, 1)) - bucketGap);
-        const bucketCellW = Math.min(90, Math.max(bucketCellWFromContent, bucketCellWFromWidth));
+        const bucketCellW = Math.min(140, Math.max(bucketCellWFromContent, bucketCellWFromWidth));
 
         // 左侧输入数组：垂直长列，方块尺寸与右侧桶表高度协调，让两者视觉统一。
         // 先按 bucketAvailH 反推数组最大允许高度，确保不超出画布底边。
