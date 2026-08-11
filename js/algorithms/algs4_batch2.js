@@ -204,6 +204,7 @@ function sort(a, lo, hi) {
     function quickXRun(ctx, data) {
         const a = asNumbers(data, NUM_DEFAULT16);
         const arr = ctx.add(new ArrayTracer('array', a.slice()));
+        const stack = ctx.add(new StackTracer('递归栈'));
         const log = ctx.add(new LogTracer('log'));
         ctx.line(1);
         log.printInfo('QuickX：小数组转插入排序，三数取中避免最坏划分');
@@ -213,8 +214,9 @@ function sort(a, lo, hi) {
             return vals[1][0];
         }
         function sort(lo, hi) {
-            if (hi <= lo) return;
-            if (hi - lo + 1 <= 5) { insertionSortRange(a, lo, hi, arr, log); return; }
+            stack.push(`[${lo},${hi}]`);
+            if (hi <= lo) { stack.pop(); return; }
+            if (hi - lo + 1 <= 5) { insertionSortRange(a, lo, hi, arr, log); stack.pop(); return; }
             const mid = lo + ((hi - lo) >> 1);
             const m = median3(lo, mid, hi);
             arr.highlight([lo, mid, hi], 'compare', `三数取中：候选 ${a[lo]},${a[mid]},${a[hi]}`);
@@ -226,6 +228,7 @@ function sort(a, lo, hi) {
             arr.highlight([j], 'sorted', `枢轴最终位置 ${j}`);
             sort(lo, j - 1);
             sort(j + 1, hi);
+            stack.pop();
         }
         function partition(lo, hi) {
             let i = lo, j = hi + 1;

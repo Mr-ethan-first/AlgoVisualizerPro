@@ -433,7 +433,7 @@
                 }
             }
         }
-        const bucketCellWFromContent = Math.max(34, maxValW + 18);
+        const bucketCellWFromContent = Math.max(18, maxValW + 8);
         const bucketCellWFromWidth = Math.max(20, Math.floor((rightW - 32 - bucketGap) / Math.max(cols, 1)) - bucketGap);
         const bucketCellW = Math.min(140, Math.max(bucketCellWFromContent, bucketCellWFromWidth));
 

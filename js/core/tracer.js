@@ -233,6 +233,26 @@
             });
         }
 
+        push(value, description) {
+            this.items.push({ value, state: 'current' });
+            this._commit({
+                type: 'set',
+                payload: { op: 'push', value, index: this.items.length - 1 },
+                description: description || `push(${value})`
+            });
+            if (this.items.length) this.items[this.items.length - 1].state = 'default';
+        }
+
+        pop(description) {
+            const top = this.items.pop();
+            if (top) top.state = 'current';
+            this._commit({
+                type: 'set',
+                payload: { op: 'pop', value: top?.value },
+                description: description || `pop() → ${top?.value}`
+            });
+        }
+
         done(description) {
             this.items.forEach(it => it.state = 'sorted');
             this._commit({

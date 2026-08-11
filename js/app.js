@@ -271,6 +271,33 @@
                 const set = new Set();
                 while (set.size < size) set.add(10 + Math.floor(Math.random() * 90));
                 data = Array.from(set);
+            } else if (this.currentAlgo.category === 'string') {
+                // 字符串算法：生成随机字符串数据（KMP 已在上文提前返回）
+                const id = this.currentAlgo.id;
+                if (id === 'string.boyerMoore') {
+                    const chars = 'abcdefghijklmnopqrstuvwxyz';
+                    const tlen = 9 + Math.floor(Math.random() * 5);
+                    let text = '';
+                    for (let i = 0; i < tlen; i++) text += chars[Math.floor(Math.random() * chars.length)];
+                    const plen = 2 + Math.floor(Math.random() * 3);
+                    const pstart = Math.floor(Math.random() * (tlen - plen + 1));
+                    const pattern = text.slice(pstart, pstart + plen);
+                    data = text + '|' + pattern;
+                } else if (id === 'string.quick3string' || id === 'string.lsd' || id === 'string.msd') {
+                    // 数组形式：多个随机小写字符串
+                    const count = 5 + Math.floor(Math.random() * 4);
+                    const pool = ['she', 'sea', 'shell', 'sells', 'shore', 'the', 'by', 'banana', 'apple', 'pear', 'orange', 'zebra', 'cat'];
+                    const arr = [];
+                    for (let i = 0; i < count; i++) arr.push(pool[Math.floor(Math.random() * pool.length)]);
+                    data = arr;
+                } else {
+                    // 单字符串
+                    const chars = 'abcdefg';
+                    const len = 6 + Math.floor(Math.random() * 5);
+                    let s = '';
+                    for (let i = 0; i < len; i++) s += chars[Math.floor(Math.random() * chars.length)];
+                    data = s;
+                }
             } else {
                 data = Array.from({ length: size }, () => Math.floor(Math.random() * 50) + 1);
             }

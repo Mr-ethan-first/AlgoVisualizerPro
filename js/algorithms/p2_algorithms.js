@@ -34,6 +34,7 @@
 }`;
     function quick3WayRun(ctx, data) {
         const arr = ctx.add(new ArrayTracer('arr', data.slice()));
+        const stack = ctx.add(new StackTracer('递归栈'));
         const log = ctx.add(new LogTracer('log'));
         const n = data.length;
 
@@ -43,9 +44,13 @@
         }
 
         function sort(lo, hi, depth) {
+            // 栈操作辅助动画：进入递归帧压入当前待处理子区间 [lo,hi]，退出时弹出，
+            // 直观展示三路快排的隐式调用栈（分治子问题边界）。
+            stack.push(`[${lo},${hi}]`);
             ctx.line(1);
             if (lo >= hi) {
                 if (lo === hi && lo >= 0 && lo < n) arr.markSorted(lo);
+                stack.pop();
                 return;
             }
             ctx.line(2);
@@ -92,6 +97,7 @@
             sort(lo, lt - 1, depth + 1);
             ctx.line(10);
             sort(gt + 1, hi, depth + 1);
+            stack.pop();
         }
         sort(0, n - 1, 0);
         arr.done();

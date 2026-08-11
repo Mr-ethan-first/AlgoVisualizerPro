@@ -198,6 +198,7 @@ function partition(arr, lo, hi) {
 }`;
     function quickRun(ctx, data) {
         const arr = ctx.add(new ArrayTracer('arr', data.slice()));
+        const stack = ctx.add(new StackTracer('递归栈'));
         const log = ctx.add(new LogTracer('log'));
 
         function partition(lo, hi) {
@@ -225,14 +226,20 @@ function partition(arr, lo, hi) {
             return i + 1;
         }
         function qs(lo, hi) {
+            // 栈操作辅助动画：进入递归帧时压入当前待处理子区间 [lo,hi]，
+            // 退出时弹出，直观展示快速排序的隐式调用栈（分治子问题边界）。
+            stack.push(`[${lo},${hi}]`);
+            log.printInfo(`递归处理区间 [${lo}..${hi}]`);
             ctx.line(1);
             if (lo >= hi) {
                 if (lo === hi && lo >= 0 && lo < arr.items.length) arr.markSorted(lo);
+                stack.pop();
                 return;
             }
             const p = partition(lo, hi);
             qs(lo, p - 1);
             qs(p + 1, hi);
+            stack.pop();
         }
         qs(0, data.length - 1);
         ctx.line(2);

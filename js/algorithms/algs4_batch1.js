@@ -14,9 +14,14 @@
         : null;
     const STR_DEFAULT = ['she', 'sells', 'seashells', 'by', 'the', 'sea', 'shore'];
     const asStrings = (data) => {
-        if (Array.isArray(data) && data.length > 0) return data;
-        const parsed = STR_DATA(data);
-        return (parsed && parsed.length) ? parsed : STR_DEFAULT;
+        let arr;
+        if (Array.isArray(data) && data.length > 0) arr = data;
+        else {
+            const parsed = STR_DATA(data);
+            arr = (parsed && parsed.length) ? parsed : STR_DEFAULT;
+        }
+        // 统一转换为字符串，兼容随机生成的数字数据（如 [12,34] -> ["12","34"]）
+        return arr.map(x => (x == null ? '' : String(x))).filter(x => x.length > 0);
     };
 
     // ============================================================

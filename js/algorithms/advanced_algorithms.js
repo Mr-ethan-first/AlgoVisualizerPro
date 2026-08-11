@@ -200,13 +200,16 @@ function countingByDigit(arr, exp) {
   for (const b of buckets) for (const x of b) arr[idx++] = x;
 }`;
     function radixSortRun(ctx, data) {
-        const values = (data && data.length) ? data.slice() : [170, 45, 75, 90, 802, 24, 2, 66];
+        let values = (data && data.length) ? data.slice() : [170, 45, 75, 90, 802, 24, 2, 66];
+        // 为保证桶表在画布内完整展示，限制可视元素数量；仍保留所有位数轮次
+        if (values.length > 24) values = values.slice(0, 24);
         const arr = ctx.add(new ArrayTracer('arr', values.slice()));
         const log = ctx.add(new LogTracer('log'));
         const n = values.length;
         const max = Math.max(...values);
 
-        const maxCols = Math.max(4, Math.ceil(n / 2) + 1);
+        // 每个桶最多容纳 n 个元素，因此桶表列数必须至少为 n，避免满桶时元素丢失
+        const maxCols = Math.max(4, n);
         const dp = ctx.add(new DPTableTracer('buckets', 10, maxCols));
         dp.rowLabels = Array.from({ length: 10 }, (_, i) => String(i));
 
