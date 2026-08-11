@@ -249,7 +249,9 @@
                 const r = (state.graph.options && state.graph.options.radius) || 22;
                 // tag（pill）绘制在顶点上方 cy - r - 16 处，pill 半高约 9，再留 2px 边距
                 const tagReserve = v.tag ? 28 : 0;
-                acc(v.x - r, v.y - r - tagReserve, v.x + r, v.y + r);
+                // 长标签会以“圆下小标签”呈现（见 drawGraphNode），为底部预留空间防裁切
+                const captionReserve = (v.label && String(v.label).length > 4) ? 22 : 0;
+                acc(v.x - r, v.y - r - tagReserve, v.x + r, v.y + r + captionReserve);
             });
             (state.overlays || []).forEach(o => {
                 if (o.panel) acc(o.panel.x, o.panel.y, o.panel.x + o.panel.w, o.panel.y + o.panel.h);
@@ -297,10 +299,11 @@
                 const targetH = Math.min(520, Math.max(380, Math.round(vh * 0.6)));
                 canvasSection.classList.remove('canvas-tall');
                 canvasSection.style.flex = '0 0 auto';
-                canvasSection.style.height = targetH + 'px';
+                const heights = this._redistributeHeight(canvasSection, targetH);
+                canvasSection.style.height = heights.canvas + 'px';
                 canvasWrap.style.flex = '';
                 canvasWrap.style.height = '';
-                const wrapH = canvasWrap.clientHeight || (targetH - 38);
+                const wrapH = canvasWrap.clientHeight || (heights.canvas - 38);
                 r.resize(w, wrapH);
                 this._renderCurrent();
                 return;
@@ -329,17 +332,50 @@
 
             const minH = 280;
             const maxH = Math.max(360, Math.round(vh * 0.88)); // 不超过视口 88%，避免过度滚动
-            // 底部留 24px 边距；若内容未填满参考高度则按实际高度，避免浪费空间。
+            // 内容实际需要的画布高度（底部留 24px 边距）。
             const needed = maxY + 24;
             const h = Math.max(minH, Math.min(needed, maxH));
 
+            // 修复“页面底部无效空白”：内容未占满视口时，把剩余高度均匀分配给
+            // 动画区(canvasSection) 与 执行日志+代码区(bottomSection)，消除空白。
+            const heights = this._redistributeHeight(canvasSection, h);
+
             canvasSection.classList.remove('canvas-tall');
             canvasSection.style.flex = '0 0 auto';
-            canvasSection.style.height = h + 'px';
+            canvasSection.style.height = heights.canvas + 'px';
             canvasWrap.style.flex = '1';
             canvasWrap.style.height = '';
-            r.resize(w, canvasWrap.clientHeight || h);
+            r.resize(w, canvasWrap.clientHeight || heights.canvas);
             this._renderCurrent();
+        }
+
+        // 把“内容所需高度”与“剩余视口空间”重新分配：
+        // 动画区与 日志+代码区 各拿一半剩余空间，页面底部不再出现无效空白。
+        _redistributeHeight(canvasSection, contentH) {
+            const bottomSection = document.querySelector('.bottom-section');
+            const header = document.querySelector('.algo-header');
+            const infoPanel = document.querySelector('.info-panel');
+            const vh = (typeof window !== 'undefined' && window.innerHeight) || 800;
+            if (!bottomSection || !header || !infoPanel) {
+                return { canvas: contentH, bottom: null };
+            }
+            // 先还原底部区高度到 CSS 基线（响应式断点下的 260/220/180），避免重复累加。
+            bottomSection.style.height = '';
+            const baseBottom = bottomSection.offsetHeight || 260;
+            const headerH = header.offsetHeight || 56;
+            const infoH = infoPanel.offsetHeight || 52;
+            // 视口中扣除固定栏后，可供“动画区 + 底部区”分配的高度预算。
+            const budget = vh - headerH - infoH;
+            let canvasH = contentH;
+            let bottomH = baseBottom;
+            // 内容 + 基线底部区能放下 → 把剩余空间五五开分配。
+            if (contentH + baseBottom <= budget) {
+                const free = budget - baseBottom - contentH;
+                canvasH = contentH + free * 0.5;
+                bottomH = baseBottom + free * 0.5;
+            }
+            bottomSection.style.height = Math.round(bottomH) + 'px';
+            return { canvas: Math.round(canvasH), bottom: Math.round(bottomH) };
         }
 
         _defaultStateBuilder(tracerStates, _step, ctxInfo) {

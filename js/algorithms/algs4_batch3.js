@@ -1658,6 +1658,54 @@ function relax(e, v) {
         g.done(`✓ 符号有向图 ${n} 个顶点，${es.length} 条依赖边`);
     }
 
+    // 符号图 / 符号有向图 自定义状态构建：采用“左符号表 + 右整数图”的左右分块策略
+    // （与堆算法的“左树 + 右数组”双视图一致），避免长字符串顶点名在圆圈内互相遮盖 / 重叠，
+    // 中间区域展示不全时，把“名字→索引”映射单独放到左侧，右侧只画整数索引，保证两者都完整可见。
+    function buildSymbolState(tracerStates, _step, ctxInfo) {
+        if (!tracerStates) return null;
+        let gsnap = null;
+        for (const k in tracerStates) {
+            const s = tracerStates[k];
+            if (s && Array.isArray(s.vertices) && Array.isArray(s.edges)) { gsnap = s; break; }
+        }
+        if (!gsnap) return null;
+        const names = gsnap.vertices.map(v => (v.label !== undefined ? v.label : ''));
+        const n = names.length;
+        const cw = (ctxInfo && ctxInfo.width) || 800;
+        const ch = (ctxInfo && ctxInfo.height) || 500;
+        const pad = 28;
+        const panelW = Math.min(260, Math.max(150, Math.round(cw * 0.26)));
+        const gx0 = panelW + pad + 6;          // 右侧图区域左边界（给左侧符号表留位置）
+        const gx1 = cw - pad;
+        const gy0 = pad + 22;                  // 顶部给标题留位置
+        const gy1 = ch - pad;
+        const gcxs = (gx0 + gx1) / 2;
+        const gcy = (gy0 + gy1) / 2;
+        const R = Math.max(40, Math.min(gx1 - gx0, gy1 - gy0) * 0.40);
+        const radius = 18;
+        const directed = gsnap.edges.some(e => e.directed);
+        const verts = gsnap.vertices.map((v, i) => {
+            const angle = (i / Math.max(1, n)) * Math.PI * 2 - Math.PI / 2;
+            return {
+                x: gcxs + R * Math.cos(angle),
+                y: gcy + R * Math.sin(angle),
+                label: String(i),              // 圆内只用整数索引（短，必能完整显示）
+                state: v.state || 'default',
+                tag: v.tag || ''
+            };
+        });
+        const edges = gsnap.edges.map(e => ({ u: e.u, v: e.v, color: e.color || null, directed: !!e.directed }));
+        const items = names.map((nm, i) => ({ label: i + '：' + nm }));
+        return {
+            graph: { vertices: verts, edges, options: { radius, fontSize: 13, directed } },
+            overlays: [{
+                title: '符号表  名字 → 索引',
+                panel: { x: pad, y: pad, w: panelW, h: Math.max(120, ch - pad * 2), layout: 'vertical', itemH: 26, gapY: 4 },
+                items
+            }]
+        };
+    }
+
     // ============================================================
     // 28. 分配问题（最小权重完美匹配 / 匈牙利 O(n³) 简化）
     // ============================================================
@@ -1983,14 +2031,17 @@ function relax(e, v) {
             complexity: { time: 'O(E)', space: 'O(V + E)' }, keywords: ['symbol graph', 'string vertex'],
             mnemonic: '名字映索引，普通图复用',
             description: D('核心思想', '现实世界的图顶点常是字符串（机场代码、人名）。符号图用哈希表建立"名字 → 整数索引"的双向映射，从而把字符串图转化为普通的整数索引图复用所有图算法。'),
-            code: symbolCode, ...G_, run: symbolRun
+            code: symbolCode, ...G_, run: symbolRun, buildState: buildSymbolState
         },
         {
             id: 'graph.symbolDigraph', name: '符号有向图', category: 'graph', level: 'P1',
             complexity: { time: 'O(E)', space: 'O(V + E)' }, keywords: ['symbol digraph', 'dependency'],
             mnemonic: '课程依赖建有向，拓扑排出学习序',
-            description: D('核心思想', '符号图的有向版本，典型应用是课程先修关系、软件包依赖。把字符串顶点映射为索引后做拓扑排序，即得到合法的执行/学习顺序。'),
-            code: symbolCode, ...G_, run: symbolDigraphRun
+            description: D('核心思想', '符号图的有向版本，典型应用是课程先修关系、软件包依赖。把字符串顶点映射为索引后做拓扑排序，即得到合法的执行/学习顺序。')
+                + D('推导过程（小白版）', '现实中的图，顶点往往是字符串：课程名、机场代码、包名。如果直接拿字符串当顶点，比较和建邻接表都很麻烦。于是先建一张“符号表”：从左到右扫描每一行，遇到没见过的名字就分配一个新整数索引（st：名字→索引；keys：索引→名字），这一步只需一次线性扫描。接着把每条边“课程/先修”翻译成整数索引对 (u, v)，就得到一张普通的整数图，可以复用 DFS / 拓扑排序等现成算法。拓扑排序从入度为 0 的顶点开始，每次输出一个顶点并把它指向的邻居入度减 1，减到 0 就入队；输出顺序反过来就是一条不违反任何依赖的学习路线。')
+                + D('适用场景', '一切“A 必须在 B 之前”的依赖关系：大学选课先修、软件包/库的依赖解析（npm、Maven）、构建系统（Makefile、Bazel）、编译器处理 import 图、任务调度。')
+                + D('典型案例', '① 选课顺序：给定“算法→数据结构→离散数学”等依赖，排出能顺利毕业的修读顺序。<br>② 依赖安装：npm install 时先装被依赖的底层包，再装上层包，避免循环依赖报错。<br>③ 工程构建：make 先编译被依赖的源文件，再链接成最终程序。'),
+            code: symbolCode, ...G_, run: symbolDigraphRun, buildState: buildSymbolState
         },
         {
             id: 'graph.assignment', name: '分配问题（最小权匹配）', category: 'graph', level: 'P3',

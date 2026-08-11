@@ -2586,8 +2586,11 @@ function dine(i) {
             keywords: ['skip list', 'delete', 'remove'],
             mnemonic: '查找记录各前驱，逐层解链释放点',
             description: `<div class="desc-section">
-                <h3>核心思想</h3><p>先查找目标节点记录各层前驱，然后逐层解除链接并释放节点。</p>
-            </div>`,
+                <h3>核心思想</h3><p>跳表是从上到下多层的有序链表。删除时先自顶向下查找，记录目标节点在每一层的前驱；再自底向上、在目标出现过的每一层把前驱的指针“跨过”目标节点，最后若最高层变空则降低 maxLevel。</p>
+            </div>`
+            + `<div class="desc-section"><h3>推导过程（小白版）</h3><p>跳表靠“多层索引”加速查找：越高层节点越稀疏，像书的目录。删除分三步：<br>① 查找：从最高层出发，向右走到“再走就会超过目标”的节点就下沉一层，直到最底层定位到目标节点，同时记下每一层停下的前驱。<br>② 解链：目标节点在哪些层出现，就在哪些层把它摘掉——前驱的 forward 直接指向目标的下一个节点，目标节点即被绕过。<br>③ 收尾：如果摘掉后最高层空了，就把 maxLevel 减 1；否则保留。平均时间复杂度 O(log n)。</p></div>`
+            + `<div class="desc-section"><h3>适用场景</h3><p>内存中需要“有序 + 频繁增删查”的键值集合：如 LevelDB / RocksDB 的 MemTable、Redis 有序集合（zset）的底层近似、内存版排行榜、需要按分数区间取 Top-K 的场景。</p></div>`
+            + `<div class="desc-section"><h3>典型案例</h3><p>① 排行榜：用分数当 key，删除某个玩家即 O(log n) 解链。<br>② 带过期时间的缓存索引：频繁增删而不想重建整棵树。<br>③ 范围查询：删除一段区间后结构仍保持多层有序。</p></div>`,
             code: skipListDeleteCode,
             run: skipListDeleteRun,
             buildState: buildSkipListState

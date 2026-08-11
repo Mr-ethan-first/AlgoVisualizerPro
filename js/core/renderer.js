@@ -185,7 +185,11 @@
                 const labelColor = opts.labelColor || (hasFill ? this._textOn(color) : tokens.panelText);
                 ctx.fillStyle = labelColor;
                 const fontFamily = opts.fontFamily || tokens.font;
-                ctx.font = `${opts.bold ? 'bold ' : ''}${opts.fontSize || 14}px ${fontFamily}`;
+                let fs = opts.fontSize || 14;
+                // 文字自适应：标签宽度超出方框时缩小字号，保证「方框内部文字完整展示不全」问题消失
+                const maxW = Math.max(8, w - 8);
+                fs = this._fitFont(String(label), maxW, fs, fontFamily, opts.bold);
+                ctx.font = `${opts.bold ? 'bold ' : ''}${fs}px ${fontFamily}`;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText(String(label), Math.round(x + w / 2), Math.round(y + h / 2));
@@ -215,7 +219,11 @@
                 const labelColor = opts.labelColor || (this._noFill(color) ? tokens.panelText : this._textOn(color));
                 ctx.fillStyle = labelColor;
                 const fontFamily = opts.fontFamily || tokens.font;
-                ctx.font = `${opts.bold ? 'bold ' : ''}${opts.fontSize || 13}px ${fontFamily}`;
+                let fs = opts.fontSize || 13;
+                // 文字自适应：标签宽度超出圆形直径时缩小字号，保证「圆形内部文字完整展示不全」问题消失
+                const maxW = Math.max(8, ir * 2 - 6);
+                fs = this._fitFont(String(label), maxW, fs, fontFamily, opts.bold);
+                ctx.font = `${opts.bold ? 'bold ' : ''}${fs}px ${fontFamily}`;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText(String(label), icx, icy);
@@ -525,12 +533,36 @@
                 ? this._stateBorder(state)
                 : (opts.stroke || this._stateBorder(state || 'default'));
             if (isRb && !active) stroke = opts.stroke || this._textOn(color);
-            this.drawCircle(cx, cy, r, color, String(label), {
-                stroke,
-                // 锐利模式：活跃态 3px 实线边框强调，替代原发光外圈
-                strokeWidth: active ? 3 : 2,
-                fontSize: opts.fontSize || 13
-            });
+
+            const labelStr = (label === undefined || label === null) ? '' : String(label);
+            const fontFamily = opts.fontFamily || tokens.font;
+            const desiredFs = opts.fontSize || 13;
+            // 文字自适应：标签能在圆内放下则居中显示；放不下则改为“圆下小标签”，
+            // 保证动画内部文字始终完整、不被裁切（修复“圆形内部文字展示不全”）。
+            let drawInside = false;
+            if (labelStr) {
+                this.ctx.save();
+                this.ctx.font = `${desiredFs}px ${fontFamily}`;
+                const lw = this.ctx.measureText(labelStr).width;
+                this.ctx.restore();
+                drawInside = lw <= (r * 2 - 6);
+            }
+            if (drawInside) {
+                this.drawCircle(cx, cy, r, color, labelStr, {
+                    stroke,
+                    // 锐利模式：活跃态 3px 实线边框强调，替代原发光外圈
+                    strokeWidth: active ? 3 : 2,
+                    fontSize: desiredFs,
+                    fontFamily
+                });
+            } else {
+                // 标签太长：只画圆（无内文字），圆下用实色胶囊承载完整文字
+                this.drawCircle(cx, cy, r, color, '', {
+                    stroke,
+                    strokeWidth: active ? 3 : 2
+                });
+                if (labelStr) this._drawPill(cx, cy + r + 14, labelStr, tokens.panelText, tokens.edge);
+            }
             if (opts.tag) {
                 // 节点标签（指针文字）带实色胶囊背景，保证在任意叠放次序下都清晰可读、不"被覆盖"
                 this._drawPill(cx, cy - r - 16, opts.tag, opts.tagColor || tokens.panelText, opts.tagColor || tokens.panelText);
@@ -640,6 +672,28 @@
             const crWhite = (1.0 + 0.05) / (lum + 0.05);
             const crBlack = (lum + 0.05) / (0.0 + 0.05);
             return crWhite >= crBlack ? '#ffffff' : '#161b22';
+        }
+
+        // 文字自适应：在 maxW 像素宽度内尽量用大字号；超出则向下等比缩小到 floor 下限。
+        // 处理多行标签（按 \n 拆分，取最宽行作为约束），防止「圆形/方框内部文字展示不全」。
+        _fitFont(text, maxW, startFs, fontFamily, bold) {
+            const ctx = this.ctx;
+            const bf = bold ? 'bold ' : '';
+            const fam = fontFamily || this._tokens().font;
+            let fs = Math.max(8, Math.floor(startFs) || 12);
+            const floor = 9;
+            const lines = String(text).split('\n');
+            const measure = (f) => {
+                ctx.font = `${bf}${f}px ${fam}`;
+                let m = 0;
+                for (const ln of lines) m = Math.max(m, ctx.measureText(ln).width);
+                return m;
+            };
+            // 当前字号已能放下，直接返回（不无谓缩小）
+            if (measure(fs) <= maxW) return fs;
+            // 逐步缩小到能放下为止，下限 floor（保证最小可读）
+            while (fs > floor && measure(fs) > maxW) fs -= 1;
+            return fs;
         }
 
         _dimText() {
