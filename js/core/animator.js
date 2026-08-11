@@ -246,7 +246,13 @@
                 acc(n.x - r, n.y - r - tagReserve, n.x + r, n.y + r);
             });
             (state.graph ? state.graph.vertices : []).forEach(v => {
-                const r = (state.graph.options && state.graph.options.radius) || 22;
+                if (v.hidden) {
+                    // 隐藏节点只贡献其几何中心（用于保留连线端点），不预留圆的半径
+                    acc(v.x, v.y, v.x, v.y);
+                    return;
+                }
+                const baseR = (state.graph.options && state.graph.options.radius) || 22;
+                const r = v.radius !== undefined ? v.radius : baseR;
                 // tag（pill）绘制在顶点上方 cy - r - 16 处，pill 半高约 9，再留 2px 边距
                 const tagReserve = v.tag ? 28 : 0;
                 // 长标签会以“圆下小标签”呈现（见 drawGraphNode），为底部预留空间防裁切
@@ -257,6 +263,10 @@
                 if (o.panel) acc(o.panel.x, o.panel.y, o.panel.x + o.panel.w, o.panel.y + o.panel.h);
             });
             if (minX === Infinity) return null;
+            // 全局预留边距：防止圆/线/标签紧贴画布边缘时被裁切或描边发虚
+            const MARGIN = 12;
+            minX -= MARGIN; maxX += MARGIN;
+            minY -= MARGIN; maxY += MARGIN;
             return { minX, maxX, minY, maxY, spanY: maxY - minY, spanX: maxX - minX };
         }
 
@@ -905,7 +915,9 @@
             // 因此不影响任何未设置 nx/ny 的既有图算法。
             const useXY = n > 0 && vertices.every(v => typeof v.nx === 'number' && typeof v.ny === 'number');
             if (useXY) {
-                const pad = 46;
+                // 边距与节点半径、可能存在的 tag/caption 挂钩，确保任意尺寸下都不贴边裁切
+                const baseR = (snap.options && snap.options.radius) || 13;
+                const pad = Math.max(56, Math.round(baseR * 2.5 + 16));
                 const w = Math.max(1, canvasW - pad * 2);
                 const h = Math.max(1, canvasH - pad * 2);
                 const renderVertices = vertices.map(v => ({
@@ -913,9 +925,10 @@
                     y: pad + (1 - v.ny) * h, // 数学坐标系：y 轴向上
                     label: v.label !== undefined ? v.label : '',
                     state: v.state || 'default',
-                    tag: v.tag || ''
+                    tag: v.tag || '',
+                    hidden: v.hidden || false
                 }));
-                return { graph: { vertices: renderVertices, edges, options: { radius: 13, fontSize: 11, directed: snap.directed } } };
+                return { graph: { vertices: renderVertices, edges, options: { radius: baseR, fontSize: 11, directed: snap.directed } } };
             }
 
             // 使用圆形布局，自动适配画布

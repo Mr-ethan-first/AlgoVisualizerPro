@@ -838,9 +838,11 @@
         const g = ctx.add(new GraphTracer('散点与拟合直线', mkPts(pts.concat(lineP), labels), []));
         const log = ctx.add(new LogTracer('log'));
 
-        // 直线端点用低调状态，避免被误认为数据点
-        g.vertices[n].state = 'tree';
-        g.vertices[n + 1].state = 'tree';
+        // 拟合直线用边连接两个端点；端点本身不画成圆，避免与 P0/P7 重叠或贴边裁切
+        g.vertices[n].hidden = true;
+        g.vertices[n + 1].hidden = true;
+        g.vertices[n].label = '';
+        g.vertices[n + 1].label = '';
 
         ctx.line(3);
         snap(g, `样本 n = ${n}，x̄ = ${xbar.toFixed(3)}，ȳ = ${ybar.toFixed(3)}；${n} 个样本点散布图`);

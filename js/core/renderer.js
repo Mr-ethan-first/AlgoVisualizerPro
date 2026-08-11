@@ -761,7 +761,7 @@
             });
             vertices.forEach((v, i) => {
                 if (v.hidden) return;
-                this.drawGraphNode(v.x, v.y, options.radius || 22, v.label !== undefined ? v.label : i, v.state, {
+                this.drawGraphNode(v.x, v.y, v.radius || options.radius || 22, v.label !== undefined ? v.label : i, v.state, {
                     tag: v.tag,
                     fontSize: options.fontSize || 13
                 });
